@@ -14,6 +14,9 @@ public struct ProjectsView: View {
     // Feedback toast state
     @State private var copiedFeedback: String?
     
+    // Row hover state for Ports Table
+    @State private var hoveredRowID: String?
+    
     public init() {}
     
     public var body: some View {
@@ -31,17 +34,20 @@ public struct ProjectsView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 14)
             
-            // Main Content: Cards or Ports Table
+            // Main Content: Cards or Ports Table (Feature 2)
             ScrollView {
                 VStack(spacing: 16) {
                     if projectsManager.viewMode == .cards {
                         cardsContentView
+                            .transition(.opacity)
                     } else {
                         portsTableContentView
+                            .transition(.opacity)
                     }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
+                .animation(.easeInOut(duration: 0.18), value: projectsManager.viewMode)
             }
             
             Spacer(minLength: 0)
@@ -265,7 +271,7 @@ public struct ProjectsView: View {
                 
                 Spacer()
                 
-                // View Mode Switcher (Cards vs Table)
+                // View Mode Switcher (Feature 2: Cards vs Table)
                 Picker("", selection: $projectsManager.viewMode) {
                     ForEach(DevProjectViewMode.allCases) { mode in
                         Label(mode.rawValue, systemImage: mode.iconName).tag(mode)
@@ -354,7 +360,7 @@ public struct ProjectsView: View {
         }
     }
     
-    // MARK: - Cards Content View
+    // MARK: - Feature 2: Cards Content View
     @ViewBuilder
     private var cardsContentView: some View {
         if projectsManager.filteredProjects.isEmpty {
@@ -390,7 +396,7 @@ public struct ProjectsView: View {
         }
     }
     
-    // MARK: - Ports Table Content View
+    // MARK: - Feature 2: High-Density Ports Table View
     @ViewBuilder
     private var portsTableContentView: some View {
         if projectsManager.filteredPortEntries.isEmpty {
@@ -406,14 +412,14 @@ public struct ProjectsView: View {
                     Text("SERVICE / RUNTIME")
                         .frame(width: 160, alignment: .leading)
                     Text("PROJECT / PATH")
-                        .frame(minWidth: 180, alignment: .leading)
+                        .frame(minWidth: 200, alignment: .leading)
                     Text("PID")
                         .frame(width: 70, alignment: .leading)
                     Text("RESOURCE")
-                        .frame(width: 120, alignment: .leading)
+                        .frame(width: 130, alignment: .leading)
                     Spacer()
                     Text("ACTIONS")
-                        .frame(width: 100, alignment: .trailing)
+                        .frame(width: 120, alignment: .trailing)
                 }
                 .font(.system(size: 11, weight: .bold))
                 .foregroundStyle(.secondary)
@@ -426,26 +432,38 @@ public struct ProjectsView: View {
                 // Table Rows
                 ForEach(projectsManager.filteredPortEntries) { entry in
                     HStack(spacing: 12) {
-                        // Port
-                        HStack(spacing: 4) {
-                            Text(":\(entry.port)")
-                                .font(.system(size: 13, weight: .bold, design: .monospaced))
-                                .foregroundStyle(Color.cyan)
+                        // Port with Click-to-Copy URL shortcut
+                        Button {
+                            let urlStr = "http://localhost:\(entry.port)"
+                            projectsManager.copyToClipboard(urlStr)
+                            showToast("Copied \(urlStr)")
+                        } label: {
+                            HStack(spacing: 4) {
+                                Text(":\(entry.port)")
+                                    .font(.system(size: 13, weight: .bold, design: .monospaced))
+                                    .foregroundStyle(Color.cyan)
+                                
+                                Image(systemName: "doc.on.doc")
+                                    .font(.system(size: 8))
+                                    .foregroundStyle(Color.cyan.opacity(0.5))
+                            }
                         }
+                        .buttonStyle(.plain)
+                        .help("Click to copy http://localhost:\(entry.port)")
                         .frame(width: 80, alignment: .leading)
                         
-                        // Status
+                        // Status: LISTEN socket indicator
                         HStack(spacing: 5) {
                             Circle()
                                 .fill(Color.green)
                                 .frame(width: 6, height: 6)
-                            Text("LISTEN")
+                            Text(entry.status)
                                 .font(.system(size: 10, weight: .bold, design: .monospaced))
                                 .foregroundStyle(.green)
                         }
                         .frame(width: 80, alignment: .leading)
                         
-                        // Service
+                        // Service & Framework
                         HStack(spacing: 6) {
                             Image(systemName: entry.runtime.iconName)
                                 .font(.system(size: 11))
@@ -456,18 +474,47 @@ public struct ProjectsView: View {
                         }
                         .frame(width: 160, alignment: .leading)
                         
-                        // Project
+                        // Project, Git Branch & Path
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(entry.projectName)
-                                .font(.system(size: 12, weight: .semibold))
-                                .lineLimit(1)
-                            Text(entry.projectPath)
-                                .font(.system(size: 10, design: .monospaced))
-                                .foregroundStyle(.secondary)
-                                .lineLimit(1)
-                                .truncationMode(.middle)
+                            HStack(spacing: 6) {
+                                Text(entry.projectName)
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .lineLimit(1)
+                                
+                                if let branch = entry.gitBranch {
+                                    HStack(spacing: 3) {
+                                        Image(systemName: "arrow.triangle.branch")
+                                            .font(.system(size: 8))
+                                        Text(branch)
+                                            .font(.system(size: 9, weight: .medium, design: .monospaced))
+                                    }
+                                    .foregroundStyle(Color.purple)
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 1)
+                                    .background(RoundedRectangle(cornerRadius: 3).fill(Color.purple.opacity(0.1)))
+                                }
+                            }
+                            
+                            Button {
+                                projectsManager.copyToClipboard(entry.projectPath)
+                                showToast("Copied path")
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Text(entry.projectPath)
+                                        .font(.system(size: 10, design: .monospaced))
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(1)
+                                        .truncationMode(.middle)
+                                    
+                                    Image(systemName: "doc.on.doc")
+                                        .font(.system(size: 7))
+                                        .foregroundStyle(.secondary.opacity(0.4))
+                                }
+                            }
+                            .buttonStyle(.plain)
+                            .help("Click to copy directory path")
                         }
-                        .frame(minWidth: 180, alignment: .leading)
+                        .frame(minWidth: 200, alignment: .leading)
                         
                         // PID
                         Text("\(entry.pid)")
@@ -475,7 +522,7 @@ public struct ProjectsView: View {
                             .foregroundStyle(.secondary)
                             .frame(width: 70, alignment: .leading)
                         
-                        // Resource
+                        // Resource: CPU% + RAM
                         HStack(spacing: 6) {
                             Text(String(format: "%.1f%%", entry.cpuPercent))
                                 .font(.system(size: 11, design: .monospaced))
@@ -486,25 +533,51 @@ public struct ProjectsView: View {
                                 .font(.system(size: 11, design: .monospaced))
                                 .foregroundStyle(.secondary)
                         }
-                        .frame(width: 120, alignment: .leading)
+                        .frame(width: 130, alignment: .leading)
                         
                         Spacer()
                         
-                        // Actions
+                        // Direct Inline Actions
                         HStack(spacing: 6) {
                             if entry.isHTTP {
                                 Button {
                                     projectsManager.openInBrowser(port: entry.port)
                                 } label: {
                                     Image(systemName: "arrow.up.forward.app")
-                                        .font(.system(size: 12))
+                                        .font(.system(size: 11))
                                         .foregroundStyle(Color.cyan)
                                         .frame(width: 26, height: 26)
                                         .background(Circle().fill(Color.cyan.opacity(0.1)))
                                 }
                                 .buttonStyle(.plain)
-                                .help("Open in Browser")
+                                .help("Open http://localhost:\(entry.port) in Browser")
                             }
+                            
+                            Button {
+                                let urlStr = "http://localhost:\(entry.port)"
+                                projectsManager.copyToClipboard(urlStr)
+                                showToast("Copied \(urlStr)")
+                            } label: {
+                                Image(systemName: "doc.on.doc")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(Color.cyan)
+                                    .frame(width: 26, height: 26)
+                                    .background(Circle().fill(Color.cyan.opacity(0.1)))
+                            }
+                            .buttonStyle(.plain)
+                            .help("Copy localhost URL")
+                            
+                            Button {
+                                projectsManager.openPathInTerminal(entry.projectPath)
+                            } label: {
+                                Image(systemName: "terminal")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.secondary)
+                                    .frame(width: 26, height: 26)
+                                    .background(Circle().fill(Color.primary.opacity(0.05)))
+                            }
+                            .buttonStyle(.plain)
+                            .help("Open Terminal at Project Path")
                             
                             Button {
                                 portToStop = entry.port
@@ -517,12 +590,16 @@ public struct ProjectsView: View {
                                     .background(Circle().fill(Color.red.opacity(0.1)))
                             }
                             .buttonStyle(.plain)
-                            .help("Stop Process")
+                            .help("Stop or Kill Process Holding Port")
                         }
-                        .frame(width: 100, alignment: .trailing)
+                        .frame(width: 120, alignment: .trailing)
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
+                    .background(hoveredRowID == entry.id ? Color.primary.opacity(0.04) : Color.clear)
+                    .onHover { isHovered in
+                        hoveredRowID = isHovered ? entry.id : nil
+                    }
                     
                     Divider()
                         .opacity(0.4)
@@ -795,7 +872,7 @@ private struct KPIMetricCard: View {
     }
 }
 
-// MARK: - Project Card View
+// MARK: - Project Card View (Feature 2 & 4 Polish)
 private struct ProjectCardView: View {
     let project: DevProjectRecord
     let hasCursor: Bool

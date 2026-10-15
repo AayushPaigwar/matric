@@ -141,15 +141,31 @@ public final class ProjectsManager {
     }
     
     public var filteredPortEntries: [PortInspectionItem] {
-        if searchText.isEmpty {
-            return portEntries
+        let list = portEntries.filter { item in
+            if selectedCategory != .all && item.runtime.category != selectedCategory {
+                return false
+            }
+            if searchText.isEmpty { return true }
+            let q = searchText.lowercased()
+            return "\(item.port)".contains(q) ||
+                   item.projectName.lowercased().contains(q) ||
+                   item.processName.lowercased().contains(q) ||
+                   item.projectPath.lowercased().contains(q) ||
+                   (item.gitBranch?.lowercased().contains(q) ?? false) ||
+                   item.runtime.rawValue.lowercased().contains(q)
         }
-        let q = searchText.lowercased()
-        return portEntries.filter { item in
-            "\(item.port)".contains(q) ||
-            item.projectName.lowercased().contains(q) ||
-            item.processName.lowercased().contains(q) ||
-            item.runtime.rawValue.lowercased().contains(q)
+        
+        return list.sorted { a, b in
+            switch sortOption {
+            case .ports:
+                return a.port < b.port
+            case .cpu:
+                return a.cpuPercent > b.cpuPercent
+            case .memory:
+                return a.memoryBytes > b.memoryBytes
+            case .name:
+                return a.projectName.localizedCaseInsensitiveCompare(b.projectName) == .orderedAscending
+            }
         }
     }
     
@@ -327,21 +343,33 @@ public final class ProjectsManager {
     }
     
     public func openInCursor(_ project: DevProjectRecord) {
-        let url = URL(fileURLWithPath: project.projectPath)
+        openPathInCursor(project.projectPath)
+    }
+    
+    public func openPathInCursor(_ path: String) {
+        let url = URL(fileURLWithPath: path)
         if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.todesktop.230313mzl4w4u92") {
             NSWorkspace.shared.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
         }
     }
     
     public func openInVSCode(_ project: DevProjectRecord) {
-        let url = URL(fileURLWithPath: project.projectPath)
+        openPathInVSCode(project.projectPath)
+    }
+    
+    public func openPathInVSCode(_ path: String) {
+        let url = URL(fileURLWithPath: path)
         if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.microsoft.VSCode") {
             NSWorkspace.shared.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
         }
     }
     
     public func openInTerminal(_ project: DevProjectRecord) {
-        let script = "tell application \"Terminal\" to do script \"cd \\\"\(project.projectPath.replacingOccurrences(of: "\"", with: "\\\""))\\\"\""
+        openPathInTerminal(project.projectPath)
+    }
+    
+    public func openPathInTerminal(_ path: String) {
+        let script = "tell application \"Terminal\" to do script \"cd \\\"\(path.replacingOccurrences(of: "\"", with: "\\\""))\\\"\""
         if let appleScript = NSAppleScript(source: script) {
             var error: NSDictionary?
             appleScript.executeAndReturnError(&error)
@@ -349,7 +377,11 @@ public final class ProjectsManager {
     }
     
     public func revealInFinder(_ project: DevProjectRecord) {
-        let url = URL(fileURLWithPath: project.projectPath)
+        revealPathInFinder(project.projectPath)
+    }
+    
+    public func revealPathInFinder(_ path: String) {
+        let url = URL(fileURLWithPath: path)
         NSWorkspace.shared.activateFileViewerSelecting([url])
     }
 }

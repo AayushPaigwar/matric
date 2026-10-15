@@ -22,21 +22,22 @@ This document records the exact feature scope for the **Developer Projects & Por
 ---
 
 ### Feature 2: Dual-View Mode: Rich Cards vs. High-Density Ports Table
-- [ ] **2.1 View Mode State & Toolbar Switcher**:
+- [x] **2.1 View Mode State & Toolbar Switcher**:
   - Add view switcher state (`Cards` / `Ports Table`) to `ProjectsView`.
-  - Add segmented control in toolbar for fluid toggling.
-- [ ] **2.2 High-Density Ports Table View**:
+  - Add segmented control in toolbar for fluid toggling with smooth transitions.
+- [x] **2.2 High-Density Ports Table View**:
   - Dense tabular view with columns:
-    - **Port**: Port number (e.g. `:3000`) in bold monospace.
+    - **Port**: Port number (e.g. `:3000`) in bold monospace with click-to-copy localhost URL shortcut.
     - **Status**: Network socket state (`LISTEN`) with colored indicator.
     - **Runtime / Service**: Framework branding icon and process command name.
-    - **Project Path**: Truncated directory path with hover tooltip and copy shortcut.
+    - **Project Path**: Truncated directory path with hover tooltip and 1-click copy shortcut.
     - **PID**: Monospaced process identifier.
-    - **CPU %**: Real-time per-service CPU utilization.
+    - **CPU %**: Real-time per-service CPU utilization with orange warning threshold.
     - **Memory**: Per-service RAM consumption.
-    - **Direct Inline Actions**: 1-click **Open in Browser** (`safari`) and **Kill Port** (`xmark.circle`).
-- [ ] **2.3 Rich Cards View Polish**:
-  - Card layout featuring framework branding, live status, quick IDE launchers, and port badges.
+    - **Direct Inline Actions**: 1-click **Open in Browser** (`arrow.up.forward.app`), **Copy URL** (`doc.on.doc`), **Terminal Launcher** (`terminal`), and **Kill Port** (`stop.fill`).
+    - **Hover Lighting**: Interactive row hover feedback.
+- [x] **2.3 Rich Cards View Polish**:
+  - Card layout featuring framework branding, pulsing `ONLINE` status, quick IDE launchers (Cursor, VS Code, Terminal, Finder), copy URL/path shortcuts, and port badges.
 
 ---
 
@@ -88,7 +89,7 @@ This document records the exact feature scope for the **Developer Projects & Por
 
 ## 🛠️ Step-by-Step Development Order
 - [x] **Step 1**: Implement Feature 1 (Header & KPI Summary Metrics Bar)
-- [ ] **Step 2**: Implement Feature 2 (Dual-View Mode: Rich Cards vs. Ports Table)
+- [x] **Step 2**: Implement Feature 2 (Dual-View Mode: Rich Cards vs. Ports Table)
 - [ ] **Step 3**: Implement Feature 3 (Smart Filtering & Organization)
 - [ ] **Step 4**: Implement Feature 4 (Project Identity & Git Integration)
 - [ ] **Step 5**: Implement Feature 5 (1-Click Developer Actions)
