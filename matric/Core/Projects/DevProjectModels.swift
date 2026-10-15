@@ -191,34 +191,45 @@ public struct DevProjectRecord: Identifiable, Sendable {
 public struct PortInspectionItem: Identifiable, Sendable {
     public var id: String { "\(pid)-\(port)" }
     public let port: Int
+    public let status: String
     public let pid: pid_t
     public let processName: String
     public let projectName: String
     public let projectPath: String
+    public let gitBranch: String?
     public let runtime: DevRuntime
     public let isHTTP: Bool
-    public let cpuPercent: Double
-    public let memoryFormatted: String
+    public var cpuPercent: Double
+    public var memoryBytes: UInt64
+    
+    public var memoryFormatted: String {
+        let formatter = ByteCountFormatter()
+        formatter.countStyle = .memory
+        return formatter.string(fromByteCount: Int64(memoryBytes))
+    }
     
     public nonisolated init(
         port: Int,
-        pid: pid_t,
-        processName: String,
+        status: String = "LISTEN",
         projectName: String,
         projectPath: String,
+        gitBranch: String? = nil,
         runtime: DevRuntime,
-        isHTTP: Bool,
+        pid: pid_t,
+        processName: String,
         cpuPercent: Double,
-        memoryFormatted: String
+        memoryBytes: UInt64
     ) {
         self.port = port
-        self.pid = pid
-        self.processName = processName
+        self.status = status
         self.projectName = projectName
         self.projectPath = projectPath
+        self.gitBranch = gitBranch
         self.runtime = runtime
-        self.isHTTP = isHTTP
+        self.pid = pid
+        self.processName = processName
+        self.isHTTP = (port == 80 || port == 443 || port == 3000 || port == 5173 || port == 8080 || port == 8000 || port == 4200 || port == 5000 || port >= 1024)
         self.cpuPercent = cpuPercent
-        self.memoryFormatted = memoryFormatted
+        self.memoryBytes = memoryBytes
     }
 }

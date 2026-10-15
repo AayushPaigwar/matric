@@ -7,7 +7,7 @@ import Observation
 public final class SystemTelemetryHub {
     public static let shared = SystemTelemetryHub()
     
-    // Live sensor state
+    // Core telemetry models
     public var cpu: CPUSample = .zero
     public var memory: MemorySample = .zero
     public var disk: DiskSample = .zero
@@ -15,10 +15,10 @@ public final class SystemTelemetryHub {
     public var gpu: GPUSample = .zero
     public var battery: BatterySample = .zero
     
-    // Live process tree
+    // Process trees
     public var appGroups: [AppGroupRecord] = []
     
-    // Rolling history for live charts (retains last 300 data points = up to 10 mins at 2s interval)
+    // Rolling historical buffers (last 60 seconds)
     public var cpuHistory: [CPUSample] = []
     public var memoryHistory: [MemorySample] = []
     public var diskHistory: [DiskSample] = []
@@ -26,9 +26,7 @@ public final class SystemTelemetryHub {
     public var gpuHistory: [GPUSample] = []
     public var batteryHistory: [BatterySample] = []
     
-    public var isMonitoring: Bool = false
-    public var refreshInterval: Double = 2.0
-    
+    // Monitors
     private let cpuMonitor = CPUMonitor()
     private let memoryMonitor = MemoryMonitor()
     private let diskMonitor = DiskMonitor()
@@ -38,35 +36,31 @@ public final class SystemTelemetryHub {
     private let processScanner = ProcessScanner()
     private let treeResolver = ProcessTreeResolver()
     
-    private var timerTask: Task<Void, Never>?
-    private let maxHistoryPoints: Int = 300
+    private var timer: Timer?
+    private let maxHistoryPoints: Int = 60
     
     public init() {
-        // Initial sample
-        refreshAll()
+        start()
     }
     
-    public func startMonitoring(interval: Double = 2.0) {
-        self.refreshInterval = interval
-        self.isMonitoring = true
+    public func start() {
+        startMonitoring(interval: 1.0)
+    }
+    
+    public func startMonitoring(interval: Double = 1.0) {
+        stop()
+        refreshAll()
         
-        // Immediate sample on start
-        self.refreshAll()
-        
-        timerTask?.cancel()
-        timerTask = Task { [weak self] in
-            while !Task.isCancelled {
-                try? await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
-                guard let self = self, self.isMonitoring else { break }
-                self.refreshAll()
+        timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.refreshAll()
             }
         }
     }
     
-    public func stopMonitoring() {
-        self.isMonitoring = false
-        timerTask?.cancel()
-        timerTask = nil
+    public func stop() {
+        timer?.invalidate()
+        timer = nil
     }
     
     public func refreshAll() {
@@ -96,6 +90,9 @@ public final class SystemTelemetryHub {
         appendHistory(&networkHistory, item: newNetwork)
         appendHistory(&gpuHistory, item: newGPU)
         appendHistory(&batteryHistory, item: newBattery)
+        
+        // Update live resource metrics for active dev projects
+        ProjectsManager.shared.updateVitals(with: rawProcesses)
         
         // Feed watchdog alert evaluator
         AlertsManager.shared.evaluateTelemetry(

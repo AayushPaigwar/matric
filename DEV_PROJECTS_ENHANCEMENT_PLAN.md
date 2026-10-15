@@ -7,17 +7,17 @@ This document records the exact feature scope for the **Developer Projects & Por
 ## 📋 Feature Breakdown & Task Checklist
 
 ### Feature 1: Header & KPI Summary Metrics Bar
-- [ ] **1.1 Real-Time Metric Aggregation Engine**:
+- [x] **1.1 Real-Time Metric Aggregation Engine**:
   - Compute `activeServicesCount`: count of active developer services and runtimes.
   - Compute `openPortsCount`: unique count of active TCP listening ports (`:3000`, `:5173`, `:8080`, etc.).
   - Compute `totalDevMemoryBytes`: aggregate RAM (RSS) consumed across all dev processes (e.g. `1.2 GB`).
   - Compute `totalDevCpuPercent`: combined CPU utilization across all dev processes with dynamic warning states (>20%).
-- [ ] **1.2 KPI Summary Bar UI Component**:
+- [x] **1.2 KPI Summary Bar UI Component**:
   - Build top-level 4-card KPI strip:
-    - **Active Services**: `server.rack` icon, dynamic blue accent.
-    - **Open TCP Ports**: `network` icon, purple accent.
-    - **Dev Memory Usage**: `memorychip` icon, auto-formatted in `MB`/`GB`.
-    - **Dev CPU Load**: `cpu` icon, orange warning indicator when load >20%.
+    - **Active Services**: `server.rack` icon, dynamic blue accent, scanning/online badges.
+    - **Open TCP Ports**: `network` icon, purple accent, live open count badge.
+    - **Dev Memory Usage**: `memorychip` icon, auto-formatted in `MB`/`GB` with High/Normal threshold tags.
+    - **Dev CPU Load**: `cpu` icon, orange warning indicator when combined dev load >20%.
 
 ---
 
@@ -87,7 +87,7 @@ This document records the exact feature scope for the **Developer Projects & Por
 ---
 
 ## 🛠️ Step-by-Step Development Order
-- [ ] **Step 1**: Implement Feature 1 (Header & KPI Summary Metrics Bar)
+- [x] **Step 1**: Implement Feature 1 (Header & KPI Summary Metrics Bar)
 - [ ] **Step 2**: Implement Feature 2 (Dual-View Mode: Rich Cards vs. Ports Table)
 - [ ] **Step 3**: Implement Feature 3 (Smart Filtering & Organization)
 - [ ] **Step 4**: Implement Feature 4 (Project Identity & Git Integration)

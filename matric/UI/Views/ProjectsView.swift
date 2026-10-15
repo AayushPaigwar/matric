@@ -21,7 +21,7 @@ public struct ProjectsView: View {
             // Header
             headerView
             
-            // KPI Summary Metrics Cards
+            // Feature 1: KPI Summary Metrics Bar
             kpiSummaryBar
                 .padding(.horizontal, 24)
                 .padding(.bottom, 16)
@@ -116,12 +116,12 @@ public struct ProjectsView: View {
                         .font(.system(size: 26, weight: .bold))
                         .foregroundStyle(.primary)
                     
-                    Text("\(projectsManager.totalActiveServers) Active")
+                    Text("\(projectsManager.activeServicesCount) Active")
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(.blue)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
-                        .background(Capsule().fill(Color.orange.opacity(0.12)))
+                        .background(Capsule().fill(Color.blue.opacity(0.12)))
                 }
                 
                 Text("Automatic Discovery of Local Dev Servers, Listening Ports & Workspace Runtimes")
@@ -190,35 +190,47 @@ public struct ProjectsView: View {
         .padding(.bottom, 12)
     }
     
-    // MARK: - KPI Summary Strip
+    // MARK: - Feature 1: KPI Summary Metrics Bar
     private var kpiSummaryBar: some View {
         HStack(spacing: 12) {
             KPIMetricCard(
                 title: "ACTIVE SERVICES",
-                value: "\(projectsManager.totalActiveServers)",
+                value: "\(projectsManager.activeServicesCount)",
                 icon: "server.rack",
-                accentColor: .orange
+                accentColor: .blue,
+                subtitle: "Running dev servers & tools",
+                badge: projectsManager.isScanning ? "Scanning..." : "\(projectsManager.activeServicesCount) online",
+                badgeColor: projectsManager.isScanning ? .orange : .blue
             )
             
             KPIMetricCard(
                 title: "OPEN TCP PORTS",
-                value: "\(projectsManager.totalListeningPorts)",
-                icon: "bolt.horizontal.fill",
-                accentColor: .green
+                value: "\(projectsManager.openPortsCount)",
+                icon: "network",
+                accentColor: .purple,
+                subtitle: "Bound listening sockets",
+                badge: projectsManager.openPortsCount > 0 ? "\(projectsManager.openPortsCount) active" : "None",
+                badgeColor: .purple
             )
             
             KPIMetricCard(
                 title: "DEV MEMORY USAGE",
                 value: projectsManager.formattedDevMemory,
                 icon: "memorychip",
-                accentColor: .cyan
+                accentColor: .cyan,
+                subtitle: "Resident RAM footprint",
+                badge: projectsManager.totalDevMemoryBytes > 2_000_000_000 ? "High" : "Normal",
+                badgeColor: projectsManager.totalDevMemoryBytes > 2_000_000_000 ? .orange : .cyan
             )
             
             KPIMetricCard(
                 title: "DEV CPU LOAD",
-                value: String(format: "%.1f%%", projectsManager.totalDevCPU),
+                value: String(format: "%.1f%%", projectsManager.totalDevCpuPercent),
                 icon: "cpu",
-                accentColor: projectsManager.totalDevCPU > 20 ? .orange : .purple
+                accentColor: projectsManager.totalDevCpuPercent > 20 ? .orange : .indigo,
+                subtitle: "Combined dev load",
+                badge: projectsManager.totalDevCpuPercent > 20 ? "High Load" : "Nominal",
+                badgeColor: projectsManager.totalDevCpuPercent > 20 ? .orange : .green
             )
         }
     }
@@ -715,37 +727,66 @@ public struct ProjectsView: View {
     }
 }
 
-// MARK: - KPI Metric Card
+// MARK: - KPI Metric Card (Feature 1)
 private struct KPIMetricCard: View {
     let title: String
     let value: String
     let icon: String
     let accentColor: Color
+    var subtitle: String? = nil
+    var badge: String? = nil
+    var badgeColor: Color? = nil
     
     var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: icon)
-                .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(accentColor)
-                .frame(width: 34, height: 34)
-                .background(Circle().fill(accentColor.opacity(0.12)))
-            
-            VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .center, spacing: 8) {
+                Image(systemName: icon)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(accentColor)
+                    .frame(width: 26, height: 26)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6, style: .continuous)
+                            .fill(accentColor.opacity(0.14))
+                    )
+                
                 Text(title)
                     .font(.system(size: 10, weight: .bold))
                     .foregroundStyle(.secondary)
+                    .tracking(0.3)
                 
-                Text(value)
-                    .font(.system(size: 17, weight: .bold, design: .rounded))
-                    .foregroundStyle(.primary)
+                Spacer(minLength: 0)
+                
+                if let badge = badge {
+                    Text(badge)
+                        .font(.system(size: 9, weight: .semibold))
+                        .foregroundStyle(badgeColor ?? accentColor)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill((badgeColor ?? accentColor).opacity(0.12))
+                        )
+                }
             }
             
-            Spacer(minLength: 0)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(value)
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundStyle(.primary)
+                
+                if let subtitle = subtitle {
+                    Text(subtitle)
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+            }
         }
         .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color(nsColor: .controlBackgroundColor).opacity(0.5))
+                .fill(Color(nsColor: .controlBackgroundColor).opacity(0.55))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .strokeBorder(Color.primary.opacity(0.06), lineWidth: 1)

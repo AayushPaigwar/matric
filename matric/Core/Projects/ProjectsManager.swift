@@ -42,19 +42,29 @@ public final class ProjectsManager {
         refreshProjects()
     }
     
-    // Aggregated Metrics
-    public var totalActiveServers: Int {
+    // MARK: - Feature 1: Real-Time Metric Aggregation Engine
+    
+    /// Count of active developer services and runtimes.
+    public var activeServicesCount: Int {
         projects.count
     }
+    public var totalActiveServers: Int {
+        activeServicesCount
+    }
     
-    public var totalListeningPorts: Int {
+    /// Unique count of active TCP listening ports (:3000, :5173, etc.).
+    public var openPortsCount: Int {
         var set = Set<Int>()
         for p in projects {
             set.formUnion(p.listeningPorts)
         }
         return set.count
     }
+    public var totalListeningPorts: Int {
+        openPortsCount
+    }
     
+    /// Aggregate RAM (RSS) consumed across all dev processes.
     public var totalDevMemoryBytes: UInt64 {
         projects.reduce(0) { $0 + $1.memoryBytes }
     }
@@ -65,8 +75,34 @@ public final class ProjectsManager {
         return formatter.string(fromByteCount: Int64(totalDevMemoryBytes))
     }
     
-    public var totalDevCPU: Double {
+    /// Combined CPU utilization across all dev processes.
+    public var totalDevCpuPercent: Double {
         projects.reduce(0.0) { $0 + $1.cpuPercent }
+    }
+    public var totalDevCPU: Double {
+        totalDevCpuPercent
+    }
+    
+    /// Updates live CPU and Memory vitals from the 1-second system telemetry tick without re-scanning disks
+    public func updateVitals(with processes: [ProcessRecord]) {
+        guard !projects.isEmpty else { return }
+        let map = Dictionary(processes.map { ($0.pid, $0) }, uniquingKeysWith: { first, _ in first })
+        
+        for i in 0..<projects.count {
+            let pid = projects[i].pid
+            if let proc = map[pid] {
+                projects[i].cpuPercent = proc.cpuPercent
+                projects[i].memoryBytes = proc.memoryBytes
+            }
+        }
+        
+        for i in 0..<portEntries.count {
+            let pid = portEntries[i].pid
+            if let proc = map[pid] {
+                portEntries[i].cpuPercent = proc.cpuPercent
+                portEntries[i].memoryBytes = proc.memoryBytes
+            }
+        }
     }
     
     public var filteredProjects: [DevProjectRecord] {
@@ -181,83 +217,103 @@ public final class ProjectsManager {
                         pid: proc.pid,
                         command: proc.name,
                         fullCommand: proc.name,
-                        listeningPorts: ports.sorted(),
+                        listeningPorts: ports,
                         cpuPercent: proc.cpuPercent,
                         memoryBytes: proc.memoryBytes
                     )
-                    
                     discovered.append(record)
                     
-                    // Populate flat ports table
-                    for p in ports.sorted() {
-                        let isWeb = (p >= 80 && p <= 90) || (p >= 3000 && p <= 9999) || p == 443 || p == 4200 || p == 5173
+                    // Build ports table items
+                    for port in ports {
                         flatPorts.append(PortInspectionItem(
-                            port: p,
-                            pid: proc.pid,
-                            processName: proc.name,
+                            port: port,
+                            status: "LISTEN",
                             projectName: projName,
                             projectPath: dirPath,
+                            gitBranch: branch,
                             runtime: runtime,
-                            isHTTP: isWeb,
+                            pid: proc.pid,
+                            processName: proc.name,
                             cpuPercent: proc.cpuPercent,
-                            memoryFormatted: record.formattedMemory
+                            memoryBytes: proc.memoryBytes
                         ))
                     }
                 }
             }
             
-            let sortedPorts = flatPorts.sorted { $0.port < $1.port }
+            // Sort flat ports numerically
+            flatPorts.sort { $0.port < $1.port }
             
-            await ProjectsManager.shared.applyDiscoveredProjects(discovered, ports: sortedPorts)
+            await MainActor.run {
+                self.projects = discovered
+                self.portEntries = flatPorts
+                self.isScanning = false
+                self.lastScannedAt = Date()
+            }
         }
     }
     
-    private func applyDiscoveredProjects(_ results: [DevProjectRecord], ports: [PortInspectionItem]) {
-        self.projects = results
-        self.portEntries = ports
-        self.lastScannedAt = Date()
-        self.isScanning = false
+    // MARK: - Quick Port Inspection Logic
+    public func inspectCustomPort() {
+        if let port = Int(portCheckInput.trimmingCharacters(in: .whitespacesAndNewlines)) {
+            checkPortAvailability(port)
+        }
     }
     
+    public func checkPortAvailability(_ port: Int) {
+        guard port > 0 && port <= 65535 else { return }
+        portCheckStatus = .checking
+        
+        Task.detached(priority: .userInitiated) {
+            let scanner = PortScanner()
+            let procScanner = ProcessScanner()
+            
+            let portMap = scanner.scanListeningPorts()
+            let processes = procScanner.scan()
+            let procDict = Dictionary(processes.map { ($0.pid, $0) }, uniquingKeysWith: { a, _ in a })
+            
+            var occupiedPID: pid_t?
+            for (pid, ports) in portMap {
+                if ports.contains(port) {
+                    occupiedPID = pid
+                    break
+                }
+            }
+            
+            await MainActor.run {
+                if let pid = occupiedPID {
+                    let proc = procDict[pid]
+                    let name = proc?.name ?? "Unknown Process"
+                    self.portCheckStatus = .occupied(port: port, pid: pid, processName: name, command: name)
+                } else {
+                    self.portCheckStatus = .free(port: port)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Process Lifecycle Actions
     public func stopProject(_ project: DevProjectRecord, force: Bool = false) {
-        let sig = force ? SIGKILL : SIGTERM
-        kill(project.pid, sig)
+        let signal = force ? SIGKILL : SIGTERM
+        kill(project.pid, signal)
         
-        withAnimation {
-            projects.removeAll { $0.pid == project.pid }
-            portEntries.removeAll { $0.pid == project.pid }
-        }
-        
-        Task {
-            try? await Task.sleep(nanoseconds: 800_000_000)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
             self.refreshProjects()
         }
     }
     
     public func stopPort(port: Int, force: Bool = false) {
         if let entry = portEntries.first(where: { $0.port == port }) {
-            let sig = force ? SIGKILL : SIGTERM
-            kill(entry.pid, sig)
+            let signal = force ? SIGKILL : SIGTERM
+            kill(entry.pid, signal)
             
-            withAnimation {
-                portEntries.removeAll { $0.port == port }
-                if let idx = projects.firstIndex(where: { $0.pid == entry.pid }) {
-                    let updated = projects[idx]
-                    var remainingPorts = updated.listeningPorts
-                    remainingPorts.removeAll { $0 == port }
-                    if remainingPorts.isEmpty {
-                        projects.remove(at: idx)
-                    }
-                }
-            }
-            
-            Task {
-                try? await Task.sleep(nanoseconds: 800_000_000)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 self.refreshProjects()
             }
         }
     }
     
+    // MARK: - Developer Actions
     public func openInBrowser(port: Int) {
         if let url = URL(string: "http://localhost:\(port)") {
             NSWorkspace.shared.open(url)
@@ -265,67 +321,35 @@ public final class ProjectsManager {
     }
     
     public func copyToClipboard(_ text: String) {
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(text, forType: .string)
-    }
-    
-    public func revealInFinder(_ project: DevProjectRecord) {
-        guard FileManager.default.fileExists(atPath: project.projectPath) else { return }
-        let url = URL(fileURLWithPath: project.projectPath)
-        NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: url.path)
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(text, forType: .string)
     }
     
     public func openInCursor(_ project: DevProjectRecord) {
-        guard FileManager.default.fileExists(atPath: project.projectPath) else { return }
+        let url = URL(fileURLWithPath: project.projectPath)
         if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.todesktop.230313mzl4w4u92") {
-            NSWorkspace.shared.open([URL(fileURLWithPath: project.projectPath)], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+            NSWorkspace.shared.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
         }
     }
     
     public func openInVSCode(_ project: DevProjectRecord) {
-        guard FileManager.default.fileExists(atPath: project.projectPath) else { return }
+        let url = URL(fileURLWithPath: project.projectPath)
         if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.microsoft.VSCode") {
-            NSWorkspace.shared.open([URL(fileURLWithPath: project.projectPath)], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+            NSWorkspace.shared.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
         }
     }
     
     public func openInTerminal(_ project: DevProjectRecord) {
-        let path = project.projectPath
-        guard FileManager.default.fileExists(atPath: path) else { return }
-        let script = "tell application \"Terminal\" to do script \"cd \(path.replacingOccurrences(of: "\"", with: "\\\""))\""
+        let script = "tell application \"Terminal\" to do script \"cd \\\"\(project.projectPath.replacingOccurrences(of: "\"", with: "\\\""))\\\"\""
         if let appleScript = NSAppleScript(source: script) {
             var error: NSDictionary?
             appleScript.executeAndReturnError(&error)
         }
     }
     
-    public func inspectCustomPort() {
-        guard let port = Int(portCheckInput.trimmingCharacters(in: .whitespaces)) else {
-            return
-        }
-        portCheckStatus = .checking
-        
-        Task.detached(priority: .userInitiated) {
-            let scanner = PortScanner()
-            if let pid = scanner.inspectPort(port) {
-                // Find process name
-                let pNameTask = Process()
-                pNameTask.launchPath = "/bin/ps"
-                pNameTask.arguments = ["-p", "\(pid)", "-o", "comm="]
-                let pipe = Pipe()
-                pNameTask.standardOutput = pipe
-                try? pNameTask.run()
-                let data = pipe.fileHandleForReading.readDataToEndOfFile()
-                let pName = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "Process"
-                
-                await MainActor.run {
-                    self.portCheckStatus = .occupied(port: port, pid: pid, processName: pName, command: pName)
-                }
-            } else {
-                await MainActor.run {
-                    self.portCheckStatus = .free(port: port)
-                }
-            }
-        }
+    public func revealInFinder(_ project: DevProjectRecord) {
+        let url = URL(fileURLWithPath: project.projectPath)
+        NSWorkspace.shared.activateFileViewerSelecting([url])
     }
 }
