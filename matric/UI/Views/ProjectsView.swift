@@ -149,7 +149,7 @@ public struct ProjectsView: View {
             Spacer()
             
             HStack(spacing: 8) {
-                // Check Port Utility Button
+                // Check Port Utility Button (Feature 6.1)
                 Button {
                     projectsManager.portCheckInput = ""
                     projectsManager.portCheckStatus = .idle
@@ -772,106 +772,294 @@ public struct ProjectsView: View {
         }
     }
     
-    // MARK: - Port Checker Sheet
+    // MARK: - Feature 6: Port Conflict Watchdog Sheet
     private var portCheckerSheet: some View {
-        VStack(spacing: 18) {
+        VStack(spacing: 16) {
+            // Modal Title & Dismiss
             HStack {
                 HStack(spacing: 8) {
                     Image(systemName: "network.badge.shield.half.filled")
-                        .font(.system(size: 18))
+                        .font(.system(size: 20))
                         .foregroundStyle(.orange)
-                    Text("Port Availability Checker")
-                        .font(.system(size: 16, weight: .bold))
+                    Text("Port Conflict Watchdog")
+                        .font(.system(size: 17, weight: .bold))
                 }
                 Spacer()
                 Button {
                     projectsManager.isShowingPortChecker = false
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 16))
+                        .font(.system(size: 17))
                         .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
             }
             
-            Text("Enter a local TCP port to inspect which process is currently listening, or verify if it is completely available for your dev server.")
+            Text("Verify socket availability or diagnose conflicts on any TCP port before spinning up dev servers.")
                 .font(.system(size: 12))
                 .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
+            // Port Input & Primary Action (Feature 6.1)
             HStack(spacing: 10) {
-                TextField("Port number (e.g. 3000, 8080, 5432)", text: $projectsManager.portCheckInput)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(size: 13, design: .monospaced))
-                    .onSubmit {
-                        projectsManager.inspectCustomPort()
-                    }
-                
-                Button("Check Port") {
-                    projectsManager.inspectCustomPort()
+                HStack(spacing: 6) {
+                    Text(":")
+                        .font(.system(size: 14, weight: .bold, design: .monospaced))
+                        .foregroundStyle(.secondary)
+                    
+                    TextField("e.g. 3000, 5173, 8080, 5432", text: $projectsManager.portCheckInput)
+                        .textFieldStyle(.plain)
+                        .font(.system(size: 14, weight: .medium, design: .monospaced))
+                        .onSubmit {
+                            projectsManager.inspectCustomPort()
+                        }
                 }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 7)
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color(nsColor: .controlBackgroundColor).opacity(0.8))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .strokeBorder(Color.primary.opacity(0.1), lineWidth: 1)
+                        )
+                )
+                
+                Button {
+                    projectsManager.inspectCustomPort()
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "magnifyingglass")
+                        Text("Check Port")
+                    }
+                    .font(.system(size: 12, weight: .semibold))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .background(Color.orange)
+                    .foregroundStyle(.white)
+                    .cornerRadius(8)
+                }
+                .buttonStyle(.plain)
                 .keyboardShortcut(.defaultAction)
             }
             
+            // Common Port Quick Preset Chips
+            VStack(alignment: .leading, spacing: 6) {
+                Text("QUICK PRESETS:")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(.secondary)
+                
+                HStack(spacing: 6) {
+                    ForEach([3000, 5173, 8080, 8000, 5432, 6379, 27017, 3306], id: \.self) { p in
+                        Button {
+                            projectsManager.portCheckInput = "\(p)"
+                            projectsManager.inspectCustomPort()
+                        } label: {
+                            Text(":\(p)")
+                                .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                                .foregroundStyle(projectsManager.portCheckInput == "\(p)" ? Color.orange : Color.secondary)
+                                .padding(.horizontal, 7)
+                                .padding(.vertical, 3)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                        .fill(projectsManager.portCheckInput == "\(p)" ? Color.orange.opacity(0.18) : Color.primary.opacity(0.05))
+                                )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Divider()
+                .opacity(0.5)
+            
+            // Status Results (Feature 6.1 & 6.2)
             if let status = projectsManager.portCheckStatus {
                 switch status {
                 case .idle:
                     EmptyView()
                 case .checking:
-                    HStack(spacing: 8) {
+                    HStack(spacing: 10) {
                         ProgressView().controlSize(.small)
-                        Text("Inspecting socket...")
+                        Text("Scanning local socket & process table...")
                             .font(.system(size: 12))
                             .foregroundStyle(.secondary)
                     }
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 14)
                 case .free(let port):
-                    HStack(spacing: 12) {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 22))
-                            .foregroundStyle(.green)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Port \(port) is Available")
-                                .font(.system(size: 13, weight: .bold))
-                                .foregroundStyle(.green)
-                            Text("No local process is currently binding to this TCP port.")
-                                .font(.system(size: 11))
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                    }
-                    .padding(12)
-                    .background(RoundedRectangle(cornerRadius: 8).fill(Color.green.opacity(0.1)))
-                case .occupied(let port, let pid, let name, _):
                     VStack(alignment: .leading, spacing: 10) {
                         HStack(spacing: 12) {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                                .font(.system(size: 22))
-                                .foregroundStyle(.orange)
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 26))
+                                .foregroundStyle(.green)
+                            
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("Port \(port) is In Use")
-                                    .font(.system(size: 13, weight: .bold))
-                                    .foregroundStyle(.orange)
-                                Text("Occupied by **\(name)** (PID \(pid)).")
-                                    .font(.system(size: 11))
+                                Text("Port :\(port) is Free & Available")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundStyle(.green)
+                                Text("No local process is currently listening on TCP port \(port). Ready for server binding.")
+                                    .font(.system(size: 12))
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
-                            
-                            Button("Kill Process", role: .destructive) {
-                                kill(pid, SIGTERM)
-                                projectsManager.portCheckStatus = .free(port: port)
-                                projectsManager.refreshProjects()
-                            }
-                            .controlSize(.small)
                         }
                     }
-                    .padding(12)
-                    .background(RoundedRectangle(cornerRadius: 8).fill(Color.orange.opacity(0.1)))
+                    .padding(14)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color.green.opacity(0.08))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .strokeBorder(Color.green.opacity(0.2), lineWidth: 1)
+                            )
+                    )
+                case .occupied(let port, let pid, let name, let user, let cpu, let mem, let dir, _):
+                    VStack(alignment: .leading, spacing: 12) {
+                        // Banner Header
+                        HStack(spacing: 10) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.system(size: 20))
+                                .foregroundStyle(.orange)
+                            
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Port :\(port) is In Use")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundStyle(.orange)
+                                Text("Bound by **\(name)** (PID \(pid)).")
+                                    .font(.system(size: 12))
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                        }
+                        
+                        Divider().opacity(0.3)
+                        
+                        // Metadata Grid (Feature 6.2)
+                        Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 6) {
+                            GridRow {
+                                Text("Process:")
+                                    .font(.system(size: 11, weight: .semibold))
+                                    .foregroundStyle(.secondary)
+                                Text(name)
+                                    .font(.system(size: 11, weight: .bold, design: .monospaced))
+                            }
+                            GridRow {
+                                Text("PID / User:")
+                                    .font(.system(size: 11, weight: .semibold))
+                                    .foregroundStyle(.secondary)
+                                Text("\(pid) · \(user)")
+                                    .font(.system(size: 11, design: .monospaced))
+                            }
+                            GridRow {
+                                Text("CPU / RAM:")
+                                    .font(.system(size: 11, weight: .semibold))
+                                    .foregroundStyle(.secondary)
+                                Text("\(String(format: "%.1f%%", cpu)) CPU · \(ByteCountFormatter.string(fromByteCount: Int64(mem), countStyle: .memory))")
+                                    .font(.system(size: 11, design: .monospaced))
+                            }
+                            if let dir = dir {
+                                GridRow {
+                                    Text("Directory:")
+                                        .font(.system(size: 11, weight: .semibold))
+                                        .foregroundStyle(.secondary)
+                                    Button {
+                                        projectsManager.copyToClipboard(dir)
+                                        showToast("Copied path")
+                                    } label: {
+                                        HStack(spacing: 4) {
+                                            Text(dir)
+                                                .font(.system(size: 10, design: .monospaced))
+                                                .lineLimit(1)
+                                                .truncationMode(.middle)
+                                            Image(systemName: "doc.on.doc")
+                                                .font(.system(size: 8))
+                                        }
+                                        .foregroundStyle(.secondary)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .help("Click to copy directory path")
+                                }
+                            }
+                        }
+                        
+                        Divider().opacity(0.3)
+                        
+                        // Actions Strip: Open Browser, Copy URL, Graceful Stop, Force Kill (Feature 6.2)
+                        HStack(spacing: 8) {
+                            Button {
+                                projectsManager.openInBrowser(port: port)
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "arrow.up.forward.app")
+                                    Text("Open in Browser")
+                                }
+                                .font(.system(size: 11, weight: .medium))
+                                .padding(.horizontal, 9)
+                                .padding(.vertical, 5)
+                                .background(Capsule().fill(Color.cyan.opacity(0.12)))
+                                .foregroundStyle(Color.cyan)
+                            }
+                            .buttonStyle(.plain)
+                            
+                            Button {
+                                let urlStr = "http://localhost:\(port)"
+                                projectsManager.copyToClipboard(urlStr)
+                                showToast("Copied \(urlStr)")
+                            } label: {
+                                Image(systemName: "doc.on.doc")
+                                    .font(.system(size: 11))
+                                    .padding(6)
+                                    .background(Circle().fill(Color.primary.opacity(0.06)))
+                            }
+                            .buttonStyle(.plain)
+                            .help("Copy localhost URL")
+                            
+                            Spacer()
+                            
+                            // Graceful Stop (SIGTERM)
+                            Button {
+                                projectsManager.killProcessHoldingPort(pid: pid, port: port, force: false)
+                            } label: {
+                                Text("Release Port")
+                                    .font(.system(size: 11, weight: .semibold))
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .background(Capsule().fill(Color.orange.opacity(0.15)))
+                                    .foregroundStyle(Color.orange)
+                            }
+                            .buttonStyle(.plain)
+                            .help("Send SIGTERM to process")
+                            
+                            // Force Kill (SIGKILL)
+                            Button {
+                                projectsManager.killProcessHoldingPort(pid: pid, port: port, force: true)
+                            } label: {
+                                Text("Force Kill")
+                                    .font(.system(size: 11, weight: .bold))
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .background(Capsule().fill(Color.red.opacity(0.18)))
+                                    .foregroundStyle(Color.red)
+                            }
+                            .buttonStyle(.plain)
+                            .help("Send SIGKILL to process")
+                        }
+                    }
+                    .padding(14)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color.orange.opacity(0.08))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .strokeBorder(Color.orange.opacity(0.2), lineWidth: 1)
+                            )
+                    )
                 }
             }
         }
-        .padding(20)
-        .frame(width: 440)
+        .padding(22)
+        .frame(width: 480)
     }
     
     private func showToast(_ message: String) {
@@ -938,7 +1126,7 @@ public struct ProjectsView: View {
                         .padding(.horizontal, 14)
                         .padding(.vertical, 6)
                         .background(Capsule().fill(Color.orange.opacity(0.15)))
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(Color.orange)
                     }
                     .buttonStyle(.plain)
                 } else {
@@ -953,7 +1141,7 @@ public struct ProjectsView: View {
                         .padding(.horizontal, 14)
                         .padding(.vertical, 6)
                         .background(Capsule().fill(Color.orange.opacity(0.15)))
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(Color.orange)
                     }
                     .buttonStyle(.plain)
                     

@@ -27,7 +27,16 @@ public final class ProjectsManager {
         case idle
         case checking
         case free(port: Int)
-        case occupied(port: Int, pid: pid_t, processName: String, command: String)
+        case occupied(
+            port: Int,
+            pid: pid_t,
+            processName: String,
+            user: String,
+            cpuPercent: Double,
+            memoryBytes: UInt64,
+            workingDir: String?,
+            command: String
+        )
     }
     
     public var hasCursor: Bool {
@@ -298,9 +307,10 @@ public final class ProjectsManager {
         }
     }
     
-    // MARK: - Quick Port Inspection Logic
+    // MARK: - Feature 6: Port Inspector Utility Logic
     public func inspectCustomPort() {
-        if let port = Int(portCheckInput.trimmingCharacters(in: .whitespacesAndNewlines)) {
+        let clean = portCheckInput.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: ":", with: "")
+        if let port = Int(clean) {
             checkPortAvailability(port)
         }
     }
@@ -312,6 +322,7 @@ public final class ProjectsManager {
         Task.detached(priority: .userInitiated) {
             let scanner = PortScanner()
             let procScanner = ProcessScanner()
+            let cwdResolver = WorkingDirResolver()
             
             let portMap = scanner.scanListeningPorts()
             let processes = procScanner.scan()
@@ -329,11 +340,46 @@ public final class ProjectsManager {
                 if let pid = occupiedPID {
                     let proc = procDict[pid]
                     let name = proc?.name ?? "Unknown Process"
-                    self.portCheckStatus = .occupied(port: port, pid: pid, processName: name, command: name)
+                    let user = ProjectsManager.resolveProcessUser(pid: pid)
+                    let cwd = cwdResolver.resolveCWD(for: pid)
+                    let cpu = proc?.cpuPercent ?? 0.0
+                    let mem = proc?.memoryBytes ?? 0
+                    
+                    self.portCheckStatus = .occupied(
+                        port: port,
+                        pid: pid,
+                        processName: name,
+                        user: user,
+                        cpuPercent: cpu,
+                        memoryBytes: mem,
+                        workingDir: cwd,
+                        command: name
+                    )
                 } else {
                     self.portCheckStatus = .free(port: port)
                 }
             }
+        }
+    }
+    
+    private nonisolated static func resolveProcessUser(pid: pid_t) -> String {
+        var info = proc_bsdinfo()
+        let size = Int32(MemoryLayout<proc_bsdinfo>.size)
+        if proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &info, size) == size {
+            if let pw = getpwuid(info.pbi_uid) {
+                return String(cString: pw.pointee.pw_name)
+            }
+        }
+        return NSUserName()
+    }
+    
+    public func killProcessHoldingPort(pid: pid_t, port: Int, force: Bool = false) {
+        let signal = force ? SIGKILL : SIGTERM
+        kill(pid, signal)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            self.checkPortAvailability(port)
+            self.refreshProjects()
         }
     }
     
