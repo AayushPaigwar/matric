@@ -11,35 +11,31 @@ import Layout from '../layouts/Layout.astro';
         <a class="flex items-center gap-2.5 rounded-lg py-1 font-semibold text-gray-900 transition-opacity hover:opacity-80" href="/">
           <img src="/app-icon.png" alt="Matric App Icon" class="h-8 w-8 rounded-lg shadow-sm" />
           <span class="text-xl font-bold tracking-tight">Matric</span>
-          <span class="rounded-full bg-purple-50 border border-purple-200/60 px-2 py-0.5 text-xs font-semibold text-purple-700">v1.0 Beta</span>
+          <span class="rounded-full bg-purple-50 border border-purple-200/60 px-2 py-0.5 text-xs font-semibold text-purple-700">v1.0</span>
         </a>
 
         <!-- Nav Links -->
         <div class="hidden items-center gap-1 md:flex">
+          <a href="#screenshots" class="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900">
+            Screenshots
+          </a>
           <a href="#features" class="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900">
             Features
           </a>
-          <a href="#ports" class="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900">
-            Port Inspector
-          </a>
-          <a href="#time-travel" class="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900">
-            Time-Travel
-          </a>
           <a href="#workflow" class="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900">
-            Workflow
+            Shortcuts
           </a>
           <a href="#comparison" class="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900">
             Compare
           </a>
           <a href="https://github.com/pawanbhayde/matric" target="_blank" rel="noopener noreferrer" class="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-gray-900">
-            Docs & Source
+            GitHub
           </a>
         </div>
       </div>
 
       <!-- Action Buttons -->
       <div class="flex items-center gap-3">
-        <!-- GitHub Star Link -->
         <a 
           href="https://github.com/pawanbhayde/matric" 
           target="_blank" 
@@ -56,13 +52,13 @@ import Layout from '../layouts/Layout.astro';
   </header>
 
   <main class="flex-1">
-    <!-- Hero Section (Direct Tuple.app Visual Style) -->
-    <section class="relative overflow-hidden pt-12 pb-24 md:pt-16 md:pb-32 bg-gradient-to-b from-gray-50/70 via-white to-white">
+    <!-- Hero Section (Tuple / Linear Visual Style) -->
+    <section class="relative overflow-hidden pt-10 pb-20 md:pt-14 md:pb-28 bg-gradient-to-b from-gray-50/70 via-white to-white">
       <!-- Background subtle grid pattern -->
       <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-60 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
 
       <div class="mx-auto max-w-6xl px-4 sm:px-6">
-        <!-- Floating Announcement Pill (Tuple Pear Style) -->
+        <!-- Floating Announcement Pill -->
         <div class="flex justify-center">
           <a 
             href="https://github.com/pawanbhayde/matric" 
@@ -76,24 +72,24 @@ import Layout from '../layouts/Layout.astro';
           </a>
         </div>
 
-        <!-- Hero Headline & Subtitle -->
-        <div class="mt-8 text-center">
+        <!-- Punchy Headline & Short Subtitle -->
+        <div class="mt-6 text-center">
           <h1 class="mx-auto max-w-4xl text-4xl font-bold tracking-tight !leading-[1.12] text-gray-900 sm:text-5xl md:text-6xl lg:text-7xl">
             The macOS Activity Monitor <br class="hidden sm:inline" />
-            <span class="text-purple-600">reimagined for developers.</span>
+            <span class="text-purple-600">built for developers.</span>
           </h1>
 
-          <p class="mx-auto mt-6 max-w-2xl text-lg !leading-relaxed text-gray-500 sm:text-xl font-normal">
-            Built from the ground up with native Swift and AppKit. Replaces generic process lists with intelligent project grouping, live developer port monitoring (:3000, :8000), 1-click IDE jump, and 30-day historical time-travel.
+          <p class="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-gray-600">
+            Live developer port monitoring (:3000, :8000), 1-click conflict kill, dev cache cleanup, and Apple Silicon telemetry. Written in pure native Swift with &lt; 20 MB RAM.
           </p>
 
           <!-- CTA Buttons -->
-          <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a 
               href="https://github.com/pawanbhayde/matric" 
               target="_blank"
               rel="noopener noreferrer"
-              class="flex w-full items-center justify-center gap-3 rounded-xl bg-purple-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-purple-600/25 transition hover:bg-purple-700 hover:shadow-purple-600/35 active:scale-[0.98] sm:w-auto"
+              class="flex w-full items-center justify-center gap-3 rounded-xl bg-purple-600 px-7 py-3.5 text-sm sm:text-base font-semibold text-white shadow-lg shadow-purple-600/25 transition hover:bg-purple-700 hover:shadow-purple-600/35 active:scale-[0.98] sm:w-auto"
             >
               <svg class="h-5 w-5 fill-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -103,320 +99,112 @@ import Layout from '../layouts/Layout.astro';
             </a>
 
             <a 
-              href="https://github.com/pawanbhayde/matric#quick-start" 
+              href="https://github.com/pawanbhayde/matric#readme" 
               target="_blank"
               rel="noopener noreferrer"
-              class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-4 text-base font-medium text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 active:scale-[0.98] sm:w-auto"
+              class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3.5 text-sm sm:text-base font-medium text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 active:scale-[0.98] sm:w-auto"
             >
               <span>Explore Documentation</span>
               <span class="text-gray-400">→</span>
             </a>
           </div>
 
-          <!-- Trust Badges -->
+          <!-- Minimal Trust Badges -->
           <div class="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-medium text-gray-500">
             <span class="flex items-center gap-1.5">
               <svg class="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              100% Free & Open Source (MIT)
+              100% Free (MIT License)
             </span>
             <span class="flex items-center gap-1.5">
               <svg class="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              Full Source Code on GitHub
+              Native Swift · Zero Electron
             </span>
             <span class="flex items-center gap-1.5">
               <svg class="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-              Zero Telemetry · 100% Offline & Private
+              Air-Gapped & 100% Private
             </span>
           </div>
         </div>
 
-        <!-- Realistic 3D Perspective macOS Window Mockup (Tuple Hero Presentation Style) -->
-        <div class="relative mt-14 sm:mt-20">
+        <!-- Interactive Real App Screenshot Showcase -->
+        <div id="screenshots" class="relative mt-12 sm:mt-16">
           <!-- Background Glow -->
           <div class="absolute -top-12 left-1/2 -z-10 h-72 w-3/4 -translate-x-1/2 rounded-full bg-purple-200/40 blur-3xl"></div>
 
-          <!-- macOS Window Container -->
-          <div class="overflow-hidden rounded-2xl border border-gray-200/90 bg-white shadow-[0_25px_70px_-15px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.04)]">
-            <!-- Window Titlebar -->
-            <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50/90 px-4 py-3 backdrop-blur-sm">
-              <div class="flex items-center gap-2">
+          <!-- macOS Window Container with Real Screenshots -->
+          <div class="overflow-hidden rounded-2xl border border-gray-200/90 bg-gray-900 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.18),0_0_0_1px_rgba(0,0,0,0.06)]">
+            <!-- Window Titlebar with Interactive Tabs -->
+            <div class="flex flex-wrap items-center justify-between border-b border-gray-800 bg-gray-950/90 px-4 py-3 backdrop-blur-md gap-3">
+              <!-- Traffic lights -->
+              <div class="flex items-center gap-3">
                 <div class="flex gap-1.5">
                   <div class="h-3 w-3 rounded-full bg-[#ff5f57] border border-[#e0443e]"></div>
                   <div class="h-3 w-3 rounded-full bg-[#febc2e] border border-[#d89e24]"></div>
                   <div class="h-3 w-3 rounded-full bg-[#28c840] border border-[#1aab29]"></div>
                 </div>
-                <div class="ml-4 hidden sm:flex items-center gap-2">
-                  <span class="text-xs font-semibold text-gray-700">Matric</span>
-                  <span class="rounded bg-gray-200/70 px-1.5 py-0.5 text-[10px] font-medium text-gray-600">Dev Monitor</span>
-                </div>
+                <span class="text-xs font-semibold text-gray-300">Matric macOS App</span>
               </div>
 
-              <!-- View Switcher Tabs -->
-              <div class="flex items-center rounded-lg bg-gray-200/80 p-0.5 text-xs font-medium text-gray-600">
+              <!-- Interactive Screen Tabs -->
+              <div class="flex items-center gap-1 rounded-xl bg-gray-900 p-1 text-xs font-medium">
                 <button 
-                  id="viewCardsBtn" 
-                  class="flex items-center gap-1.5 rounded-md bg-white px-3 py-1 font-semibold text-gray-900 shadow-sm transition"
+                  data-shot="/screenshots/hero-projects.png"
+                  data-label="Developer Projects & Listening Ports"
+                  class="shot-tab flex items-center gap-1.5 rounded-lg bg-purple-600 px-3 py-1 font-semibold text-white shadow-sm transition"
                 >
-                  <svg class="h-3.5 w-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                  <span>Rich Cards</span>
+                  <span>⚡ Developer Projects</span>
                 </button>
                 <button 
-                  id="viewTableBtn" 
-                  class="flex items-center gap-1.5 rounded-md px-3 py-1 hover:text-gray-900 transition"
+                  data-shot="/screenshots/hero-overview.png"
+                  data-label="Real-Time Apple Silicon Telemetry"
+                  class="shot-tab flex items-center gap-1.5 rounded-lg px-3 py-1 text-gray-400 hover:text-white transition"
                 >
-                  <svg class="h-3.5 w-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-                  <span>Ports Table</span>
+                  <span>📊 System Overview</span>
+                </button>
+                <button 
+                  data-shot="/screenshots/cleanup.png"
+                  data-label="Build Artifacts & Dev Cache Cleanup"
+                  class="shot-tab flex items-center gap-1.5 rounded-lg px-3 py-1 text-gray-400 hover:text-white transition"
+                >
+                  <span>🧹 System Cleanup</span>
+                </button>
+                <button 
+                  data-shot="/screenshots/processor.png"
+                  data-label="Apple M4 10-Core Multi-Thread Load"
+                  class="shot-tab hidden sm:flex items-center gap-1.5 rounded-lg px-3 py-1 text-gray-400 hover:text-white transition"
+                >
+                  <span>⚡ 10-Core CPU</span>
                 </button>
               </div>
 
-              <!-- Search Bar & Filters -->
-              <div class="hidden md:flex items-center gap-2">
-                <div class="relative">
-                  <input 
-                    type="text" 
-                    placeholder="Filter ports, apps, git... (⌘K)" 
-                    readonly
-                    class="h-7 w-60 rounded-md border border-gray-200 bg-white px-2.5 text-xs text-gray-700 shadow-inner focus:outline-none"
-                  />
-                  <span class="absolute right-2 top-1.5 text-[10px] text-gray-400 font-mono">⌘K</span>
-                </div>
+              <!-- View Live Indicator -->
+              <div class="hidden md:flex items-center gap-2 text-[11px] font-mono text-gray-400">
+                <span class="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span id="currentShotLabel">Developer Projects & Listening Ports</span>
               </div>
             </div>
 
-            <!-- KPI Summary Bar (Feature 1 implementation preview) -->
-            <div class="grid grid-cols-2 sm:grid-cols-5 divide-x divide-y sm:divide-y-0 divide-gray-100 border-b border-gray-100 bg-gray-50/50 text-xs">
-              <div class="p-3 pl-4">
-                <div class="flex items-center justify-between text-gray-400">
-                  <span class="font-medium text-gray-500">CPU Usage</span>
-                  <span class="font-semibold text-purple-600">14.2%</span>
-                </div>
-                <div class="mt-1 flex items-baseline gap-1">
-                  <span class="font-bold text-gray-900 text-sm">16 Cores</span>
-                  <span class="text-[11px] text-gray-500">Apple M3 Max</span>
-                </div>
-              </div>
-
-              <div class="p-3">
-                <div class="flex items-center justify-between text-gray-400">
-                  <span class="font-medium text-gray-500">Memory</span>
-                  <span class="font-semibold text-blue-600">18.4 GB</span>
-                </div>
-                <div class="mt-1 flex items-baseline gap-1">
-                  <span class="font-bold text-gray-900 text-sm">32 GB Total</span>
-                  <span class="text-[11px] text-green-600 font-medium">Pressure: Normal</span>
-                </div>
-              </div>
-
-              <div class="p-3">
-                <div class="flex items-center justify-between text-gray-400">
-                  <span class="font-medium text-gray-500">Listening Ports</span>
-                  <span class="rounded bg-green-100 px-1.5 py-0.2 font-semibold text-green-700 text-[10px]">8 Active</span>
-                </div>
-                <div class="mt-1 font-mono text-[11px] text-gray-700 font-semibold truncate">:3000, :8000, :5432, :5173</div>
-              </div>
-
-              <div class="p-3">
-                <div class="flex items-center justify-between text-gray-400">
-                  <span class="font-medium text-gray-500">Network I/O</span>
-                  <span class="text-gray-400 text-[10px]">Wi-Fi (en0)</span>
-                </div>
-                <div class="mt-1 font-mono text-[11px] text-gray-800">
-                  <span class="text-green-600 font-medium">↓ 4.2 MB/s</span> · <span class="text-blue-600 font-medium">↑ 840 KB/s</span>
-                </div>
-              </div>
-
-              <div class="p-3 col-span-2 sm:col-span-1">
-                <div class="flex items-center justify-between text-gray-400">
-                  <span class="font-medium text-gray-500">Disk Free</span>
-                  <span class="text-gray-500 text-[10px]">Macintosh HD</span>
-                </div>
-                <div class="mt-1 flex items-baseline gap-1">
-                  <span class="font-bold text-gray-900 text-sm">412 GB</span>
-                  <span class="text-[11px] text-gray-500">of 1 TB</span>
-                </div>
-              </div>
+            <!-- Crisp Retina Image Display Frame -->
+            <div class="relative bg-black flex items-center justify-center p-1 sm:p-2">
+              <img 
+                id="mainScreenshot" 
+                src="/screenshots/hero-projects.png" 
+                alt="Matric Developer Projects View Screenshot"
+                class="w-full h-auto rounded-lg shadow-2xl transition-opacity duration-300"
+                loading="eager"
+              />
             </div>
 
-            <!-- Main Window Body -->
-            <div class="p-4 sm:p-6 bg-white min-h-[380px]">
-              <!-- View 1: Rich Cards Mode (Default) -->
-              <div id="cardsView" class="space-y-3">
-                <!-- Card 1: Next.js Frontend Project -->
-                <div class="rounded-xl border border-gray-200/90 bg-white p-4 shadow-sm transition hover:border-purple-300 hover:shadow-md">
-                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div class="flex items-center gap-3">
-                      <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-black text-white font-bold text-sm shadow-sm">
-                        N
-                      </div>
-                      <div>
-                        <div class="flex items-center gap-2">
-                          <h3 class="font-semibold text-gray-900 text-sm">Next.js E-Commerce Frontend</h3>
-                          <span class="rounded bg-green-50 border border-green-200 px-2 py-0.5 font-mono text-xs font-bold text-green-700">:3000</span>
-                          <span class="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[11px] text-gray-500">PID 48291</span>
-                        </div>
-                        <div class="mt-0.5 flex flex-wrap items-center gap-x-3 text-xs text-gray-500">
-                          <span class="flex items-center gap-1 font-mono text-gray-600">📁 ~/Developer/storefront</span>
-                          <span class="flex items-center gap-1 font-mono text-purple-700 bg-purple-50 px-1.5 py-0.2 rounded"> feature/cart-checkout</span>
-                          <span class="text-gray-400">CPU 3.8% · 214 MB RAM · Up 3h 12m</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- 1-Click Action Buttons -->
-                    <div class="flex items-center gap-1.5 self-end sm:self-center">
-                      <a href="http://localhost:3000" target="_blank" class="rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 hover:bg-gray-100 transition">Open :3000 ↗</a>
-                      <button class="rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 hover:bg-gray-100 transition">Cursor</button>
-                      <button class="rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 hover:bg-gray-100 transition">VS Code</button>
-                      <button onclick="this.closest('.rounded-xl').classList.add('opacity-30', 'line-through'); setTimeout(() => this.innerText = 'Killed', 300)" class="rounded-lg bg-red-50 border border-red-200 px-2.5 py-1 text-xs font-semibold text-red-600 hover:bg-red-100 transition">Kill Port</button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Card 2: Python FastAPI Backend -->
-                <div class="rounded-xl border border-gray-200/90 bg-white p-4 shadow-sm transition hover:border-purple-300 hover:shadow-md">
-                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div class="flex items-center gap-3">
-                      <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-600 text-white font-bold text-sm shadow-sm">
-                        ⚡
-                      </div>
-                      <div>
-                        <div class="flex items-center gap-2">
-                          <h3 class="font-semibold text-gray-900 text-sm">FastAPI Order Processing API</h3>
-                          <span class="rounded bg-green-50 border border-green-200 px-2 py-0.5 font-mono text-xs font-bold text-green-700">:8000</span>
-                          <span class="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[11px] text-gray-500">PID 51204</span>
-                        </div>
-                        <div class="mt-0.5 flex flex-wrap items-center gap-x-3 text-xs text-gray-500">
-                          <span class="flex items-center gap-1 font-mono text-gray-600">📁 ~/Developer/services/orders-api</span>
-                          <span class="flex items-center gap-1 font-mono text-purple-700 bg-purple-50 px-1.5 py-0.2 rounded"> main</span>
-                          <span class="text-gray-400">CPU 1.2% · 88 MB RAM · Healthy</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="flex items-center gap-1.5 self-end sm:self-center">
-                      <a href="http://localhost:8000/docs" target="_blank" class="rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 hover:bg-gray-100 transition">Swagger ↗</a>
-                      <button class="rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 hover:bg-gray-100 transition">Cursor</button>
-                      <button class="rounded-lg bg-red-50 border border-red-200 px-2.5 py-1 text-xs font-semibold text-red-600 hover:bg-red-100 transition">Kill Port</button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Card 3: Intelligent Grouping Row (Collapsed Chrome Helpers) -->
-                <div class="rounded-xl border border-gray-200/90 bg-gray-50/70 p-3.5 shadow-sm">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                      <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500 text-white font-bold text-xs shadow-sm">
-                        🌐
-                      </div>
-                      <div>
-                        <div class="flex items-center gap-2">
-                          <span class="font-semibold text-gray-800 text-xs">Google Chrome</span>
-                          <span class="rounded-full bg-blue-100 px-2 py-0.2 font-mono text-[10px] font-semibold text-blue-700">47 helper threads consolidated</span>
-                        </div>
-                        <p class="text-[11px] text-gray-500 mt-0.5">
-                          Total Memory: 1.48 GB · Main PID: 928 · Renderer and GPU helper processes grouped automatically
-                        </p>
-                      </div>
-                    </div>
-                    <span class="text-xs text-gray-400 font-mono">Collapsed ▾</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- View 2: High-Density Ports Table (Initially Hidden, Toggled by JS) -->
-              <div id="tableView" class="hidden overflow-x-auto">
-                <table class="w-full text-left text-xs font-mono">
-                  <thead>
-                    <tr class="border-b border-gray-200 text-gray-400 uppercase tracking-wider text-[10px]">
-                      <th class="py-2 px-3">Port</th>
-                      <th class="py-2 px-3">Protocol</th>
-                      <th class="py-2 px-3">PID</th>
-                      <th class="py-2 px-3">Process / Project</th>
-                      <th class="py-2 px-3">Git Branch</th>
-                      <th class="py-2 px-3">CPU</th>
-                      <th class="py-2 px-3">RAM</th>
-                      <th class="py-2 px-3 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-100 text-gray-700">
-                    <tr class="hover:bg-gray-50">
-                      <td class="py-2.5 px-3 font-bold text-green-600">:3000</td>
-                      <td class="py-2.5 px-3 text-gray-500">TCP (LISTEN)</td>
-                      <td class="py-2.5 px-3 font-semibold">48291</td>
-                      <td class="py-2.5 px-3 font-sans font-medium text-gray-900">node ~/storefront</td>
-                      <td class="py-2.5 px-3 text-purple-700">feature/cart-checkout</td>
-                      <td class="py-2.5 px-3">3.8%</td>
-                      <td class="py-2.5 px-3">214 MB</td>
-                      <td class="py-2.5 px-3 text-right">
-                        <button class="text-red-600 hover:text-red-800 font-semibold">Kill</button>
-                      </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                      <td class="py-2.5 px-3 font-bold text-green-600">:8000</td>
-                      <td class="py-2.5 px-3 text-gray-500">TCP (LISTEN)</td>
-                      <td class="py-2.5 px-3 font-semibold">51204</td>
-                      <td class="py-2.5 px-3 font-sans font-medium text-gray-900">python uvicorn main:app</td>
-                      <td class="py-2.5 px-3 text-purple-700">main</td>
-                      <td class="py-2.5 px-3">1.2%</td>
-                      <td class="py-2.5 px-3">88 MB</td>
-                      <td class="py-2.5 px-3 text-right">
-                        <button class="text-red-600 hover:text-red-800 font-semibold">Kill</button>
-                      </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                      <td class="py-2.5 px-3 font-bold text-green-600">:5432</td>
-                      <td class="py-2.5 px-3 text-gray-500">TCP (LISTEN)</td>
-                      <td class="py-2.5 px-3 font-semibold">1294</td>
-                      <td class="py-2.5 px-3 font-sans font-medium text-gray-900">postgres: docker container</td>
-                      <td class="py-2.5 px-3 text-gray-400">—</td>
-                      <td class="py-2.5 px-3">0.4%</td>
-                      <td class="py-2.5 px-3">340 MB</td>
-                      <td class="py-2.5 px-3 text-right">
-                        <button class="text-red-600 hover:text-red-800 font-semibold">Kill</button>
-                      </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                      <td class="py-2.5 px-3 font-bold text-green-600">:5173</td>
-                      <td class="py-2.5 px-3 text-gray-500">TCP (LISTEN)</td>
-                      <td class="py-2.5 px-3 font-semibold">62391</td>
-                      <td class="py-2.5 px-3 font-sans font-medium text-gray-900">vite dev (admin-portal)</td>
-                      <td class="py-2.5 px-3 text-purple-700">dev</td>
-                      <td class="py-2.5 px-3">0.6%</td>
-                      <td class="py-2.5 px-3">142 MB</td>
-                      <td class="py-2.5 px-3 text-right">
-                        <button class="text-red-600 hover:text-red-800 font-semibold">Kill</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Bottom Time-Travel Scrubber Bar (Feature 3 integration) -->
-            <div class="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-4 py-2.5 text-xs text-gray-600">
-              <div class="flex items-center gap-3">
-                <span class="flex items-center gap-1.5 font-semibold text-green-700">
-                  <span class="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-                  LIVE TELEMETRY
-                </span>
-                <span class="hidden sm:inline text-gray-300">|</span>
-                <span class="hidden sm:inline text-gray-500 font-mono text-[11px]">Snapshot frequency: 1.0s · SQLite ledger active</span>
-              </div>
-
-              <!-- Time Travel Scrubber controls -->
+            <!-- Interactive Caption Bar -->
+            <div class="flex flex-col sm:flex-row items-center justify-between border-t border-gray-800 bg-gray-950 px-4 py-2.5 text-xs text-gray-400 gap-2 font-mono">
               <div class="flex items-center gap-2">
-                <button class="rounded border border-gray-200 bg-white px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                  -10m
-                </button>
-                <button class="rounded border border-gray-200 bg-white px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                  -1h
-                </button>
-                <button class="rounded border border-gray-200 bg-white px-2 py-0.5 text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                  -24h
-                </button>
-                <span class="rounded bg-purple-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-purple-700">
-                  30-Day Time Travel
-                </span>
+                <span class="text-purple-400 font-semibold">Live Capture:</span>
+                <span>Active dev servers, listening sockets (:3000, :8000), Git branch context</span>
+              </div>
+              <div class="flex items-center gap-3 text-[11px] text-gray-500">
+                <span>Native Swift 6.0</span>
+                <span>·</span>
+                <span>Apple Silicon M1-M4 Optimized</span>
               </div>
             </div>
           </div>
@@ -424,341 +212,221 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
-    <!-- Trusted By / Stack Logos Section (Tuple Style) -->
-    <section class="border-y border-gray-100 bg-gray-50/60 py-12">
+    <!-- Visual 4-Pillar Feature Showcase (Real Screenshots, Minimal Text) -->
+    <section id="features" class="py-20 sm:py-28 bg-white border-t border-gray-100">
       <div class="mx-auto max-w-6xl px-4 sm:px-6">
-        <p class="text-center font-mono text-xs font-semibold uppercase tracking-widest text-gray-400">
-          Built for engineers running modern local runtimes
-        </p>
-        <div class="mt-6 flex flex-wrap items-center justify-center gap-8 md:gap-14 font-mono font-medium text-sm text-gray-400">
-          <span class="hover:text-gray-800 transition">Next.js</span>
-          <span class="hover:text-gray-800 transition">Node.js</span>
-          <span class="hover:text-gray-800 transition">Python & FastAPI</span>
-          <span class="hover:text-gray-800 transition">Docker & Containers</span>
-          <span class="hover:text-gray-800 transition">Rust & Cargo</span>
-          <span class="hover:text-gray-800 transition">Go & Gin</span>
-          <span class="hover:text-gray-800 transition">PostgreSQL</span>
-          <span class="hover:text-gray-800 transition">Vite & Astro</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Core Features Grid (Tuple Clean 3-Card & 2-Card Layout) -->
-    <section id="features" class="py-24 sm:py-32 bg-white">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6">
-        <div class="mx-auto max-w-3xl text-center">
+        <div class="text-center max-w-2xl mx-auto">
           <h2 class="font-mono text-xs font-semibold uppercase tracking-widest text-purple-600 sm:text-sm">
-            Developer Superpowers
+            Core Capabilities
           </h2>
-          <p class="mt-3 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
-            Why Activity Monitor falls short for developers
-          </p>
-          <p class="mt-4 text-lg text-gray-500">
-            Activity Monitor was designed in 2001 for casual Mac users. Matric was designed for software engineers managing complex local microservices, listening ports, and multi-repo workspaces.
+          <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Everything developers need. Nothing they don't.
           </p>
         </div>
 
-        <!-- Tuple Signature Feature Grid -->
-        <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <!-- Feature Card 1: Port Inspector -->
-          <div id="ports" class="flex flex-col justify-between rounded-3xl border border-gray-100 bg-gray-50/70 p-8 shadow-sm transition hover:shadow-md">
-            <div>
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-600 font-bold text-xl shadow-inner">
-                ⚡
-              </div>
-              <h3 class="mt-6 text-xl font-bold text-gray-900">
-                Port Inspector & Conflict Killer
-              </h3>
-              <p class="mt-3 text-sm leading-relaxed text-gray-600">
-                Never get stopped by <code class="rounded bg-white px-1.5 py-0.5 font-mono text-xs text-red-600 border border-gray-200">EADDRINUSE: port 3000</code> again. See the exact PID, parent command, and Git branch squatting on your port, and kill it with 1 click.
-              </p>
-            </div>
-            <div class="mt-8 rounded-xl border border-gray-200 bg-white p-3 font-mono text-xs shadow-sm">
-              <div class="flex items-center justify-between text-gray-500 pb-2 border-b border-gray-100">
-                <span>PORT 3000 CONFLICT</span>
-                <span class="text-red-500 font-semibold">Squatted</span>
-              </div>
-              <div class="mt-2 flex items-center justify-between">
-                <span class="text-gray-800">zombie-node (PID 48291)</span>
-                <button class="rounded bg-red-600 px-2 py-0.5 text-[11px] font-semibold text-white shadow-sm">Kill</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature Card 2: Intelligent App Grouping -->
-          <div class="flex flex-col justify-between rounded-3xl border border-gray-100 bg-gray-50/70 p-8 shadow-sm transition hover:shadow-md">
-            <div>
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-100 text-green-600 font-bold text-xl shadow-inner">
-                🗂️
-              </div>
-              <h3 class="mt-6 text-xl font-bold text-gray-900">
-                Zero "Helper" Process Spam
-              </h3>
-              <p class="mt-3 text-sm leading-relaxed text-gray-600">
-                Chrome, Slack, and Electron flood your process table with 50 useless "Helper (Renderer)" rows. Matric collapses child threads into their parent application, showing true consolidated CPU and memory footprints.
-              </p>
-            </div>
-            <div class="mt-8 rounded-xl border border-gray-200 bg-white p-3 font-mono text-xs shadow-sm">
-              <div class="flex items-center justify-between">
-                <span class="font-semibold text-gray-900">Google Chrome</span>
-                <span class="text-green-600 font-bold">1.42 GB Total</span>
-              </div>
-              <div class="mt-1 text-[11px] text-gray-400">
-                47 child helper processes collapsed
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature Card 3: 30-Day Historical Time Travel -->
-          <div id="time-travel" class="flex flex-col justify-between rounded-3xl border border-gray-100 bg-gray-50/70 p-8 shadow-sm transition hover:shadow-md">
-            <div>
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600 font-bold text-xl shadow-inner">
-                ⏪
-              </div>
-              <h3 class="mt-6 text-xl font-bold text-gray-900">
-                30-Day Historical Time-Travel
-              </h3>
-              <p class="mt-3 text-sm leading-relaxed text-gray-600">
-                Did your dev container crash while you were out getting coffee? Scrub backward in time through high-resolution SQLite snapshots to inspect the exact second memory spiked or a process quit.
-              </p>
-            </div>
-            <div class="mt-8 rounded-xl border border-gray-200 bg-white p-3 font-mono text-xs shadow-sm">
-              <div class="flex items-center justify-between text-purple-700 font-semibold">
-                <span>Today 14:28:10</span>
-                <span>OOM Crash detected</span>
-              </div>
-              <div class="mt-1.5 h-1.5 w-full rounded-full bg-gray-100 overflow-hidden">
-                <div class="h-full w-4/5 bg-purple-600 rounded-full"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Feature Card 4: 1-Click IDE Jump -->
-          <div class="flex flex-col justify-between rounded-3xl border border-gray-100 bg-gray-50/70 p-8 shadow-sm transition hover:shadow-md">
-            <div>
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-600 font-bold text-xl shadow-inner">
-                🚀
-              </div>
-              <h3 class="mt-6 text-xl font-bold text-gray-900">
-                1-Click Jump to Editor
-              </h3>
-              <p class="mt-3 text-sm leading-relaxed text-gray-600">
-                Matric inspects the working directory of each running process and finds its Git repo root. One click jumps directly into Cursor, VS Code, Zed, or Terminal right at the project root.
-              </p>
-            </div>
-            <div class="mt-8 flex gap-2">
-              <span class="rounded-lg bg-white border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-sm">Cursor</span>
-              <span class="rounded-lg bg-white border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-sm">VS Code</span>
-              <span class="rounded-lg bg-white border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-sm">Terminal</span>
-            </div>
-          </div>
-
-          <!-- Feature Card 5: Native Swift & AppKit -->
-          <div class="flex flex-col justify-between rounded-3xl border border-gray-100 bg-gray-50/70 p-8 shadow-sm transition hover:shadow-md">
-            <div>
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 font-bold text-xl shadow-inner">
-                ⚡
-              </div>
-              <h3 class="mt-6 text-xl font-bold text-gray-900">
-                Native Swift & Zero Electron
-              </h3>
-              <p class="mt-3 text-sm leading-relaxed text-gray-600">
-                A system monitor should never slow down your system. Matric is written in 100% pure native Swift and AppKit. It launches instantly, uses under 25 MB of RAM, and sips negligible battery.
-              </p>
-            </div>
-            <div class="mt-8 flex items-baseline gap-2 font-mono text-xs">
-              <span class="text-2xl font-bold text-gray-900">&lt; 20 MB</span>
-              <span class="text-gray-500">Idle RAM Footprint</span>
-            </div>
-          </div>
-
-          <!-- Feature Card 6: 100% Local & Private -->
-          <div class="flex flex-col justify-between rounded-3xl border border-gray-100 bg-gray-50/70 p-8 shadow-sm transition hover:shadow-md">
-            <div>
-              <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 font-bold text-xl shadow-inner">
-                🔒
-              </div>
-              <h3 class="mt-6 text-xl font-bold text-gray-900">
-                100% Local & Private
-              </h3>
-              <p class="mt-3 text-sm leading-relaxed text-gray-600">
-                No user accounts, no analytics SDKs, no cloud servers, and no background tracking. Your process names, listening ports, and repo directories never leave your local Mac.
-              </p>
-            </div>
-            <div class="mt-8 flex items-center gap-2 font-mono text-xs text-green-700 font-semibold">
-              <span class="h-2 w-2 rounded-full bg-green-500"></span>
-              Air-Gapped & Local SQLite Storage
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tuple Signature Dark "Workflow" Section (Directly mirroring index.html lines 1640-2050) -->
-    <section id="workflow" class="bg-gray-950 px-4 py-24 sm:py-32 text-white sm:px-8">
-      <div class="mx-auto max-w-6xl">
-        <div class="mx-auto max-w-3xl text-center">
-          <h2 class="font-mono text-xs font-semibold uppercase tracking-widest text-green-400 sm:text-sm">
-            Developer Workflow
-          </h2>
-          <p class="mt-3 text-3xl font-bold sm:text-4xl md:text-5xl">
-            Built for developers, by developers
-          </p>
-          <p class="mt-4 text-lg text-gray-400">
-            Keep your hands on the keyboard and stay in flow with instant global hotkeys and command palettes.
-          </p>
-        </div>
-
-        <!-- 3D Tactile Keyboard Shortcuts Demo (Direct Tuple Inspiration) -->
-        <div class="mt-16 overflow-hidden rounded-3xl border border-gray-800 bg-gray-900/90 p-8 sm:p-12 shadow-2xl">
-          <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 items-center">
-            <div>
-              <span class="rounded-full bg-green-500/10 border border-green-500/30 px-3 py-1 font-mono text-xs font-semibold text-green-400">
-                Global Hotkeys
+        <!-- 4 Visual Cards Grid -->
+        <div class="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Card 1: Port Inspector -->
+          <div class="flex flex-col rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
+            <div class="flex items-center justify-between">
+              <span class="rounded-full bg-purple-100 px-3 py-1 font-mono text-xs font-semibold text-purple-700">
+                Port Intelligence
               </span>
-              <h3 class="mt-4 text-2xl font-bold text-white sm:text-3xl">
-                Stay in flow without touching your mouse
-              </h3>
-              <p class="mt-4 text-gray-400 leading-relaxed text-base">
-                When a rogue dev process consumes 100% of your CPU or locks port 3000, trigger Matric instantly with global shortcuts, search the port, and kill it in less than a second.
-              </p>
-
-              <div class="mt-8 space-y-4">
-                <div class="flex items-center gap-4 rounded-xl border border-gray-800 bg-gray-950 p-3.5">
-                  <div class="flex items-center gap-1 font-mono font-semibold text-sm">
-                    <span class="rounded border border-gray-700 bg-gray-800 px-2 py-1 text-gray-200 shadow">⌘</span>
-                    <span class="rounded border border-gray-700 bg-gray-800 px-2 py-1 text-gray-200 shadow">K</span>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-white text-sm">Fuzzy Port & Process Filter</h4>
-                    <p class="text-xs text-gray-400">Jump directly to any port (:3000, :8000) or branch</p>
-                  </div>
-                </div>
-
-                <div class="flex items-center gap-4 rounded-xl border border-gray-800 bg-gray-950 p-3.5">
-                  <div class="flex items-center gap-1 font-mono font-semibold text-sm">
-                    <span class="rounded border border-gray-700 bg-gray-800 px-2 py-1 text-gray-200 shadow">⌘</span>
-                    <span class="rounded border border-gray-700 bg-gray-800 px-2 py-1 text-gray-200 shadow">.</span>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-white text-sm">Instant Kill Selected Process</h4>
-                    <p class="text-xs text-gray-400">Terminates the process and immediately releases its port</p>
-                  </div>
-                </div>
-
-                <div class="flex items-center gap-4 rounded-xl border border-gray-800 bg-gray-950 p-3.5">
-                  <div class="flex items-center gap-1 font-mono font-semibold text-sm">
-                    <span class="rounded border border-gray-700 bg-gray-800 px-2 py-1 text-gray-200 shadow">⌘</span>
-                    <span class="rounded border border-gray-700 bg-gray-800 px-2 py-1 text-gray-200 shadow">D</span>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold text-white text-sm">Toggle Cards vs High-Density Table</h4>
-                    <p class="text-xs text-gray-400">Switch between visual overview and dense sysadmin mode</p>
-                  </div>
-                </div>
-              </div>
+              <span class="font-mono text-xs text-gray-400">:3000, :8000, :5432</span>
             </div>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">
+              Instant Port & Conflict Killer
+            </h3>
+            <p class="mt-2 text-sm text-gray-600">
+              Never get blocked by <code class="rounded bg-white px-1.5 py-0.5 font-mono text-xs text-red-600 border border-gray-200">EADDRINUSE</code>. Identifies the PID, process name, and Git branch squatting on your port, and kills it with one click.
+            </p>
+            <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+              <img 
+                src="/screenshots/hero-projects.png" 
+                alt="Matric Port Inspector Screenshot" 
+                class="w-full h-48 object-cover object-top hover:scale-[1.02] transition duration-300"
+              />
+            </div>
+          </div>
 
-            <!-- Interactive Tactile Keypad Graphic -->
-            <div class="flex flex-col items-center justify-center rounded-2xl border border-gray-800 bg-gray-950 p-8 text-center">
-              <div class="flex items-center justify-center gap-3">
-                <div class="flex h-16 w-16 items-center justify-center rounded-xl border-b-[5px] border-gray-700 bg-gray-800 text-2xl font-bold text-white shadow-lg">
-                  ⌘
-                </div>
-                <div class="flex h-16 w-16 items-center justify-center rounded-xl border-b-[5px] border-gray-700 bg-gray-800 text-2xl font-bold text-white shadow-lg">
-                  ⇧
-                </div>
-                <div class="flex h-16 w-16 items-center justify-center rounded-xl border-b-[5px] border-gray-700 bg-gray-800 text-2xl font-bold text-purple-400 shadow-lg">
-                  M
-                </div>
-              </div>
-              <p class="mt-6 font-mono text-sm text-gray-300">
-                <span class="text-green-400 font-semibold">Global Summon:</span> Bring Matric to the foreground from any app
-              </p>
-              <div class="mt-6 rounded-lg bg-gray-900 border border-gray-800 p-3 text-left font-mono text-xs text-gray-400 w-full max-w-sm">
-                <span class="text-gray-500"># Native IPC Daemon Running</span><br/>
-                <span class="text-green-400">✔</span> Matric listener active on en0<br/>
-                <span class="text-purple-400">✔</span> Git repo cache warmed in 12ms
-              </div>
+          <!-- Card 2: Disk & Cache Cleanup -->
+          <div class="flex flex-col rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
+            <div class="flex items-center justify-between">
+              <span class="rounded-full bg-emerald-100 px-3 py-1 font-mono text-xs font-semibold text-emerald-700">
+                Disk Reclaim
+              </span>
+              <span class="font-mono text-xs text-emerald-600 font-semibold">37+ GB Cleanable</span>
+            </div>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">
+              Developer Cache & Artifact Purge
+            </h3>
+            <p class="mt-2 text-sm text-gray-600">
+              Reclaim gigabytes instantly. Safely purges stale <code class="font-mono text-xs text-gray-700">node_modules</code>, Xcode <code class="font-mono text-xs text-gray-700">DerivedData</code>, Cargo caches, and Docker dangling images.
+            </p>
+            <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+              <img 
+                src="/screenshots/cleanup.png" 
+                alt="Matric System Cleanup Screenshot" 
+                class="w-full h-48 object-cover object-top hover:scale-[1.02] transition duration-300"
+              />
+            </div>
+          </div>
+
+          <!-- Card 3: Deep Hardware Telemetry -->
+          <div class="flex flex-col rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
+            <div class="flex items-center justify-between">
+              <span class="rounded-full bg-blue-100 px-3 py-1 font-mono text-xs font-semibold text-blue-700">
+                Apple Silicon Native
+              </span>
+              <span class="font-mono text-xs text-gray-400">10 Cores · LPDDR5</span>
+            </div>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">
+              Multi-Core CPU & Memory Pressure
+            </h3>
+            <p class="mt-2 text-sm text-gray-600">
+              Real-time Mach VM memory allocation, Apple Silicon per-core distribution, and Darwin BSD network sockets with zero Electron overhead (&lt; 20 MB RAM).
+            </p>
+            <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+              <img 
+                src="/screenshots/processor.png" 
+                alt="Matric Processor Telemetry Screenshot" 
+                class="w-full h-48 object-cover object-top hover:scale-[1.02] transition duration-300"
+              />
+            </div>
+          </div>
+
+          <!-- Card 4: Historical Diagnostics -->
+          <div class="flex flex-col rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
+            <div class="flex items-center justify-between">
+              <span class="rounded-full bg-amber-100 px-3 py-1 font-mono text-xs font-semibold text-amber-700">
+                Time-Travel
+              </span>
+              <span class="font-mono text-xs text-gray-400">Local SQLite Ledger</span>
+            </div>
+            <h3 class="mt-4 text-xl font-bold text-gray-900">
+              Long-Term Performance History
+            </h3>
+            <p class="mt-2 text-sm text-gray-600">
+              Did a daemon crash while you stepped away? Scrub backward through high-resolution hardware history to inspect the exact second memory spiked or leaked.
+            </p>
+            <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+              <img 
+                src="/screenshots/history.png" 
+                alt="Matric History Diagnostics Screenshot" 
+                class="w-full h-48 object-cover object-top hover:scale-[1.02] transition duration-300"
+              />
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Side-by-Side Comparison Table (Tuple Style) -->
-    <section id="comparison" class="py-24 sm:py-32 bg-white">
-      <div class="mx-auto max-w-5xl px-4 sm:px-6">
-        <div class="text-center">
-          <h2 class="font-mono text-xs font-semibold uppercase tracking-widest text-purple-600 sm:text-sm">
-            Feature Breakdown
+    <!-- Developer Workflow Shortcuts (Tuple Dark Section, Concise & Visual) -->
+    <section id="workflow" class="bg-gray-950 px-4 py-20 text-white sm:px-6">
+      <div class="mx-auto max-w-5xl">
+        <div class="text-center max-w-xl mx-auto">
+          <span class="rounded-full bg-green-500/10 border border-green-500/30 px-3 py-1 font-mono text-xs font-semibold text-green-400">
+            Tactile Shortcuts
+          </span>
+          <h2 class="mt-3 text-3xl font-bold sm:text-4xl">
+            Stay in flow without touching your mouse
           </h2>
-          <p class="mt-3 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <p class="mt-2 text-sm text-gray-400">
+            Global hotkeys summon Matric from any workspace or editor in milliseconds.
+          </p>
+        </div>
+
+        <!-- 3 Tactile Cards -->
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="rounded-2xl border border-gray-800 bg-gray-900/80 p-6 text-center shadow-lg">
+            <div class="flex items-center justify-center gap-2">
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl border-b-[4px] border-gray-700 bg-gray-800 text-lg font-bold text-white shadow">⌘</span>
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl border-b-[4px] border-gray-700 bg-gray-800 text-lg font-bold text-purple-400 shadow">K</span>
+            </div>
+            <h3 class="mt-4 font-bold text-white text-base">Fuzzy Filter</h3>
+            <p class="mt-1 text-xs text-gray-400">Instantly search active ports, processes, or Git branches.</p>
+          </div>
+
+          <div class="rounded-2xl border border-gray-800 bg-gray-900/80 p-6 text-center shadow-lg">
+            <div class="flex items-center justify-center gap-2">
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl border-b-[4px] border-gray-700 bg-gray-800 text-lg font-bold text-white shadow">⌘</span>
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl border-b-[4px] border-gray-700 bg-gray-800 text-lg font-bold text-purple-400 shadow">.</span>
+            </div>
+            <h3 class="mt-4 font-bold text-white text-base">Kill Port</h3>
+            <p class="mt-1 text-xs text-gray-400">Instantly terminate the squatted process and free the socket.</p>
+          </div>
+
+          <div class="rounded-2xl border border-gray-800 bg-gray-900/80 p-6 text-center shadow-lg">
+            <div class="flex items-center justify-center gap-2">
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl border-b-[4px] border-gray-700 bg-gray-800 text-lg font-bold text-white shadow">⌘</span>
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl border-b-[4px] border-gray-700 bg-gray-800 text-lg font-bold text-white shadow">⇧</span>
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl border-b-[4px] border-gray-700 bg-gray-800 text-lg font-bold text-purple-400 shadow">M</span>
+            </div>
+            <h3 class="mt-4 font-bold text-white text-base">Global Summon</h3>
+            <p class="mt-1 text-xs text-gray-400">Bring Matric to the front from Cursor, VS Code, or Terminal.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Side-by-Side Comparison Table (Tuple Style, Crisp & Concise) -->
+    <section id="comparison" class="py-20 sm:py-28 bg-white">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <div class="text-center max-w-xl mx-auto">
+          <h2 class="font-mono text-xs font-semibold uppercase tracking-widest text-purple-600 sm:text-sm">
+            Comparison
+          </h2>
+          <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             How Matric compares
           </p>
-          <p class="mt-4 text-gray-500">
-            Compare Matric with macOS Activity Monitor and terminal tools like htop.
-          </p>
         </div>
 
-        <div class="mt-14 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <div class="mt-10 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
           <table class="w-full text-left text-sm">
             <thead>
               <tr class="border-b border-gray-200 bg-gray-50 text-xs font-semibold uppercase text-gray-500">
-                <th class="py-4 px-6">Capability</th>
-                <th class="py-4 px-6 text-purple-700 font-bold bg-purple-50/50">Matric</th>
-                <th class="py-4 px-6">macOS Activity Monitor</th>
-                <th class="py-4 px-6">htop / top</th>
+                <th class="py-3.5 px-5">Capability</th>
+                <th class="py-3.5 px-5 text-purple-700 font-bold bg-purple-50/50">Matric</th>
+                <th class="py-3.5 px-5">macOS Activity Monitor</th>
+                <th class="py-3.5 px-5">htop / CLI</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100 text-gray-700">
+            <tbody class="divide-y divide-gray-100 text-gray-700 text-xs sm:text-sm">
               <tr>
-                <td class="py-4 px-6 font-medium text-gray-900">Listening Port Monitoring (:3000, :8000)</td>
-                <td class="py-4 px-6 text-green-600 font-bold bg-purple-50/30">✔ Real-time auto-detected</td>
-                <td class="py-4 px-6 text-gray-400">❌ None</td>
-                <td class="py-4 px-6 text-gray-400">❌ None (needs lsof)</td>
+                <td class="py-3.5 px-5 font-medium text-gray-900">Developer Port Tracking (:3000, :8000)</td>
+                <td class="py-3.5 px-5 text-green-600 font-bold bg-purple-50/30">✔ Real-time auto-detected</td>
+                <td class="py-3.5 px-5 text-gray-400">❌ None</td>
+                <td class="py-3.5 px-5 text-gray-400">❌ None (needs lsof)</td>
               </tr>
               <tr>
-                <td class="py-4 px-6 font-medium text-gray-900">1-Click Kill Port & Release</td>
-                <td class="py-4 px-6 text-green-600 font-bold bg-purple-50/30">✔ 1-Click instant</td>
-                <td class="py-4 px-6 text-gray-400">❌ Must search PID manually</td>
-                <td class="py-4 px-6 text-gray-400">❌ Must send SIGKILL via PID</td>
+                <td class="py-3.5 px-5 font-medium text-gray-900">1-Click Kill Port & Release</td>
+                <td class="py-3.5 px-5 text-green-600 font-bold bg-purple-50/30">✔ 1-Click instant</td>
+                <td class="py-3.5 px-5 text-gray-400">❌ Manual PID search</td>
+                <td class="py-3.5 px-5 text-gray-400">❌ Manual kill -9</td>
               </tr>
               <tr>
-                <td class="py-4 px-6 font-medium text-gray-900">Git Branch & Working Dir Detection</td>
-                <td class="py-4 px-6 text-green-600 font-bold bg-purple-50/30">✔ Automatic repo identity</td>
-                <td class="py-4 px-6 text-gray-400">❌ None</td>
-                <td class="py-4 px-6 text-gray-400">❌ Raw cwd only</td>
+                <td class="py-3.5 px-5 font-medium text-gray-900">Developer Cache & Artifact Purge</td>
+                <td class="py-3.5 px-5 text-green-600 font-bold bg-purple-50/30">✔ Built-in (37+ GB)</td>
+                <td class="py-3.5 px-5 text-gray-400">❌ None</td>
+                <td class="py-3.5 px-5 text-gray-400">❌ None</td>
               </tr>
               <tr>
-                <td class="py-4 px-6 font-medium text-gray-900">1-Click Jump to Cursor / VS Code / IDE</td>
-                <td class="py-4 px-6 text-green-600 font-bold bg-purple-50/30">✔ Built-in launcher</td>
-                <td class="py-4 px-6 text-gray-400">❌ None</td>
-                <td class="py-4 px-6 text-gray-400">❌ None</td>
+                <td class="py-3.5 px-5 font-medium text-gray-900">Child & Helper Process Aggregation</td>
+                <td class="py-3.5 px-5 text-green-600 font-bold bg-purple-50/30">✔ Consolidated hierarchy</td>
+                <td class="py-3.5 px-5 text-gray-400">❌ Flooded with 50+ helpers</td>
+                <td class="py-3.5 px-5 text-gray-400">❌ Flat thread list</td>
               </tr>
               <tr>
-                <td class="py-4 px-6 font-medium text-gray-900">Child & Helper Process Aggregation</td>
-                <td class="py-4 px-6 text-green-600 font-bold bg-purple-50/30">✔ Collapsed tree hierarchy</td>
-                <td class="py-4 px-6 text-gray-400">❌ Floods table with 50+ helpers</td>
-                <td class="py-4 px-6 text-gray-400">❌ Flat thread list</td>
+                <td class="py-3.5 px-5 font-medium text-gray-900">Memory & CPU Overhead</td>
+                <td class="py-3.5 px-5 text-green-600 font-bold bg-purple-50/30">&lt; 20 MB (Native Swift)</td>
+                <td class="py-3.5 px-5 text-gray-600">~40 MB (AppKit)</td>
+                <td class="py-3.5 px-5 text-green-600">&lt; 10 MB (C/C++)</td>
               </tr>
               <tr>
-                <td class="py-4 px-6 font-medium text-gray-900">30-Day Historical Time-Travel</td>
-                <td class="py-4 px-6 text-green-600 font-bold bg-purple-50/30">✔ Scrub back to any second</td>
-                <td class="py-4 px-6 text-gray-400">❌ Discarded instantly</td>
-                <td class="py-4 px-6 text-gray-400">❌ None</td>
-              </tr>
-              <tr>
-                <td class="py-4 px-6 font-medium text-gray-900">Framework & Runtime Overhead</td>
-                <td class="py-4 px-6 text-green-600 font-bold bg-purple-50/30">&lt; 20 MB (Native Swift)</td>
-                <td class="py-4 px-6 text-gray-600">~40 MB (Native AppKit)</td>
-                <td class="py-4 px-6 text-green-600">&lt; 10 MB (C/C++)</td>
-              </tr>
-              <tr>
-                <td class="py-4 px-6 font-medium text-gray-900">License & Cost</td>
-                <td class="py-4 px-6 text-purple-700 font-bold bg-purple-50/30">100% Free & Open Source (MIT)</td>
-                <td class="py-4 px-6 text-gray-600">Free (Proprietary macOS)</td>
-                <td class="py-4 px-6 text-gray-600">Free (GPL)</td>
+                <td class="py-3.5 px-5 font-medium text-gray-900">License & Cost</td>
+                <td class="py-3.5 px-5 text-purple-700 font-bold bg-purple-50/30">100% Free (MIT)</td>
+                <td class="py-3.5 px-5 text-gray-600">Free (Proprietary macOS)</td>
+                <td class="py-3.5 px-5 text-gray-600">Free (GPL)</td>
               </tr>
             </tbody>
           </table>
@@ -766,62 +434,25 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
-    <!-- Open Source Section -->
-    <section id="open-source" class="border-t border-gray-100 bg-gray-50/80 py-24 sm:py-32">
-      <div class="mx-auto max-w-4xl px-4 text-center sm:px-6">
-        <span class="rounded-full bg-purple-100 px-3 py-1 font-mono text-xs font-semibold text-purple-700">
-          Open Source & Community
-        </span>
-        <h2 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Built in the open for the macOS developer community
-        </h2>
-        <p class="mt-4 text-lg text-gray-600">
-          Matric is free software licensed under the permissive MIT license. Audit the code, contribute features, or report issues on GitHub.
-        </p>
-
-        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <a 
-            href="https://github.com/pawanbhayde/matric" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-black active:scale-[0.98]"
-          >
-            <svg class="h-5 w-5 fill-white" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            <span>Star on GitHub</span>
-          </a>
-
-          <a 
-            href="https://github.com/pawanbhayde/matric/blob/main/CONTRIBUTING.md" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-6 py-3 font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 active:scale-[0.98]"
-          >
-            <span>Contributing Guide</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Final Call to Action Section (Tuple Style) -->
-    <section class="relative overflow-hidden py-24 sm:py-32 bg-white">
+    <!-- Final Call to Action Section (Tuple Style, Minimal & High Impact) -->
+    <section class="relative overflow-hidden py-20 sm:py-28 bg-white border-t border-gray-100">
       <div class="mx-auto max-w-5xl px-4 sm:px-6">
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-900 via-gray-900 to-black p-10 sm:p-16 text-center text-white shadow-2xl">
-          <!-- Background Ambient Glow -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-900 via-gray-900 to-black p-10 sm:p-14 text-center text-white shadow-2xl">
           <div class="pointer-events-none absolute -top-24 left-1/2 h-64 w-96 -translate-x-1/2 rounded-full bg-purple-500/20 blur-3xl"></div>
 
-          <h2 class="text-3xl font-bold sm:text-4xl md:text-5xl">
-            Explore the source and get started
+          <h2 class="text-3xl font-bold sm:text-4xl">
+            Upgrade your macOS developer workspace
           </h2>
-          <p class="mx-auto mt-4 max-w-xl text-lg text-gray-300">
-            Never waste another minute diagnosing hung local ports or memory leaks. Matric is 100% free and open source on GitHub.
+          <p class="mx-auto mt-3 max-w-lg text-base text-gray-300">
+            Never waste another minute diagnosing hung local ports or bloated build caches. Matric is 100% free and open source.
           </p>
 
-          <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a 
               href="https://github.com/pawanbhayde/matric" 
               target="_blank"
               rel="noopener noreferrer"
-              class="flex w-full items-center justify-center gap-3 rounded-xl bg-purple-600 px-8 py-4 font-semibold text-white shadow-lg shadow-purple-600/30 transition hover:bg-purple-500 active:scale-[0.98] sm:w-auto"
+              class="flex w-full items-center justify-center gap-3 rounded-xl bg-purple-600 px-8 py-3.5 font-semibold text-white shadow-lg shadow-purple-600/30 transition hover:bg-purple-500 active:scale-[0.98] sm:w-auto"
             >
               <svg class="h-5 w-5 fill-white" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
               <span>View on GitHub</span>
@@ -831,23 +462,23 @@ import Layout from '../layouts/Layout.astro';
               href="https://github.com/pawanbhayde/matric/blob/main/README.md#building-from-source" 
               target="_blank"
               rel="noopener noreferrer"
-              class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-700 bg-gray-800/90 px-6 py-4 font-medium text-gray-200 transition hover:bg-gray-800 hover:border-gray-600 sm:w-auto"
+              class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-700 bg-gray-800/90 px-6 py-3.5 font-medium text-gray-200 transition hover:bg-gray-800 hover:border-gray-600 sm:w-auto"
             >
-              <span>Building from Source</span>
+              <span>Build from Source</span>
               <span class="text-gray-400">→</span>
             </a>
           </div>
 
           <p class="mt-6 text-xs text-gray-400">
-            Supports macOS 14 Sonoma and macOS 15 Sequoia · 100% Native Swift & AppKit
+            Supports macOS 14 Sonoma & macOS 15 Sequoia · 100% Native Swift
           </p>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Clean Minimalist Footer (Tuple Style) -->
-  <footer class="border-t border-gray-100 bg-white py-14 text-sm text-gray-500">
+  <!-- Clean Minimalist Footer -->
+  <footer class="border-t border-gray-100 bg-white py-12 text-sm text-gray-500">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
       <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
         <div>
@@ -855,10 +486,10 @@ import Layout from '../layouts/Layout.astro';
             <img src="/app-icon.png" alt="Matric Logo" class="h-6 w-6 rounded" />
             <span>Matric</span>
           </div>
-          <p class="mt-3 text-xs leading-relaxed text-gray-500">
+          <p class="mt-2 text-xs leading-relaxed text-gray-500">
             The native macOS developer activity monitor and port command center.
           </p>
-          <p class="mt-4 text-xs text-gray-400">
+          <p class="mt-3 text-xs text-gray-400">
             MIT Licensed. Free & Open Source.
           </p>
         </div>
@@ -866,10 +497,10 @@ import Layout from '../layouts/Layout.astro';
         <div>
           <h4 class="font-semibold text-gray-900 text-xs uppercase tracking-wider">Product</h4>
           <ul class="mt-3 space-y-2 text-xs">
-            <li><a href="#features" class="hover:text-gray-900 transition">Features</a></li>
-            <li><a href="#ports" class="hover:text-gray-900 transition">Port Inspector</a></li>
-            <li><a href="#time-travel" class="hover:text-gray-900 transition">Time-Travel Scrubber</a></li>
+            <li><a href="#screenshots" class="hover:text-gray-900 transition">App Screenshots</a></li>
+            <li><a href="#features" class="hover:text-gray-900 transition">Port Inspector</a></li>
             <li><a href="#workflow" class="hover:text-gray-900 transition">Keyboard Shortcuts</a></li>
+            <li><a href="#comparison" class="hover:text-gray-900 transition">Comparison</a></li>
           </ul>
         </div>
 
@@ -877,7 +508,7 @@ import Layout from '../layouts/Layout.astro';
           <h4 class="font-semibold text-gray-900 text-xs uppercase tracking-wider">Resources</h4>
           <ul class="mt-3 space-y-2 text-xs">
             <li><a href="https://github.com/pawanbhayde/matric#readme" target="_blank" class="hover:text-gray-900 transition">Documentation</a></li>
-            <li><a href="https://github.com/pawanbhayde/matric/releases" target="_blank" class="hover:text-gray-900 transition">Changelog & Releases</a></li>
+            <li><a href="https://github.com/pawanbhayde/matric/releases" target="_blank" class="hover:text-gray-900 transition">Releases</a></li>
             <li><a href="https://github.com/pawanbhayde/matric/blob/main/CONTRIBUTING.md" target="_blank" class="hover:text-gray-900 transition">Contributing</a></li>
             <li><a href="https://github.com/pawanbhayde/matric/issues" target="_blank" class="hover:text-gray-900 transition">Issue Tracker</a></li>
           </ul>
@@ -893,8 +524,8 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
-      <div class="mt-12 border-t border-gray-100 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-4">
-        <p>© {new Date().getFullYear()} Matric Open Source Contributors. All rights reserved.</p>
+      <div class="mt-10 border-t border-gray-100 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-4">
+        <p>© {new Date().getFullYear()} Matric Open Source Contributors. MIT Licensed.</p>
         <p class="flex items-center gap-4">
           <span>Native Swift & AppKit</span>
           <span>·</span>
@@ -904,31 +535,38 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </footer>
 
-  <!-- Interactive Scripts (View toggle) -->
+  <!-- Interactive Screenshot Switcher Script -->
   <script>
-    // Window View Switcher Script (Cards vs Table)
-    const viewCardsBtn = document.getElementById('viewCardsBtn');
-    const viewTableBtn = document.getElementById('viewTableBtn');
-    const cardsView = document.getElementById('cardsView');
-    const tableView = document.getElementById('tableView');
+    const tabs = document.querySelectorAll('.shot-tab');
+    const mainImg = document.getElementById('mainScreenshot');
+    const labelSpan = document.getElementById('currentShotLabel');
 
-    if (viewCardsBtn && viewTableBtn && cardsView && tableView) {
-      viewCardsBtn.addEventListener('click', () => {
-        cardsView.classList.remove('hidden');
-        tableView.classList.add('hidden');
-        viewCardsBtn.classList.add('bg-white', 'text-gray-900', 'shadow-sm', 'font-semibold');
-        viewCardsBtn.classList.remove('hover:text-gray-900');
-        viewTableBtn.classList.remove('bg-white', 'text-gray-900', 'shadow-sm', 'font-semibold');
-        viewTableBtn.classList.add('hover:text-gray-900');
-      });
+    if (tabs && mainImg) {
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const shotSrc = tab.getAttribute('data-shot');
+          const shotLabel = tab.getAttribute('data-label');
+          if (!shotSrc) return;
 
-      viewTableBtn.addEventListener('click', () => {
-        tableView.classList.remove('hidden');
-        cardsView.classList.add('hidden');
-        viewTableBtn.classList.add('bg-white', 'text-gray-900', 'shadow-sm', 'font-semibold');
-        viewTableBtn.classList.remove('hover:text-gray-900');
-        viewCardsBtn.classList.remove('bg-white', 'text-gray-900', 'shadow-sm', 'font-semibold');
-        viewCardsBtn.classList.add('hover:text-gray-900');
+          // Update active tab styles
+          tabs.forEach((t) => {
+            t.classList.remove('bg-purple-600', 'text-white', 'font-semibold', 'shadow-sm');
+            t.classList.add('text-gray-400');
+          });
+          tab.classList.add('bg-purple-600', 'text-white', 'font-semibold', 'shadow-sm');
+          tab.classList.remove('text-gray-400');
+
+          // Smooth image transition
+          mainImg.classList.add('opacity-40');
+          setTimeout(() => {
+            (mainImg as HTMLImageElement).src = shotSrc;
+            mainImg.classList.remove('opacity-40');
+          }, 150);
+
+          if (labelSpan && shotLabel) {
+            labelSpan.textContent = shotLabel;
+          }
+        });
       });
     }
   </script>
