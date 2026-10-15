@@ -196,25 +196,20 @@ matric/
 
 ### Option 1: Install via Homebrew Cask (Recommended)
 
-Modern Homebrew requires casks to be hosted inside a tap repository. You can tap this repository directly:
+Tap this repository directly and install Matric:
 
 ```bash
-# Tap this repository directly
+# 1. Tap this repository
 brew tap aayushpaigwar/matric https://github.com/aayushpaigwar/matric
 
-# Install Matric (automatically skips Gatekeeper quarantine)
-brew install --cask --no-quarantine matric
+# 2. Install Matric
+brew install --cask matric
 ```
 
-> **Tip:** Adding `--no-quarantine` instructs Homebrew to remove macOS download quarantine so you don't need to go to *Privacy & Security -> Open Anyway*.
-
-> **Note on Releases:** Homebrew Cask downloads the release binary from GitHub Releases (`Matric-1.0.0.dmg`). Ensure a release tag (e.g. `v1.0.0`) has been pushed to GitHub to trigger the release workflow before running `brew install`.
-
-If you maintain a dedicated `homebrew-tap` repository:
-```bash
-brew tap aayushpaigwar/tap
-brew install --cask --no-quarantine matric
-```
+> **Note on Homebrew 7+ Tap Trust:** If prompted with `Refusing to load cask from untrusted tap`, run:
+> ```bash
+> brew trust aayushpaigwar/matric
+> ```
 
 To upgrade in the future:
 ```bash
@@ -241,21 +236,18 @@ brew uninstall --zap --cask matric
 Because Matric is a free and open-source application:
 
 - **If signed with an Apple Developer ID & Notarized**: Matric opens immediately on double-click with zero prompts.
-- **For community/open-source builds without Apple Developer ID**: macOS Gatekeeper attaches a quarantine flag to downloaded apps. If macOS prompts that the developer cannot be verified, you can permit it in any of these ways:
+- **For community/open-source builds without Apple Developer ID**: macOS Gatekeeper marks downloaded files with a quarantine attribute. If macOS prompts that the developer cannot be verified or requires *Privacy & Security -> Open Anyway*, you can permit it in any of these ways:
 
-1. **Option 1: Recommended Install Command (Bypasses Gatekeeper completely)**:
-   ```bash
-   brew install --cask --no-quarantine matric
-   ```
-2. **Option 2: 1-Line Terminal Fix**:
+1. **Option 1: 1-Line Terminal Fix (Fastest)**:
    ```bash
    xattr -cr /Applications/Matric.app
    ```
-3. **Option 3: macOS System Settings**:
+   *(This removes the quarantine attribute so Matric opens immediately on double-click)*.
+2. **Option 2: macOS System Settings**:
    - Open **System Settings** -> **Privacy & Security**.
    - Scroll down to the **Security** section.
    - Click **Open Anyway** next to Matric.
-4. **Option 4: Finder Right-Click**:
+3. **Option 3: Finder Right-Click**:
    - In `/Applications`, **Right-Click** (or `Control-Click`) on **Matric.app** and select **Open**.
    - Click **Open** in the dialog box (only required once).
 
