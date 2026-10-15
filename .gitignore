@@ -58,3 +58,9 @@ Icon
 
 ## Crash logs
 *.crash
+
+## Node / Web & Cloudflare
+node_modules/
+dist/
+.astro/
+.wrangler/
