@@ -190,23 +190,91 @@ matric/
 
 ---
 
-## 💻 Getting Started & Building from Source
+---
+
+## 📦 Installation
+
+### Option 1: Install via Homebrew Cask (Recommended)
+
+Modern Homebrew requires casks to be hosted inside a tap repository. You can tap this repository directly:
+
+```bash
+# Tap this repository directly
+brew tap aayushpaigwar/matric https://github.com/aayushpaigwar/matric
+
+# Install Matric
+brew install --cask matric
+```
+
+> **Note on Releases:** Homebrew Cask downloads the release binary from GitHub Releases (`Matric-1.0.0.dmg`). Ensure a release tag (e.g. `v1.0.0`) has been pushed to GitHub to trigger the release workflow before running `brew install`.
+
+If you maintain a dedicated `homebrew-tap` repository:
+```bash
+brew tap aayushpaigwar/tap
+brew install --cask matric
+```
+
+To upgrade in the future:
+```bash
+brew upgrade --cask matric
+```
+
+To uninstall and clean up all app data:
+```bash
+brew uninstall --zap --cask matric
+```
+
+---
+
+### Option 2: Download Disk Image (.dmg)
+
+1. Download the latest Universal release (**Apple Silicon & Intel**) from [GitHub Releases](https://github.com/aayushpaigwar/matric/releases/latest).
+2. Double-click the downloaded `Matric-x.x.x.dmg`.
+3. Drag **Matric** into your **Applications** folder.
+
+---
+
+### 🛡️ Opening on macOS (Gatekeeper & Security)
+
+Because Matric is a free and open-source project:
+
+- **If signed with an Apple Developer ID & Notarized**: Matric opens immediately on double-click.
+- **If installing an ad-hoc signed build or direct community release**: macOS Gatekeeper may prompt:
+  > *"Matric cannot be opened because Apple cannot check it for malicious software"* or *"developer cannot be verified"*.
+
+You can easily permit it on any Mac in either of two ways:
+
+1. **Via Finder (GUI)**:
+   - Navigate to `/Applications` in Finder.
+   - **Right-Click** (or `Control-Click`) on **Matric.app** and select **Open**.
+   - Click **Open** in the dialog box. (You only need to do this once).
+2. **Via Terminal**:
+   ```bash
+   xattr -cr /Applications/Matric.app
+   ```
+
+---
+
+## 💻 Building from Source & Packaging DMG
 
 ### Prerequisites
 - **macOS 14.0 (Sonoma)** or **macOS 15.0+ (Sequoia)** (Apple Silicon M1/M2/M3/M4 or Intel)
 - **Xcode 15.0+** or **Xcode 16.0+**
 - Command Line Tools (`xcode-select --install`)
+- Optional for visual DMG styling: `brew install create-dmg`
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/matric.git
+git clone https://github.com/pawanbhayde/matric.git
 cd matric
 ```
 
-### Build via Command Line
+### 1-Click Build & Package Universal DMG
+Run the automated packaging script to produce a signed, universal release DMG:
 ```bash
-xcodebuild -project matric.xcodeproj -scheme matric -configuration Debug build
+./scripts/build_dmg.sh
 ```
+The output `.dmg` and `.dmg.sha256` will be generated in `build/dist/`.
 
 ### Run via Xcode
 1. Open the project in Xcode:
@@ -215,6 +283,23 @@ xcodebuild -project matric.xcodeproj -scheme matric -configuration Debug build
    ```
 2. Select the `matric` scheme and target **My Mac**.
 3. Press `Cmd + R` to build and run.
+
+---
+
+## 🚀 Automated CI/CD & GitHub Releases
+
+Matric includes a complete GitHub Actions workflow (`.github/workflows/release.yml`) that automatically builds universal binaries, signs, packages the DMG, generates SHA-256 checksums, and updates the Homebrew Cask formula upon publishing a new tag (e.g. `v1.0.0`).
+
+### Code Signing & Apple Notarization Secrets (Maintainers)
+To enable Developer ID signing and Apple Notarization in GitHub Actions, add the following repository secrets:
+- `MACOS_CERTIFICATE`: Base64-encoded Developer ID Application `.p12` certificate.
+- `MACOS_CERTIFICATE_PWD`: Password for the `.p12` certificate.
+- `KEYCHAIN_PASSWORD`: Any temporary password for creating the runner keychain.
+- `APPLE_ID`: Your Apple Developer account email.
+- `APPLE_APP_SPECIFIC_PASSWORD`: App-specific password generated at [appleid.apple.com](https://appleid.apple.com).
+- `APPLE_TEAM_ID`: Your 10-character Apple Developer Team ID.
+
+*(Note: If these secrets are not configured, the workflow automatically falls back to hardened-runtime ad-hoc signing, ensuring the DMG build and release pipeline always succeeds.)*
 
 ---
 
