@@ -1,11 +1,3055 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<Welcome />
+	<!-- Ambient Background Glows -->
+	<div class="glow-bg-top" aria-hidden="true"></div>
+	<div class="glow-bg-middle" aria-hidden="true"></div>
+
+	<!-- Navigation Bar -->
+	<header class="nav-header">
+		<div class="nav-container">
+			<a href="#" class="brand-link">
+				<img src="/app-icon.png" alt="Matric Logo" class="brand-icon" />
+				<span class="brand-name">Matric</span>
+				<span class="brand-badge">v1.0-beta</span>
+			</a>
+
+			<nav class="nav-links">
+				<a href="#projects">Dev Projects</a>
+				<a href="#comparison">App Grouping</a>
+				<a href="#time-travel">Time-Travel</a>
+				<a href="#sensors">Sensors</a>
+				<a href="#storage">Storage & Cleaner</a>
+				<a href="#architecture">Architecture</a>
+			</nav>
+
+			<div class="nav-actions">
+				<a href="https://github.com/pawanbhayde/matric" target="_blank" rel="noopener noreferrer" class="btn-github">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+					</svg>
+					<span>Star on GitHub</span>
+				</a>
+				<a href="#download" class="btn-download-nav">
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.76 1.05-1.82.93-2.88-.91.04-2.03.61-2.68 1.37-.58.67-1.09 1.76-.95 2.8 1.02.08 2.08-.53 2.7-1.29z"/>
+					</svg>
+					<span>Download App</span>
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<!-- Hero Section -->
+	<section class="hero-section">
+		<div class="hero-content">
+			<div class="hero-badge">
+				<span class="pulse-radar"></span>
+				<span class="badge-text">OPEN SOURCE · NATIVE MACOS 14+ & 15+</span>
+			</div>
+
+			<h1 class="hero-title">
+				The macOS Activity Monitor <br>
+				<span class="gradient-text">reimagined for developers.</span>
+			</h1>
+
+			<p class="hero-subtitle">
+				Stop drowning in hundreds of anonymous helper daemons. Matric brings intelligent app grouping, live developer port inspection, 30-day historical time-travel, and instant bottleneck diagnostics into a blazing-fast native interface — 100% locally and privately.
+			</p>
+
+			<div class="hero-cta-group">
+				<a href="https://github.com/pawanbhayde/matric/releases" class="btn-primary-large">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.76 1.05-1.82.93-2.88-.91.04-2.03.61-2.68 1.37-.58.67-1.09 1.76-.95 2.8 1.02.08 2.08-.53 2.7-1.29z"/>
+					</svg>
+					<span>Download for Mac (Apple Silicon & Intel)</span>
+				</a>
+
+				<a href="https://github.com/pawanbhayde/matric" target="_blank" rel="noopener noreferrer" class="btn-secondary-large">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+						<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+					</svg>
+					<span>View Source Code</span>
+				</a>
+			</div>
+
+			<!-- Terminal Install Strip -->
+			<div class="hero-terminal-strip">
+				<span class="terminal-prompt">$</span>
+				<code id="brew-cmd">git clone https://github.com/pawanbhayde/matric.git && cd matric</code>
+				<button id="copy-btn" class="btn-copy-code" title="Copy to clipboard">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+						<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+					</svg>
+					<span id="copy-label">Copy</span>
+				</button>
+			</div>
+
+			<!-- Quick specs pill row -->
+			<div class="hero-specs-row">
+				<div class="spec-item">
+					<span class="spec-icon">⚡</span>
+					<span>Pure Swift & SwiftUI</span>
+				</div>
+				<div class="spec-divider"></div>
+				<div class="spec-item">
+					<span class="spec-icon">🔒</span>
+					<span>Zero Outbound Telemetry</span>
+				</div>
+				<div class="spec-divider"></div>
+				<div class="spec-item">
+					<span class="spec-icon">⏱️</span>
+					<span>30-Day Offline SQLite Storage</span>
+				</div>
+				<div class="spec-divider"></div>
+				<div class="spec-item">
+					<span class="spec-icon">🍃</span>
+					<span>&lt; 1% CPU Polling Footprint</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Interactive Hero Window Showcase -->
+		<div class="app-window-frame">
+			<div class="window-header">
+				<div class="window-traffic-lights">
+					<span class="light close"></span>
+					<span class="light minimize"></span>
+					<span class="light expand"></span>
+				</div>
+
+				<div class="window-titlebar">
+					<span class="window-app-name">Matric — Developer Projects</span>
+					<span class="window-path-pill">Listening Ports & Local Runtimes</span>
+				</div>
+
+				<div class="window-toolbar-actions">
+					<div class="interactive-view-toggle">
+						<button id="toggle-cards" class="view-btn active" data-view="cards">
+							<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+								<rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+								<rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+								<rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+								<rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+							</svg>
+							<span>Cards</span>
+						</button>
+						<button id="toggle-table" class="view-btn" data-view="table">
+							<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<rect x="3" y="3" width="18" height="18" rx="2"></rect>
+								<path d="M3 9h18M3 15h18M9 3v18"></path>
+							</svg>
+							<span>Ports Table</span>
+						</button>
+					</div>
+
+					<button id="btn-watchdog-modal" class="btn-check-port">
+						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"></circle>
+							<path d="m9 12 2 2 4-4"></path>
+						</svg>
+						<span>Check Port...</span>
+					</button>
+				</div>
+			</div>
+
+			<!-- Window Interior Body -->
+			<div class="window-body">
+				<!-- KPI Bar -->
+				<div class="kpi-summary-bar">
+					<div class="kpi-card">
+						<div class="kpi-card-header">
+							<span class="kpi-icon emerald">⚡</span>
+							<span class="kpi-title">ACTIVE SERVICES</span>
+						</div>
+						<div class="kpi-value-row">
+							<span class="kpi-value">5</span>
+							<span class="kpi-badge emerald">Online</span>
+						</div>
+						<span class="kpi-caption">Vite, Next, Python, Postgres, Redis</span>
+					</div>
+
+					<div class="kpi-card">
+						<div class="kpi-card-header">
+							<span class="kpi-icon cyan">🌐</span>
+							<span class="kpi-title">OPEN TCP PORTS</span>
+						</div>
+						<div class="kpi-value-row">
+							<span class="kpi-value">5</span>
+							<span class="kpi-badge cyan">Bound</span>
+						</div>
+						<span class="kpi-caption">:3000, :5173, :8000, :5432, :6379</span>
+					</div>
+
+					<div class="kpi-card">
+						<div class="kpi-card-header">
+							<span class="kpi-icon indigo">💾</span>
+							<span class="kpi-title">DEV MEMORY</span>
+						</div>
+						<div class="kpi-value-row">
+							<span class="kpi-value">1.12 GB</span>
+							<span class="kpi-badge muted">Combined</span>
+						</div>
+						<span class="kpi-caption">7.0% of physical system RAM</span>
+					</div>
+
+					<div class="kpi-card">
+						<div class="kpi-card-header">
+							<span class="kpi-icon amber">🔥</span>
+							<span class="kpi-title">DEV CPU LOAD</span>
+						</div>
+						<div class="kpi-value-row">
+							<span class="kpi-value">2.8%</span>
+							<span class="kpi-badge emerald">Low Load</span>
+						</div>
+						<span class="kpi-caption">Idle dev watchers running smoothly</span>
+					</div>
+				</div>
+
+				<!-- Dual View Dynamic Container -->
+				<div class="views-wrapper">
+					<!-- CARDS VIEW -->
+					<div id="view-cards-content" class="cards-view-grid">
+						<!-- Next.js Card -->
+						<div class="project-card">
+							<div class="card-top-row">
+								<div class="project-identity">
+									<div class="runtime-badge nextjs">
+										<span>▲</span>
+									</div>
+									<div class="project-naming">
+										<div class="name-status-row">
+											<h4 class="project-title">matric-web</h4>
+											<span class="status-pill online">
+												<span class="status-pulse-dot"></span>
+												ONLINE
+											</span>
+										</div>
+										<div class="path-branch-row">
+											<span class="git-branch-tag">⎇ main</span>
+											<span class="project-path-text">~/projects/matric-web</span>
+										</div>
+									</div>
+								</div>
+								<div class="runtime-stats">
+									<span class="stat-pill">1.2% CPU</span>
+									<span class="stat-pill">412 MB</span>
+								</div>
+							</div>
+
+							<div class="card-ports-row">
+								<span class="port-label">PORTS:</span>
+								<a href="http://localhost:3000" target="_blank" class="port-chip link">
+									<span class="port-dot"></span>
+									<span>:3000</span>
+									<span class="port-arrow">↗</span>
+								</a>
+							</div>
+
+							<div class="card-action-bar">
+								<div class="ide-launchers">
+									<button class="btn-ide" title="Open in Cursor">Cursor</button>
+									<button class="btn-ide" title="Open in VS Code">VS Code</button>
+									<button class="btn-ide" title="Open in Terminal">Terminal</button>
+									<button class="btn-ide" title="Reveal in Finder">Finder</button>
+								</div>
+								<button class="btn-stop-port">Stop</button>
+							</div>
+						</div>
+
+						<!-- Vite Card -->
+						<div class="project-card">
+							<div class="card-top-row">
+								<div class="project-identity">
+									<div class="runtime-badge vite">
+										<span>⚡</span>
+									</div>
+									<div class="project-naming">
+										<div class="name-status-row">
+											<h4 class="project-title">landing-page</h4>
+											<span class="status-pill online">
+												<span class="status-pulse-dot"></span>
+												ONLINE
+											</span>
+										</div>
+										<div class="path-branch-row">
+											<span class="git-branch-tag">⎇ feat/v1</span>
+											<span class="project-path-text">~/projects/matric/landing-page</span>
+										</div>
+									</div>
+								</div>
+								<div class="runtime-stats">
+									<span class="stat-pill">0.4% CPU</span>
+									<span class="stat-pill">186 MB</span>
+								</div>
+							</div>
+
+							<div class="card-ports-row">
+								<span class="port-label">PORTS:</span>
+								<a href="http://localhost:5173" target="_blank" class="port-chip link">
+									<span class="port-dot"></span>
+									<span>:5173</span>
+									<span class="port-arrow">↗</span>
+								</a>
+							</div>
+
+							<div class="card-action-bar">
+								<div class="ide-launchers">
+									<button class="btn-ide">Cursor</button>
+									<button class="btn-ide">VS Code</button>
+									<button class="btn-ide">Terminal</button>
+								</div>
+								<button class="btn-stop-port">Stop</button>
+							</div>
+						</div>
+
+						<!-- FastAPI Card -->
+						<div class="project-card">
+							<div class="card-top-row">
+								<div class="project-identity">
+									<div class="runtime-badge python">
+										<span>🐍</span>
+									</div>
+									<div class="project-naming">
+										<div class="name-status-row">
+											<h4 class="project-title">telemetry-api</h4>
+											<span class="status-pill online">
+												<span class="status-pulse-dot"></span>
+												ONLINE
+											</span>
+										</div>
+										<div class="path-branch-row">
+											<span class="git-branch-tag">⎇ staging</span>
+											<span class="project-path-text">~/services/telemetry-api</span>
+										</div>
+									</div>
+								</div>
+								<div class="runtime-stats">
+									<span class="stat-pill">0.8% CPU</span>
+									<span class="stat-pill">145 MB</span>
+								</div>
+							</div>
+
+							<div class="card-ports-row">
+								<span class="port-label">PORTS:</span>
+								<a href="http://localhost:8000" target="_blank" class="port-chip link">
+									<span class="port-dot"></span>
+									<span>:8000</span>
+									<span class="port-arrow">↗</span>
+								</a>
+							</div>
+
+							<div class="card-action-bar">
+								<div class="ide-launchers">
+									<button class="btn-ide">Cursor</button>
+									<button class="btn-ide">Terminal</button>
+								</div>
+								<button class="btn-stop-port">Stop</button>
+							</div>
+						</div>
+
+						<!-- PostgreSQL Card -->
+						<div class="project-card">
+							<div class="card-top-row">
+								<div class="project-identity">
+									<div class="runtime-badge postgres">
+										<span>🐘</span>
+									</div>
+									<div class="project-naming">
+										<div class="name-status-row">
+											<h4 class="project-title">postgres-local</h4>
+											<span class="status-pill online">
+												<span class="status-pulse-dot"></span>
+												ONLINE
+											</span>
+										</div>
+										<div class="path-branch-row">
+											<span class="project-path-text">/opt/homebrew/var/postgresql@16</span>
+										</div>
+									</div>
+								</div>
+								<div class="runtime-stats">
+									<span class="stat-pill">0.2% CPU</span>
+									<span class="stat-pill">318 MB</span>
+								</div>
+							</div>
+
+							<div class="card-ports-row">
+								<span class="port-label">PORTS:</span>
+								<span class="port-chip db">
+									<span class="port-dot"></span>
+									<span>:5432</span>
+								</span>
+							</div>
+
+							<div class="card-action-bar">
+								<div class="ide-launchers">
+									<button class="btn-ide">Terminal</button>
+									<button class="btn-ide">Finder</button>
+								</div>
+								<button class="btn-stop-port">Stop</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- PORTS TABLE VIEW (Hidden by default) -->
+					<div id="view-table-content" class="ports-table-container hidden">
+						<table class="ports-table">
+							<thead>
+								<tr>
+									<th>PORT</th>
+									<th>SOCKET</th>
+									<th>SERVICE / RUNTIME</th>
+									<th>PROJECT & PATH</th>
+									<th>PID</th>
+									<th>CPU</th>
+									<th>RAM</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><span class="table-port-chip">:3000</span></td>
+									<td><span class="table-status-listen"><span class="table-socket-dot"></span>LISTEN</span></td>
+									<td><span class="table-runtime-badge nextjs">▲ Next.js</span></td>
+									<td>
+										<div class="table-project-cell">
+											<span class="table-proj-name">matric-web</span>
+											<span class="table-branch-pill">⎇ main</span>
+										</div>
+									</td>
+									<td><code class="table-pid">32941</code></td>
+									<td><span class="table-cpu">1.2%</span></td>
+									<td><span class="table-ram">412 MB</span></td>
+									<td>
+										<div class="table-action-btns">
+											<button class="table-btn-browser" title="Open localhost:3000">Open</button>
+											<button class="table-btn-kill" title="Stop process">Kill</button>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td><span class="table-port-chip">:5173</span></td>
+									<td><span class="table-status-listen"><span class="table-socket-dot"></span>LISTEN</span></td>
+									<td><span class="table-runtime-badge vite">⚡ Vite</span></td>
+									<td>
+										<div class="table-project-cell">
+											<span class="table-proj-name">landing-page</span>
+											<span class="table-branch-pill">⎇ feat/v1</span>
+										</div>
+									</td>
+									<td><code class="table-pid">33104</code></td>
+									<td><span class="table-cpu">0.4%</span></td>
+									<td><span class="table-ram">186 MB</span></td>
+									<td>
+										<div class="table-action-btns">
+											<button class="table-btn-browser">Open</button>
+											<button class="table-btn-kill">Kill</button>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td><span class="table-port-chip">:8000</span></td>
+									<td><span class="table-status-listen"><span class="table-socket-dot"></span>LISTEN</span></td>
+									<td><span class="table-runtime-badge python">🐍 Python / FastAPI</span></td>
+									<td>
+										<div class="table-project-cell">
+											<span class="table-proj-name">telemetry-api</span>
+											<span class="table-branch-pill">⎇ staging</span>
+										</div>
+									</td>
+									<td><code class="table-pid">31802</code></td>
+									<td><span class="table-cpu">0.8%</span></td>
+									<td><span class="table-ram">145 MB</span></td>
+									<td>
+										<div class="table-action-btns">
+											<button class="table-btn-browser">Open</button>
+											<button class="table-btn-kill">Kill</button>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td><span class="table-port-chip">:5432</span></td>
+									<td><span class="table-status-listen"><span class="table-socket-dot"></span>LISTEN</span></td>
+									<td><span class="table-runtime-badge postgres">🐘 PostgreSQL</span></td>
+									<td>
+										<div class="table-project-cell">
+											<span class="table-proj-name">postgres-local</span>
+										</div>
+									</td>
+									<td><code class="table-pid">1042</code></td>
+									<td><span class="table-cpu">0.2%</span></td>
+									<td><span class="table-ram">318 MB</span></td>
+									<td>
+										<div class="table-action-btns">
+											<button class="table-btn-browser">Open</button>
+											<button class="table-btn-kill">Kill</button>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td><span class="table-port-chip">:6379</span></td>
+									<td><span class="table-status-listen"><span class="table-socket-dot"></span>LISTEN</span></td>
+									<td><span class="table-runtime-badge redis">🔴 Redis Server</span></td>
+									<td>
+										<div class="table-project-cell">
+											<span class="table-proj-name">redis-cache</span>
+										</div>
+									</td>
+									<td><code class="table-pid">994</code></td>
+									<td><span class="table-cpu">0.1%</span></td>
+									<td><span class="table-ram">64 MB</span></td>
+									<td>
+										<div class="table-action-btns">
+											<button class="table-btn-browser">Open</button>
+											<button class="table-btn-kill">Kill</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Window Bottom Footer -->
+				<div class="window-footer">
+					<div class="footer-left">
+						<span class="footer-privacy-badge">🔒 100% Local & Private</span>
+						<span class="footer-dot">•</span>
+						<span class="footer-refresh">Zero Subprocess Git Detection</span>
+					</div>
+					<div class="footer-right">
+						<span class="live-status-indicator">
+							<span class="pulse-radar small"></span>
+							Live · 1s Polling Loop
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- FEATURE 1: Developer Projects & Port Command Center -->
+	<section id="projects" class="feature-spotlight-section">
+		<div class="section-container">
+			<div class="section-badge">COMMAND CENTER</div>
+			<h2 class="section-heading">
+				"Which process is holding <code class="code-highlight">:3000</code>?" <br>
+				<span class="gradient-text">Answered in milliseconds.</span>
+			</h2>
+			<p class="section-subtext">
+				Never run <code>lsof -i :3000</code> and <code>kill -9</code> in a terminal panic again. Matric continuously scans listening sockets, extracts working directories, reads your Git branch, and lets you open or terminate services with one click.
+			</p>
+
+			<div class="grid-3-col">
+				<div class="feature-card">
+					<div class="card-icon emerald">🎯</div>
+					<h3>Port Conflict Watchdog</h3>
+					<p>
+						Built-in watchdog sheet lets you query any port (:3000, :5173, :8080, :5432). If in use, see the holding process name, PID, user, CPU%, and working directory, then release or force kill with 1-click.
+					</p>
+					<div class="micro-mockup">
+						<div class="watchdog-mockup-row">
+							<span class="tag-port-num">:3000</span>
+							<span class="tag-status-warn">OCCUPIED · node (PID 32941)</span>
+						</div>
+						<div class="watchdog-actions-row">
+							<span class="btn-micro-gray">Open Browser</span>
+							<span class="btn-micro-red">Release Port (SIGKILL)</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="feature-card">
+					<div class="card-icon cyan">🌿</div>
+					<h3>Zero-Subprocess Git Detection</h3>
+					<p>
+						Matric inspects <code>.git/HEAD</code> and worktree pointer files directly via native filesystem reads without spawning slow <code>git branch</code> shell subprocesses. Instant branch visibility with zero battery drain.
+					</p>
+					<div class="micro-mockup">
+						<div class="git-pill-display">
+							<span class="git-icon">⎇</span>
+							<span class="branch-name">feat/payment-gateway-v2</span>
+							<span class="branch-copy-badge">1-Click Copy</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="feature-card">
+					<div class="card-icon indigo">🚀</div>
+					<h3>1-Click IDE & Tool Launchers</h3>
+					<p>
+						Launch project folders directly into <strong>Cursor</strong>, <strong>VS Code</strong>, <strong>Terminal</strong>, or <strong>Finder</strong>. Open localhost URLs in your browser or copy them to your clipboard with immediate toast feedback.
+					</p>
+					<div class="micro-mockup">
+						<div class="ide-chips-row">
+							<span class="ide-chip">Cursor</span>
+							<span class="ide-chip">VS Code</span>
+							<span class="ide-chip">Terminal</span>
+							<span class="ide-chip">Finder</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- FEATURE 2: Activity Monitor vs Matric (App Grouping) -->
+	<section id="comparison" class="comparison-section">
+		<div class="section-container">
+			<div class="section-badge">INTELLIGENT ATTRIBUTION</div>
+			<h2 class="section-heading">
+				Activity Monitor vs. Matric <br>
+				<span class="gradient-text">Hierarchy replaces the helper chaos.</span>
+			</h2>
+			<p class="section-subtext">
+				Modern browsers, IDEs, and Electron applications spawn dozens of anonymous child workers. Activity Monitor leaves them scattered across a 500-row list. Matric organizes them cleanly.
+			</p>
+
+			<div class="comparison-grid">
+				<!-- Old Activity Monitor -->
+				<div class="compare-card old-way">
+					<div class="compare-header">
+						<span class="compare-badge red">ACTIVITY MONITOR (DEFAULT)</span>
+						<span class="compare-subtitle">Flat wall of anonymous threads</span>
+					</div>
+					<div class="compare-content">
+						<div class="mock-row bad">
+							<span class="proc-name">Google Chrome Helper (Renderer)</span>
+							<span class="proc-pid">PID 18,941</span>
+							<span class="proc-metric">32.4% CPU</span>
+						</div>
+						<div class="mock-row bad">
+							<span class="proc-name">Google Chrome Helper (Renderer)</span>
+							<span class="proc-pid">PID 18,942</span>
+							<span class="proc-metric">28.1% CPU</span>
+						</div>
+						<div class="mock-row bad">
+							<span class="proc-name">Google Chrome Helper (GPU)</span>
+							<span class="proc-pid">PID 18,910</span>
+							<span class="proc-metric">14.6% CPU</span>
+						</div>
+						<div class="mock-row bad">
+							<span class="proc-name">Google Chrome Helper (Alerts)</span>
+							<span class="proc-pid">PID 19,002</span>
+							<span class="proc-metric">5.2% CPU</span>
+						</div>
+						<div class="compare-verdict bad">
+							❌ 47 disconnected rows. Impossible to know which browser tab or window is freezing your Mac.
+						</div>
+					</div>
+				</div>
+
+				<!-- Matric The New Way -->
+				<div class="compare-card matric-way">
+					<div class="compare-header">
+						<span class="compare-badge emerald">MATRIC (INTELLIGENT GROUPING)</span>
+						<span class="compare-subtitle">One parent app with aggregated totals</span>
+					</div>
+					<div class="compare-content">
+						<div class="mock-row good parent">
+							<div class="app-title-cell">
+								<span class="app-icon-circle">🌐</span>
+								<strong>Google Chrome</strong>
+								<span class="helpers-count">47 child helpers</span>
+							</div>
+							<span class="proc-metric bold">80.3% CPU · 4.8 GB</span>
+						</div>
+						<div class="child-inspector-drawer">
+							<div class="child-row">
+								<span>Renderer (Tab: Figma Dashboard)</span>
+								<span>PID 18,941 · 32.4%</span>
+							</div>
+							<div class="child-row">
+								<span>Renderer (Tab: Localhost 3000)</span>
+								<span>PID 18,942 · 28.1%</span>
+							</div>
+							<div class="child-actions">
+								<span class="btn-micro-action">Inspect 47 Processes</span>
+								<span class="btn-micro-action red">Graceful Quit (SIGTERM)</span>
+							</div>
+						</div>
+						<div class="compare-verdict good">
+							✅ All 47 processes grouped under Google Chrome with aggregate CPU, RAM footprint, and 1-click inspection.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- FEATURE 3: 30-Day Historical Time-Travel -->
+	<section id="time-travel" class="time-travel-section">
+		<div class="section-container">
+			<div class="section-badge">HISTORICAL DIAGNOSTICS</div>
+			<h2 class="section-heading">
+				"Why was my Mac lagging yesterday at 3:15 PM?" <br>
+				<span class="gradient-text">Scrub through 30 days of history.</span>
+			</h2>
+			<p class="section-subtext">
+				Activity Monitor forgets everything the instant a process dies or your window closes. Matric saves 1-minute persistent SQLite snapshots locally on your Mac. Scrub backward to restore the exact state of apps and processes from hours or days ago.
+			</p>
+
+			<div class="scrubber-visual-box">
+				<div class="scrubber-top-controls">
+					<div class="scrubber-range-pills">
+						<span class="range-pill">12 Hours</span>
+						<span class="range-pill active">24 Hours</span>
+						<span class="range-pill">7 Days</span>
+						<span class="range-pill">30 Days</span>
+					</div>
+					<div class="scrubber-metric-selector">
+						<span>Metric: <strong>CPU Load</strong></span>
+					</div>
+				</div>
+
+				<div class="scrubber-chart-area">
+					<div class="scrubber-chart-lines">
+						<svg viewBox="0 0 1000 240" class="timeline-svg" preserveAspectRatio="none">
+							<defs>
+								<linearGradient id="grad-area" x1="0%" y1="0%" x2="0%" y2="100%">
+									<stop offset="0%" stop-color="#10B981" stop-opacity="0.35"/>
+									<stop offset="100%" stop-color="#10B981" stop-opacity="0.0"/>
+								</linearGradient>
+							</defs>
+							<path d="M0,180 Q120,160 240,170 T480,90 T640,30 T800,140 T1000,160 L1000,240 L0,240 Z" fill="url(#grad-area)" />
+							<path d="M0,180 Q120,160 240,170 T480,90 T640,30 T800,140 T1000,160" fill="none" stroke="#10B981" stroke-width="2.5" />
+						</svg>
+						<div class="scrubber-needle">
+							<div class="needle-tooltip">
+								<span class="time-label">Yesterday · 3:14:22 PM</span>
+								<span class="spike-label">🔥 CPU: 94.2% · Xcode Build Spike</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="restored-snapshot-bar">
+					<span class="restored-title">RESTORED APP STATE AT SELECTED TIME:</span>
+					<div class="restored-apps-list">
+						<div class="restored-app-chip">
+							<span class="chip-app-name">Xcode (Swift Compiler)</span>
+							<span class="chip-app-load">78.4% CPU</span>
+						</div>
+						<div class="restored-app-chip">
+							<span class="chip-app-name">Google Chrome</span>
+							<span class="chip-app-load">12.1% CPU</span>
+						</div>
+						<div class="restored-app-chip">
+							<span class="chip-app-name">Docker Desktop</span>
+							<span class="chip-app-load">3.2% CPU</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- FEATURE 4: 6 Low-Level Hardware Sensors -->
+	<section id="sensors" class="sensors-grid-section">
+		<div class="section-container">
+			<div class="section-badge">DEEP TELEMETRY</div>
+			<h2 class="section-heading">
+				6 Native Hardware Sensors. <br>
+				<span class="gradient-text">Direct Mach kernel & IOKit bindings.</span>
+			</h2>
+			<p class="section-subtext">
+				Zero slow shell commands like <code>top</code> or <code>vm_stat</code>. Matric communicates directly with macOS kernel interfaces via C and Swift for microsecond updates with less than 1% CPU utilization.
+			</p>
+
+			<div class="sensors-grid">
+				<!-- Sensor 1: CPU -->
+				<div class="sensor-card">
+					<div class="sensor-header">
+						<span class="sensor-icon emerald">⚡</span>
+						<span class="sensor-name">CPU TELEMETRY</span>
+					</div>
+					<div class="sensor-body">
+						<div class="sensor-metric-big">42.8%</div>
+						<p class="sensor-desc">
+							Mach <code>host_processor_info</code> per-core breakdown (Efficiency vs. Performance cores), User vs. System kernel load, and UNIX load averages.
+						</p>
+					</div>
+					<div class="sensor-footer">
+						<span>host_processor_info</span>
+						<span>getloadavg</span>
+					</div>
+				</div>
+
+				<!-- Sensor 2: Memory -->
+				<div class="sensor-card">
+					<div class="sensor-header">
+						<span class="sensor-icon cyan">💾</span>
+						<span class="sensor-name">UNIFIED MEMORY</span>
+					</div>
+					<div class="sensor-body">
+						<div class="sensor-metric-big">12.4 GB</div>
+						<p class="sensor-desc">
+							<code>vm_statistics64</code> decomposition: Active, Inactive, Wired, Compressed RAM, Swap space, and macOS Memory Pressure badge.
+						</p>
+					</div>
+					<div class="sensor-footer">
+						<span>vm_statistics64</span>
+						<span>sysctl vm.swapusage</span>
+					</div>
+				</div>
+
+				<!-- Sensor 3: Disk I/O -->
+				<div class="sensor-card">
+					<div class="sensor-header">
+						<span class="sensor-icon purple">💿</span>
+						<span class="sensor-name">DISK I/O THROUGHPUT</span>
+					</div>
+					<div class="sensor-body">
+						<div class="sensor-metric-big">142 MB/s</div>
+						<p class="sensor-desc">
+							Live Read & Write rates via <code>IOBlockStorageDriver</code>, APFS container capacity, and real-time per-app disk activity attribution.
+						</p>
+					</div>
+					<div class="sensor-footer">
+						<span>IOBlockStorageDriver</span>
+						<span>APFS Container Stats</span>
+					</div>
+				</div>
+
+				<!-- Sensor 4: Network -->
+				<div class="sensor-card">
+					<div class="sensor-header">
+						<span class="sensor-icon indigo">🌐</span>
+						<span class="sensor-name">NETWORK BANDWIDTH</span>
+					</div>
+					<div class="sensor-body">
+						<div class="sensor-metric-big">2.4 MB/s</div>
+						<p class="sensor-desc">
+							64-bit hardware packet and byte counters via <code>NET_RT_IFLIST2</code>. Categorizes physical Wi-Fi/Ethernet vs. virtual VPN tunnel interfaces.
+						</p>
+					</div>
+					<div class="sensor-footer">
+						<span>NET_RT_IFLIST2</span>
+						<span>getifaddrs</span>
+					</div>
+				</div>
+
+				<!-- Sensor 5: Apple Silicon GPU -->
+				<div class="sensor-card">
+					<div class="sensor-header">
+						<span class="sensor-icon rose">🎮</span>
+						<span class="sensor-name">APPLE SILICON GPU</span>
+					</div>
+					<div class="sensor-body">
+						<div class="sensor-metric-big">68.0%</div>
+						<p class="sensor-desc">
+							<code>IOAccelerator</code> registry metrics for normalized Apple Silicon GPU compute load, driver-allocated graphics memory, and thermal state.
+						</p>
+					</div>
+					<div class="sensor-footer">
+						<span>IOAccelerator</span>
+						<span>ProcessInfo.thermalState</span>
+					</div>
+				</div>
+
+				<!-- Sensor 6: Battery & Wattage -->
+				<div class="sensor-card">
+					<div class="sensor-header">
+						<span class="sensor-icon amber">🔋</span>
+						<span class="sensor-name">BATTERY & POWER DRAW</span>
+					</div>
+					<div class="sensor-body">
+						<div class="sensor-metric-big">24.6 W</div>
+						<p class="sensor-desc">
+							Instantaneous wattage draw (W), battery temperature (°C), maximum health capacity %, cycle count, and connected Bluetooth peripheral charge levels.
+						</p>
+					</div>
+					<div class="sensor-footer">
+						<span>IOPMPowerSource</span>
+						<span>IOPSGetPowerSourceDescription</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- FEATURE 5: Saved Moments & Sustained Alerts -->
+	<section class="moments-alerts-section">
+		<div class="section-container">
+			<div class="section-badge">WORKFLOW ENHANCERS</div>
+			<h2 class="section-heading">
+				Saved Moments & Sustained Load Watchdogs
+			</h2>
+			<p class="section-subtext">
+				Capture frozen diagnostic bookmarks during compiles or lag, and let automatic watchdogs notify you when a background tab runs wild.
+			</p>
+
+			<div class="grid-2-col">
+				<div class="card-split">
+					<div class="card-split-icon">📸</div>
+					<h3>Saved Moments (Diagnostic Bookmarks)</h3>
+					<p>
+						When your Mac stutters or a test suite spikes the machine, press a hotkey or click "Save a moment". Matric instantly freezes CPU, RAM, active window, disk throughput, and battery draw with space for developer notes.
+					</p>
+					<div class="card-preview-box">
+						<div class="moment-preview-item">
+							<span class="moment-title">Compile Spike: Rust Core Build</span>
+							<span class="moment-tag">100% CPU · 8.2 GB RAM</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-split">
+					<div class="card-split-icon">🚨</div>
+					<h3>Sustained Load Alerts</h3>
+					<p>
+						Runaway processes drain your battery without warning. Matric monitors moving time-windows and alerts you when any background daemon holds over 80% CPU for more than 120 seconds.
+					</p>
+					<div class="card-preview-box">
+						<div class="alert-preview-item">
+							<span class="alert-badge-warn">WARNING</span>
+							<span class="alert-text">node (PID 44102) holding 98% CPU for 140s</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- FEATURE 6: Storage Space Explorer & Cleaner -->
+	<section id="storage" class="storage-section">
+		<div class="section-container">
+			<div class="section-badge">DISK HYGIENE</div>
+			<h2 class="section-heading">
+				Storage Space Visualizer & System Cleaner
+			</h2>
+			<p class="section-subtext">
+				Locate forgotten gigabytes in seconds. Clean stale Xcode DerivedData, simulator runtimes, npm caches, and old logs with zero risk to your operating system.
+			</p>
+
+			<div class="storage-grid">
+				<div class="storage-card">
+					<span class="storage-cat-icon">🛠️</span>
+					<div class="storage-cat-info">
+						<h4>Developer Caches</h4>
+						<span class="storage-size">42.8 GB</span>
+					</div>
+					<span class="badge-cleanable">DerivedData & Simulators</span>
+				</div>
+
+				<div class="storage-card">
+					<span class="storage-cat-icon">📦</span>
+					<div class="storage-cat-info">
+						<h4>Package Managers</h4>
+						<span class="storage-size">14.2 GB</span>
+					</div>
+					<span class="badge-cleanable">npm, pnpm, yarn, cargo</span>
+				</div>
+
+				<div class="storage-card">
+					<span class="storage-cat-icon">📁</span>
+					<div class="storage-cat-info">
+						<h4>Applications</h4>
+						<span class="storage-size">88.4 GB</span>
+					</div>
+					<span class="badge-cleanable">System Applications</span>
+				</div>
+
+				<div class="storage-card">
+					<span class="storage-cat-icon">🧹</span>
+					<div class="storage-cat-info">
+						<h4>System Logs & Caches</h4>
+						<span class="storage-size">8.6 GB</span>
+					</div>
+					<span class="badge-cleanable">User & Application Caches</span>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ARCHITECTURE & PRIVACY -->
+	<section id="architecture" class="architecture-section">
+		<div class="section-container">
+			<div class="section-badge">ENGINEERING</div>
+			<h2 class="section-heading">
+				Engineered for Native macOS. <br>
+				<span class="gradient-text">Zero Electron. Zero Telemetry.</span>
+			</h2>
+			<p class="section-subtext">
+				Built with modern Swift 5.10+, SwiftUI, and Swift Observation (`@Observable`). Matric boots in 120 milliseconds, uses less than 40 MB of RAM, and makes absolutely zero network connections.
+			</p>
+
+			<div class="architecture-table-wrapper">
+				<table class="arch-table">
+					<thead>
+						<tr>
+							<th>Metric / Capability</th>
+							<th>Matric</th>
+							<th>Activity Monitor</th>
+							<th>Electron Monitors</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><strong>Developer Ports & Git Integration</strong></td>
+							<td class="check">✅ Built-in (:3000, branch, IDEs)</td>
+							<td class="cross">❌ None</td>
+							<td class="cross">❌ Rare / Slow</td>
+						</tr>
+						<tr>
+							<td><strong>Intelligent App Grouping</strong></td>
+							<td class="check">✅ Rollup with child inspector</td>
+							<td class="cross">❌ Flat list of 500+ threads</td>
+							<td class="cross">❌ Incomplete</td>
+						</tr>
+						<tr>
+							<td><strong>Historical Time-Travel</strong></td>
+							<td class="check">✅ 30-Day Offline SQLite Snapshots</td>
+							<td class="cross">❌ None (lost on close)</td>
+							<td class="cross">❌ Cloud-locked / Heavy</td>
+						</tr>
+						<tr>
+							<td><strong>Network Telemetry & Privacy</strong></td>
+							<td class="check">✅ 100% Offline (0 outbound calls)</td>
+							<td class="check">✅ Local</td>
+							<td class="cross">⚠️ Cloud tracking & telemetry</td>
+						</tr>
+						<tr>
+							<td><strong>Launch Time & Memory Footprint</strong></td>
+							<td class="check">✅ &lt; 150ms · ~40 MB RAM</td>
+							<td class="check">✅ Native</td>
+							<td class="cross">❌ 2–4s · 300–600 MB RAM</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<!-- GETTING STARTED & DOWNLOAD -->
+	<section id="download" class="cta-section">
+		<div class="section-container">
+			<div class="cta-box">
+				<img src="/app-icon.png" alt="Matric App Icon" class="cta-app-icon" />
+				<h2 class="cta-title">Take control of your Mac today.</h2>
+				<p class="cta-text">
+					Free, open-source, and ready for macOS 14.0 (Sonoma) and macOS 15.0+ (Sequoia).
+				</p>
+
+				<div class="cta-buttons">
+					<a href="https://github.com/pawanbhayde/matric/releases" class="btn-primary-large">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.76 1.05-1.82.93-2.88-.91.04-2.03.61-2.68 1.37-.58.67-1.09 1.76-.95 2.8 1.02.08 2.08-.53 2.7-1.29z"/>
+						</svg>
+						<span>Download Matric for Mac</span>
+					</a>
+					<a href="https://github.com/pawanbhayde/matric" target="_blank" rel="noopener noreferrer" class="btn-secondary-large">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+						</svg>
+						<span>Clone & Build from Source</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- PORT WATCHDOG INTERACTIVE SIMULATOR MODAL (Hidden by default) -->
+	<div id="watchdog-modal" class="modal-overlay hidden">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="modal-title-row">
+					<span class="modal-icon">🛡️</span>
+					<h3>Port Conflict Watchdog</h3>
+				</div>
+				<button id="btn-close-modal" class="btn-modal-close">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p class="modal-instruction">Enter any local TCP port or select a preset to test binding availability:</p>
+				<div class="modal-input-row">
+					<span class="input-prefix">:</span>
+					<input type="text" id="watchdog-input" value="3000" placeholder="3000" />
+					<button id="btn-simulate-scan" class="btn-modal-check">Scan Port</button>
+				</div>
+				<div class="preset-chips">
+					<span class="preset-chip active" data-port="3000">:3000</span>
+					<span class="preset-chip" data-port="5173">:5173</span>
+					<span class="preset-chip" data-port="8080">:8080</span>
+					<span class="preset-chip" data-port="8000">:8000</span>
+					<span class="preset-chip" data-port="5432">:5432</span>
+					<span class="preset-chip" data-port="6379">:6379</span>
+				</div>
+
+				<div id="watchdog-result-occupied" class="conflict-card">
+					<div class="conflict-badge-warn">
+						<span>⚠️ PORT IN USE</span>
+						<span>Bound by node (PID 32941)</span>
+					</div>
+					<div class="conflict-grid">
+						<div class="conflict-item">
+							<span class="label">PROCESS</span>
+							<span class="val">node</span>
+						</div>
+						<div class="conflict-item">
+							<span class="label">PID & USER</span>
+							<span class="val">32941 · developer</span>
+						</div>
+						<div class="conflict-item">
+							<span class="label">CPU & RAM</span>
+							<span class="val">1.2% · 412 MB</span>
+						</div>
+						<div class="conflict-item">
+							<span class="label">DIRECTORY</span>
+							<span class="val mono">~/projects/matric-web</span>
+						</div>
+					</div>
+					<div class="conflict-actions">
+						<a href="http://localhost:3000" target="_blank" class="btn-conflict-browser">Open localhost:3000</a>
+						<button id="btn-simulate-kill" class="btn-conflict-kill">Force Release Port (SIGKILL)</button>
+					</div>
+				</div>
+
+				<div id="watchdog-result-free" class="free-card hidden">
+					<div class="free-badge">
+						<span>✅ PORT IS FREE & AVAILABLE</span>
+					</div>
+					<p class="free-text">No active process is bound to this port. Ready for local server binding.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Toast Notification -->
+	<div id="toast" class="toast-notification">Copied to clipboard!</div>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="footer-container">
+			<div class="footer-brand-col">
+				<div class="footer-brand">
+					<img src="/app-icon.png" alt="Matric Icon" class="footer-icon" />
+					<span class="footer-title">Matric</span>
+				</div>
+				<p class="footer-tagline">
+					Native macOS activity monitor and developer command center. 100% open source under the MIT License.
+				</p>
+			</div>
+
+			<div class="footer-links-col">
+				<span class="footer-col-heading">Features</span>
+				<a href="#projects">Dev Projects</a>
+				<a href="#comparison">App Grouping</a>
+				<a href="#time-travel">Historical Time-Travel</a>
+				<a href="#sensors">Hardware Sensors</a>
+				<a href="#storage">Disk Space & Cleaner</a>
+			</div>
+
+			<div class="footer-links-col">
+				<span class="footer-col-heading">Community & Open Source</span>
+				<a href="https://github.com/pawanbhayde/matric" target="_blank">GitHub Repository</a>
+				<a href="https://github.com/pawanbhayde/matric/blob/main/CONTRIBUTING.md" target="_blank">Contributing Guide</a>
+				<a href="https://github.com/pawanbhayde/matric/blob/main/LICENSE" target="_blank">MIT License</a>
+				<a href="https://github.com/pawanbhayde/matric/issues" target="_blank">Report an Issue</a>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>© 2026 Matric Contributors. Inspired by <a href="https://pulsemac.app/" target="_blank" rel="noopener noreferrer">Pulse for Mac</a>.</p>
+		</div>
+	</footer>
 </Layout>
+
+<script>
+	// 1. Dual-View Mode Switcher (Cards vs Ports Table)
+	const toggleCards = document.getElementById('toggle-cards');
+	const toggleTable = document.getElementById('toggle-table');
+	const viewCards = document.getElementById('view-cards-content');
+	const viewTable = document.getElementById('view-table-content');
+
+	toggleCards?.addEventListener('click', () => {
+		toggleCards.classList.add('active');
+		toggleTable?.classList.remove('active');
+		viewCards?.classList.remove('hidden');
+		viewTable?.classList.add('hidden');
+	});
+
+	toggleTable?.addEventListener('click', () => {
+		toggleTable.classList.add('active');
+		toggleCards?.classList.remove('active');
+		viewTable?.classList.remove('hidden');
+		viewCards?.classList.add('hidden');
+	});
+
+	// 2. Terminal Command Copy Button
+	const copyBtn = document.getElementById('copy-btn');
+	const copyLabel = document.getElementById('copy-label');
+	const brewCmd = document.getElementById('brew-cmd');
+	const toast = document.getElementById('toast');
+
+	function showToast(msg: string) {
+		if (!toast) return;
+		toast.textContent = msg;
+		toast.classList.add('show');
+		setTimeout(() => {
+			toast.classList.remove('show');
+		}, 2400);
+	}
+
+	copyBtn?.addEventListener('click', () => {
+		if (brewCmd) {
+			navigator.clipboard.writeText(brewCmd.textContent || '');
+			if (copyLabel) copyLabel.textContent = 'Copied!';
+			showToast('Command copied to clipboard!');
+			setTimeout(() => {
+				if (copyLabel) copyLabel.textContent = 'Copy';
+			}, 2000);
+		}
+	});
+
+	// 3. Port Watchdog Interactive Modal
+	const btnWatchdogModal = document.getElementById('btn-watchdog-modal');
+	const watchdogModal = document.getElementById('watchdog-modal');
+	const btnCloseModal = document.getElementById('btn-close-modal');
+	const watchdogInput = document.getElementById('watchdog-input') as HTMLInputElement;
+	const btnSimulateScan = document.getElementById('btn-simulate-scan');
+	const btnSimulateKill = document.getElementById('btn-simulate-kill');
+	const resultOccupied = document.getElementById('watchdog-result-occupied');
+	const resultFree = document.getElementById('watchdog-result-free');
+	const presetChips = document.querySelectorAll('.preset-chip');
+
+	btnWatchdogModal?.addEventListener('click', () => {
+		watchdogModal?.classList.remove('hidden');
+	});
+
+	btnCloseModal?.addEventListener('click', () => {
+		watchdogModal?.classList.add('hidden');
+	});
+
+	watchdogModal?.addEventListener('click', (e) => {
+		if (e.target === watchdogModal) {
+			watchdogModal.classList.add('hidden');
+		}
+	});
+
+	presetChips.forEach(chip => {
+		chip.addEventListener('click', () => {
+			presetChips.forEach(c => c.classList.remove('active'));
+			chip.classList.add('active');
+			const port = chip.getAttribute('data-port') || '3000';
+			if (watchdogInput) watchdogInput.value = port;
+			simulateScan(port);
+		});
+	});
+
+	btnSimulateScan?.addEventListener('click', () => {
+		const port = watchdogInput?.value.replace(':', '') || '3000';
+		simulateScan(port);
+	});
+
+	function simulateScan(port: string) {
+		if (port === '8080' || port === '3306') {
+			resultOccupied?.classList.add('hidden');
+			resultFree?.classList.remove('hidden');
+		} else {
+			resultOccupied?.classList.remove('hidden');
+			resultFree?.classList.add('hidden');
+		}
+	}
+
+	btnSimulateKill?.addEventListener('click', () => {
+		resultOccupied?.classList.add('hidden');
+		resultFree?.classList.remove('hidden');
+		showToast(`Process holding port killed! Port is now free.`);
+	});
+</script>
+
+<style>
+	/* Glow Backgrounds */
+	.glow-bg-top {
+		position: absolute;
+		top: -150px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 1000px;
+		height: 600px;
+		background: radial-gradient(ellipse, rgba(16, 185, 129, 0.15) 0%, rgba(99, 102, 241, 0.08) 50%, transparent 70%);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.glow-bg-middle {
+		position: absolute;
+		top: 1400px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 900px;
+		height: 500px;
+		background: radial-gradient(ellipse, rgba(6, 182, 212, 0.09) 0%, rgba(139, 92, 246, 0.06) 50%, transparent 70%);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	/* Navigation Header */
+	.nav-header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		width: 100%;
+		background: rgba(7, 8, 11, 0.75);
+		backdrop-filter: blur(18px);
+		-webkit-backdrop-filter: blur(18px);
+		border-bottom: 1px solid var(--border-subtle);
+	}
+
+	.nav-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 12px 24px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.brand-link {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		text-decoration: none;
+		color: var(--text-primary);
+	}
+
+	.brand-icon {
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	}
+
+	.brand-name {
+		font-size: 19px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	.brand-badge {
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--accent-emerald);
+		background: rgba(16, 185, 129, 0.12);
+		border: 1px solid rgba(16, 185, 129, 0.25);
+		padding: 2px 7px;
+		border-radius: 12px;
+	}
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+	}
+
+	.nav-links a {
+		color: var(--text-secondary);
+		text-decoration: none;
+		font-size: 13.5px;
+		font-weight: 500;
+		transition: color 0.15s ease;
+	}
+
+	.nav-links a:hover {
+		color: var(--text-primary);
+	}
+
+	.nav-actions {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.btn-github {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--border-subtle);
+		color: var(--text-primary);
+		padding: 7px 14px;
+		border-radius: 8px;
+		font-size: 13px;
+		font-weight: 500;
+		text-decoration: none;
+		transition: all 0.15s ease;
+	}
+
+	.btn-github:hover {
+		background: rgba(255, 255, 255, 0.1);
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+
+	.btn-download-nav {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		background: #ffffff;
+		color: #000000;
+		padding: 7px 14px;
+		border-radius: 8px;
+		font-size: 13px;
+		font-weight: 600;
+		text-decoration: none;
+		transition: opacity 0.15s ease;
+	}
+
+	.btn-download-nav:hover {
+		opacity: 0.9;
+	}
+
+	/* Hero Section */
+	.hero-section {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 60px 24px 80px;
+		position: relative;
+		z-index: 10;
+	}
+
+	.hero-content {
+		text-align: center;
+		max-width: 840px;
+		margin: 0 auto 60px;
+	}
+
+	.hero-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px 14px;
+		background: rgba(16, 185, 129, 0.08);
+		border: 1px solid rgba(16, 185, 129, 0.25);
+		border-radius: 30px;
+		margin-bottom: 24px;
+	}
+
+	.pulse-radar {
+		width: 8px;
+		height: 8px;
+		background-color: var(--accent-emerald);
+		border-radius: 50%;
+		box-shadow: 0 0 10px var(--accent-emerald);
+		animation: radar-pulse 2s infinite ease-out;
+	}
+
+	.pulse-radar.small {
+		width: 6px;
+		height: 6px;
+	}
+
+	@keyframes radar-pulse {
+		0% {
+			transform: scale(0.95);
+			box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+		}
+		70% {
+			transform: scale(1);
+			box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+		}
+		100% {
+			transform: scale(0.95);
+			box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+		}
+	}
+
+	.badge-text {
+		font-size: 11.5px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		color: var(--accent-emerald);
+	}
+
+	.hero-title {
+		font-size: 58px;
+		font-weight: 800;
+		line-height: 1.1;
+		letter-spacing: -0.035em;
+		margin-bottom: 20px;
+		color: #ffffff;
+	}
+
+	.gradient-text {
+		background: linear-gradient(135deg, #10B981 0%, #06B6D4 50%, #818CF8 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	.hero-subtitle {
+		font-size: 18px;
+		line-height: 1.6;
+		color: var(--text-secondary);
+		margin-bottom: 36px;
+	}
+
+	.hero-cta-group {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+		margin-bottom: 30px;
+	}
+
+	.btn-primary-large {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		background: #ffffff;
+		color: #000000;
+		padding: 13px 24px;
+		border-radius: 12px;
+		font-size: 15px;
+		font-weight: 600;
+		text-decoration: none;
+		box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+		transition: transform 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.btn-primary-large:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 25px rgba(255, 255, 255, 0.25);
+	}
+
+	.btn-secondary-large {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid var(--border-subtle);
+		color: #ffffff;
+		padding: 13px 24px;
+		border-radius: 12px;
+		font-size: 15px;
+		font-weight: 500;
+		text-decoration: none;
+		transition: all 0.15s ease;
+	}
+
+	.btn-secondary-large:hover {
+		background: rgba(255, 255, 255, 0.12);
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+
+	.hero-terminal-strip {
+		display: inline-flex;
+		align-items: center;
+		gap: 12px;
+		background: rgba(13, 16, 23, 0.9);
+		border: 1px solid var(--border-subtle);
+		padding: 10px 18px;
+		border-radius: 10px;
+		font-family: var(--font-mono);
+		font-size: 13px;
+		color: var(--text-secondary);
+		margin-bottom: 36px;
+	}
+
+	.terminal-prompt {
+		color: var(--accent-emerald);
+		font-weight: bold;
+	}
+
+	.btn-copy-code {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background: rgba(255, 255, 255, 0.08);
+		border: none;
+		color: var(--text-primary);
+		padding: 4px 8px;
+		border-radius: 5px;
+		font-size: 11px;
+		cursor: pointer;
+		font-family: var(--font-sans);
+		transition: background 0.15s ease;
+	}
+
+	.btn-copy-code:hover {
+		background: rgba(255, 255, 255, 0.15);
+	}
+
+	.hero-specs-row {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 18px;
+		font-size: 13px;
+		color: var(--text-muted);
+	}
+
+	.spec-item {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.spec-divider {
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: var(--text-muted);
+		opacity: 0.4;
+	}
+
+	/* Window Mockup Frame */
+	.app-window-frame {
+		background: rgba(13, 16, 23, 0.85);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border: 1px solid var(--border-subtle);
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
+	}
+
+	.window-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 12px 18px;
+		background: rgba(20, 24, 35, 0.6);
+		border-bottom: 1px solid var(--border-subtle);
+	}
+
+	.window-traffic-lights {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+	}
+
+	.light {
+		width: 11px;
+		height: 11px;
+		border-radius: 50%;
+	}
+
+	.light.close { background: #FF5F56; }
+	.light.minimize { background: #FFBD2E; }
+	.light.expand { background: #27C93F; }
+
+	.window-titlebar {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.window-app-name {
+		font-size: 12.5px;
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+
+	.window-path-pill {
+		font-size: 11px;
+		color: var(--text-muted);
+		background: rgba(255, 255, 255, 0.04);
+		padding: 2px 8px;
+		border-radius: 6px;
+	}
+
+	.window-toolbar-actions {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.interactive-view-toggle {
+		display: flex;
+		align-items: center;
+		background: rgba(0, 0, 0, 0.3);
+		padding: 2px;
+		border-radius: 8px;
+		border: 1px solid var(--border-subtle);
+	}
+
+	.view-btn {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background: transparent;
+		border: none;
+		color: var(--text-secondary);
+		padding: 4px 10px;
+		border-radius: 6px;
+		font-size: 11.5px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.view-btn.active {
+		background: rgba(255, 255, 255, 0.12);
+		color: #ffffff;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+	}
+
+	.btn-check-port {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background: rgba(16, 185, 129, 0.12);
+		border: 1px solid rgba(16, 185, 129, 0.3);
+		color: var(--accent-emerald);
+		padding: 4px 10px;
+		border-radius: 8px;
+		font-size: 11.5px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background 0.15s ease;
+	}
+
+	.btn-check-port:hover {
+		background: rgba(16, 185, 129, 0.2);
+	}
+
+	/* Window Body */
+	.window-body {
+		padding: 20px;
+	}
+
+	.kpi-summary-bar {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 14px;
+		margin-bottom: 20px;
+	}
+
+	.kpi-card {
+		background: rgba(22, 28, 41, 0.6);
+		border: 1px solid var(--border-subtle);
+		padding: 14px;
+		border-radius: 10px;
+	}
+
+	.kpi-card-header {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin-bottom: 8px;
+	}
+
+	.kpi-title {
+		font-size: 10.5px;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		color: var(--text-muted);
+	}
+
+	.kpi-value-row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 4px;
+	}
+
+	.kpi-value {
+		font-size: 22px;
+		font-weight: 700;
+		font-family: var(--font-mono);
+		letter-spacing: -0.02em;
+	}
+
+	.kpi-badge {
+		font-size: 10.5px;
+		font-weight: 600;
+		padding: 2px 6px;
+		border-radius: 6px;
+	}
+
+	.kpi-badge.emerald {
+		background: rgba(16, 185, 129, 0.15);
+		color: var(--accent-emerald);
+	}
+
+	.kpi-badge.cyan {
+		background: rgba(6, 182, 212, 0.15);
+		color: var(--accent-cyan);
+	}
+
+	.kpi-badge.muted {
+		background: rgba(255, 255, 255, 0.08);
+		color: var(--text-secondary);
+	}
+
+	.kpi-caption {
+		font-size: 11px;
+		color: var(--text-muted);
+		display: block;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	/* Cards View Grid */
+	.cards-view-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 14px;
+	}
+
+	.project-card {
+		background: rgba(22, 28, 41, 0.4);
+		border: 1px solid var(--border-subtle);
+		border-radius: 12px;
+		padding: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		transition: border-color 0.15s ease, background 0.15s ease;
+	}
+
+	.project-card:hover {
+		border-color: rgba(255, 255, 255, 0.15);
+		background: rgba(26, 33, 49, 0.5);
+	}
+
+	.card-top-row {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+	}
+
+	.project-identity {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.runtime-badge {
+		width: 38px;
+		height: 38px;
+		border-radius: 9px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	.runtime-badge.nextjs { background: #000000; color: #ffffff; border: 1px solid rgba(255,255,255,0.2); }
+	.runtime-badge.vite { background: linear-gradient(135deg, #41D1FF, #BD34FE); color: #ffffff; }
+	.runtime-badge.python { background: #306998; color: #FFD43B; }
+	.runtime-badge.postgres { background: #336791; color: #ffffff; }
+
+	.project-naming {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.name-status-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.project-title {
+		font-size: 15px;
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+
+	.status-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 10px;
+		font-weight: 700;
+		padding: 2px 7px;
+		border-radius: 10px;
+	}
+
+	.status-pill.online {
+		background: rgba(16, 185, 129, 0.12);
+		color: var(--accent-emerald);
+		border: 1px solid rgba(16, 185, 129, 0.25);
+	}
+
+	.status-pulse-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--accent-emerald);
+	}
+
+	.path-branch-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 11.5px;
+	}
+
+	.git-branch-tag {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--accent-indigo);
+		background: rgba(99, 102, 241, 0.12);
+		padding: 1px 6px;
+		border-radius: 4px;
+	}
+
+	.project-path-text {
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+	}
+
+	.runtime-stats {
+		display: flex;
+		gap: 6px;
+	}
+
+	.stat-pill {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--text-secondary);
+		background: rgba(255, 255, 255, 0.05);
+		padding: 3px 7px;
+		border-radius: 6px;
+	}
+
+	.card-ports-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding-top: 4px;
+	}
+
+	.port-label {
+		font-size: 10px;
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+
+	.port-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		padding: 3px 8px;
+		border-radius: 6px;
+		text-decoration: none;
+	}
+
+	.port-chip.link {
+		background: rgba(6, 182, 212, 0.12);
+		color: var(--accent-cyan);
+		border: 1px solid rgba(6, 182, 212, 0.25);
+		transition: background 0.15s ease;
+	}
+
+	.port-chip.link:hover {
+		background: rgba(6, 182, 212, 0.22);
+	}
+
+	.port-chip.db {
+		background: rgba(255, 255, 255, 0.06);
+		color: var(--text-secondary);
+	}
+
+	.port-dot {
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: var(--accent-emerald);
+	}
+
+	.port-arrow {
+		font-size: 9px;
+		opacity: 0.8;
+	}
+
+	.card-action-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		padding-top: 10px;
+	}
+
+	.ide-launchers {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.btn-ide {
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid var(--border-subtle);
+		color: var(--text-secondary);
+		padding: 4px 8px;
+		border-radius: 6px;
+		font-size: 11px;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.btn-ide:hover {
+		background: rgba(255, 255, 255, 0.12);
+		color: #ffffff;
+	}
+
+	.btn-stop-port {
+		background: rgba(244, 63, 94, 0.1);
+		border: 1px solid rgba(244, 63, 94, 0.2);
+		color: var(--accent-rose);
+		padding: 4px 10px;
+		border-radius: 6px;
+		font-size: 11px;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.btn-stop-port:hover {
+		background: rgba(244, 63, 94, 0.2);
+	}
+
+	/* Ports Table View */
+	.ports-table-container {
+		background: rgba(22, 28, 41, 0.4);
+		border: 1px solid var(--border-subtle);
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	.ports-table {
+		width: 100%;
+		border-collapse: collapse;
+		text-align: left;
+		font-size: 12.5px;
+	}
+
+	.ports-table th {
+		padding: 10px 14px;
+		font-size: 10px;
+		font-weight: 700;
+		color: var(--text-muted);
+		letter-spacing: 0.05em;
+		background: rgba(0, 0, 0, 0.2);
+		border-bottom: 1px solid var(--border-subtle);
+	}
+
+	.ports-table td {
+		padding: 10px 14px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+		color: var(--text-secondary);
+	}
+
+	.ports-table tr:hover td {
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.table-port-chip {
+		font-family: var(--font-mono);
+		font-weight: bold;
+		color: var(--accent-cyan);
+	}
+
+	.table-status-listen {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 10px;
+		font-weight: 700;
+		color: var(--accent-emerald);
+	}
+
+	.table-socket-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--accent-emerald);
+		box-shadow: 0 0 6px var(--accent-emerald);
+	}
+
+	.table-runtime-badge {
+		font-size: 11.5px;
+		font-weight: 500;
+	}
+
+	.table-project-cell {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.table-proj-name {
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+
+	.table-branch-pill {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--accent-indigo);
+		background: rgba(99, 102, 241, 0.12);
+		padding: 1px 5px;
+		border-radius: 4px;
+	}
+
+	.table-pid, .table-cpu, .table-ram {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+	}
+
+	.table-action-btns {
+		display: flex;
+		gap: 6px;
+	}
+
+	.table-btn-browser {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid var(--border-subtle);
+		color: var(--text-primary);
+		padding: 3px 8px;
+		border-radius: 5px;
+		font-size: 11px;
+		cursor: pointer;
+	}
+
+	.table-btn-kill {
+		background: rgba(244, 63, 94, 0.1);
+		border: 1px solid rgba(244, 63, 94, 0.2);
+		color: var(--accent-rose);
+		padding: 3px 8px;
+		border-radius: 5px;
+		font-size: 11px;
+		cursor: pointer;
+	}
+
+	/* Window Footer */
+	.window-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-top: 16px;
+		font-size: 11.5px;
+		color: var(--text-muted);
+	}
+
+	.footer-left {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.footer-dot { opacity: 0.4; }
+
+	.live-status-indicator {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		color: var(--accent-emerald);
+		font-weight: 500;
+	}
+
+	.hidden {
+		display: none !important;
+	}
+
+	/* Section Common Styles */
+	.section-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 100px 24px;
+	}
+
+	.section-badge {
+		display: inline-block;
+		font-size: 11px;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		color: var(--accent-emerald);
+		background: rgba(16, 185, 129, 0.1);
+		border: 1px solid rgba(16, 185, 129, 0.25);
+		padding: 3px 10px;
+		border-radius: 12px;
+		margin-bottom: 16px;
+	}
+
+	.section-heading {
+		font-size: 40px;
+		font-weight: 800;
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+		margin-bottom: 16px;
+	}
+
+	.section-subtext {
+		font-size: 17px;
+		line-height: 1.6;
+		color: var(--text-secondary);
+		max-width: 720px;
+		margin-bottom: 48px;
+	}
+
+	.grid-3-col {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 20px;
+	}
+
+	.feature-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
+		border-radius: 16px;
+		padding: 28px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		transition: transform 0.15s ease, border-color 0.15s ease;
+	}
+
+	.feature-card:hover {
+		transform: translateY(-3px);
+		border-color: rgba(255, 255, 255, 0.18);
+	}
+
+	.card-icon {
+		width: 44px;
+		height: 44px;
+		border-radius: 12px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 20px;
+	}
+
+	.card-icon.emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); }
+	.card-icon.cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+	.card-icon.indigo { background: rgba(99, 102, 241, 0.15); color: var(--accent-indigo); }
+
+	.feature-card h3 {
+		font-size: 18px;
+		font-weight: 700;
+	}
+
+	.feature-card p {
+		font-size: 14px;
+		line-height: 1.6;
+		color: var(--text-secondary);
+	}
+
+	.micro-mockup {
+		background: rgba(0, 0, 0, 0.35);
+		border: 1px solid var(--border-subtle);
+		border-radius: 10px;
+		padding: 12px;
+		margin-top: auto;
+	}
+
+	.watchdog-mockup-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		margin-bottom: 8px;
+	}
+
+	.tag-port-num { color: var(--accent-cyan); font-weight: bold; }
+	.tag-status-warn { color: var(--accent-amber); }
+
+	.watchdog-actions-row {
+		display: flex;
+		gap: 6px;
+	}
+
+	.btn-micro-gray {
+		background: rgba(255, 255, 255, 0.08);
+		font-size: 10px;
+		padding: 3px 7px;
+		border-radius: 4px;
+		color: var(--text-primary);
+	}
+
+	.btn-micro-red {
+		background: rgba(244, 63, 94, 0.2);
+		color: var(--accent-rose);
+		font-size: 10px;
+		padding: 3px 7px;
+		border-radius: 4px;
+		font-weight: 600;
+	}
+
+	.git-pill-display {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+	}
+
+	.branch-name { color: var(--accent-indigo); font-weight: 600; }
+	.branch-copy-badge { font-size: 9.5px; color: var(--text-muted); }
+
+	.ide-chips-row {
+		display: flex;
+		gap: 6px;
+	}
+
+	.ide-chip {
+		font-size: 10.5px;
+		background: rgba(255, 255, 255, 0.08);
+		padding: 3px 8px;
+		border-radius: 5px;
+		color: var(--text-secondary);
+	}
+
+	/* Comparison Section */
+	.comparison-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 24px;
+	}
+
+	.compare-card {
+		border-radius: 16px;
+		padding: 24px;
+		border: 1px solid var(--border-subtle);
+	}
+
+	.compare-card.old-way {
+		background: rgba(244, 63, 94, 0.03);
+		border-color: rgba(244, 63, 94, 0.2);
+	}
+
+	.compare-card.matric-way {
+		background: rgba(16, 185, 129, 0.03);
+		border-color: rgba(16, 185, 129, 0.3);
+		box-shadow: 0 0 40px rgba(16, 185, 129, 0.05);
+	}
+
+	.compare-header {
+		margin-bottom: 20px;
+	}
+
+	.compare-badge {
+		font-size: 10.5px;
+		font-weight: 800;
+		padding: 3px 8px;
+		border-radius: 6px;
+		display: inline-block;
+		margin-bottom: 6px;
+	}
+
+	.compare-badge.red { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); }
+	.compare-badge.emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); }
+
+	.compare-subtitle {
+		font-size: 13px;
+		color: var(--text-muted);
+		display: block;
+	}
+
+	.mock-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 12px;
+		border-radius: 8px;
+		font-size: 12px;
+		margin-bottom: 6px;
+	}
+
+	.mock-row.bad {
+		background: rgba(0, 0, 0, 0.3);
+		border-left: 2px solid var(--accent-rose);
+		color: var(--text-secondary);
+	}
+
+	.mock-row.good.parent {
+		background: rgba(16, 185, 129, 0.08);
+		border: 1px solid rgba(16, 185, 129, 0.2);
+		color: #ffffff;
+	}
+
+	.app-title-cell {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.helpers-count {
+		font-size: 11px;
+		color: var(--accent-emerald);
+		background: rgba(16, 185, 129, 0.15);
+		padding: 1px 6px;
+		border-radius: 6px;
+	}
+
+	.child-inspector-drawer {
+		margin-left: 20px;
+		padding: 10px 14px;
+		background: rgba(0, 0, 0, 0.3);
+		border-left: 2px solid var(--accent-emerald);
+		border-radius: 0 0 8px 8px;
+		font-size: 11.5px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin-bottom: 12px;
+	}
+
+	.child-row {
+		display: flex;
+		justify-content: space-between;
+		color: var(--text-muted);
+	}
+
+	.child-actions {
+		display: flex;
+		gap: 8px;
+		margin-top: 4px;
+	}
+
+	.btn-micro-action {
+		font-size: 10px;
+		background: rgba(255, 255, 255, 0.08);
+		padding: 2px 7px;
+		border-radius: 4px;
+		color: var(--text-primary);
+	}
+
+	.btn-micro-action.red {
+		background: rgba(244, 63, 94, 0.2);
+		color: var(--accent-rose);
+	}
+
+	.compare-verdict {
+		margin-top: 16px;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	.compare-verdict.bad { color: var(--accent-rose); }
+	.compare-verdict.good { color: var(--accent-emerald); }
+
+	/* Time Travel Section */
+	.scrubber-visual-box {
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
+		border-radius: 16px;
+		padding: 24px;
+	}
+
+	.scrubber-top-controls {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 24px;
+	}
+
+	.scrubber-range-pills {
+		display: flex;
+		gap: 8px;
+	}
+
+	.range-pill {
+		font-size: 12px;
+		font-weight: 500;
+		padding: 4px 12px;
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.05);
+		color: var(--text-secondary);
+		cursor: pointer;
+	}
+
+	.range-pill.active {
+		background: rgba(16, 185, 129, 0.15);
+		color: var(--accent-emerald);
+		border: 1px solid rgba(16, 185, 129, 0.3);
+	}
+
+	.scrubber-chart-area {
+		position: relative;
+		height: 200px;
+		border-bottom: 1px solid var(--border-subtle);
+		margin-bottom: 20px;
+	}
+
+	.timeline-svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.scrubber-needle {
+		position: absolute;
+		left: 64%;
+		top: 0;
+		bottom: 0;
+		width: 2px;
+		background: #ffffff;
+		box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+	}
+
+	.needle-tooltip {
+		position: absolute;
+		bottom: 110%;
+		left: 50%;
+		transform: translateX(-50%);
+		background: rgba(13, 16, 23, 0.95);
+		border: 1px solid var(--border-subtle);
+		padding: 8px 12px;
+		border-radius: 8px;
+		white-space: nowrap;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+	}
+
+	.time-label { font-size: 11px; color: var(--text-muted); }
+	.spike-label { font-size: 12px; font-weight: 600; color: var(--accent-amber); }
+
+	.restored-snapshot-bar {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+	}
+
+	.restored-title {
+		font-size: 10.5px;
+		font-weight: 700;
+		color: var(--text-muted);
+		letter-spacing: 0.05em;
+	}
+
+	.restored-apps-list {
+		display: flex;
+		gap: 10px;
+	}
+
+	.restored-app-chip {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background: rgba(255, 255, 255, 0.05);
+		padding: 5px 10px;
+		border-radius: 6px;
+		font-size: 11.5px;
+	}
+
+	.chip-app-name { color: var(--text-primary); font-weight: 500; }
+	.chip-app-load { color: var(--accent-amber); font-family: var(--font-mono); }
+
+	/* Sensors Grid */
+	.sensors-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 20px;
+	}
+
+	.sensor-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
+		border-radius: 16px;
+		padding: 24px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.sensor-header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-bottom: 12px;
+	}
+
+	.sensor-icon {
+		font-size: 16px;
+	}
+
+	.sensor-name {
+		font-size: 11px;
+		font-weight: 700;
+		color: var(--text-muted);
+		letter-spacing: 0.06em;
+	}
+
+	.sensor-metric-big {
+		font-size: 36px;
+		font-weight: 800;
+		font-family: var(--font-mono);
+		margin-bottom: 8px;
+	}
+
+	.sensor-desc {
+		font-size: 13.5px;
+		line-height: 1.5;
+		color: var(--text-secondary);
+		margin-bottom: 16px;
+	}
+
+	.sensor-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-top: 12px;
+		border-top: 1px solid var(--border-subtle);
+		font-size: 10.5px;
+		font-family: var(--font-mono);
+		color: var(--text-muted);
+	}
+
+	/* Moments & Alerts */
+	.grid-2-col {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 24px;
+	}
+
+	.card-split {
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
+		border-radius: 16px;
+		padding: 28px;
+	}
+
+	.card-split-icon { font-size: 28px; margin-bottom: 12px; }
+	.card-split h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+	.card-split p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 20px; }
+
+	.card-preview-box {
+		background: rgba(0, 0, 0, 0.3);
+		border: 1px solid var(--border-subtle);
+		border-radius: 10px;
+		padding: 14px;
+	}
+
+	.moment-preview-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 12px;
+	}
+
+	.moment-title { font-weight: 600; color: var(--text-primary); }
+	.moment-tag { color: var(--accent-rose); font-family: var(--font-mono); font-size: 11px; }
+
+	.alert-preview-item {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-size: 12px;
+	}
+
+	.alert-badge-warn {
+		background: rgba(245, 158, 11, 0.15);
+		color: var(--accent-amber);
+		padding: 2px 6px;
+		border-radius: 4px;
+		font-weight: 700;
+		font-size: 10px;
+	}
+
+	/* Storage Section */
+	.storage-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 16px;
+	}
+
+	.storage-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
+		border-radius: 14px;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.storage-cat-icon { font-size: 24px; }
+	.storage-cat-info h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+	.storage-size { font-size: 20px; font-weight: 700; font-family: var(--font-mono); color: var(--accent-cyan); }
+	.badge-cleanable { font-size: 10.5px; color: var(--text-muted); }
+
+	/* Architecture Table */
+	.architecture-table-wrapper {
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
+		border-radius: 16px;
+		overflow: hidden;
+	}
+
+	.arch-table {
+		width: 100%;
+		border-collapse: collapse;
+		text-align: left;
+		font-size: 13.5px;
+	}
+
+	.arch-table th {
+		padding: 14px 20px;
+		background: rgba(0, 0, 0, 0.3);
+		border-bottom: 1px solid var(--border-subtle);
+		font-size: 11px;
+		color: var(--text-muted);
+		font-weight: 700;
+		letter-spacing: 0.05em;
+	}
+
+	.arch-table td {
+		padding: 14px 20px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+		color: var(--text-secondary);
+	}
+
+	.arch-table td.check { color: var(--accent-emerald); font-weight: 500; }
+	.arch-table td.cross { color: var(--text-muted); }
+
+	/* CTA Box */
+	.cta-box {
+		text-align: center;
+		background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(99, 102, 241, 0.04) 100%);
+		border: 1px solid rgba(16, 185, 129, 0.25);
+		border-radius: 24px;
+		padding: 60px 24px;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.cta-app-icon {
+		width: 72px;
+		height: 72px;
+		border-radius: 18px;
+		margin-bottom: 20px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	}
+
+	.cta-title {
+		font-size: 36px;
+		font-weight: 800;
+		margin-bottom: 12px;
+	}
+
+	.cta-text {
+		font-size: 16px;
+		color: var(--text-secondary);
+		margin-bottom: 32px;
+	}
+
+	.cta-buttons {
+		display: flex;
+		justify-content: center;
+		gap: 16px;
+	}
+
+	/* Modal Dialog */
+	.modal-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.7);
+		backdrop-filter: blur(10px);
+		z-index: 100;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.modal-content {
+		background: #0E121B;
+		border: 1px solid var(--border-subtle);
+		border-radius: 16px;
+		width: 100%;
+		max-width: 520px;
+		padding: 24px;
+		box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+	}
+
+	.modal-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 16px;
+	}
+
+	.modal-title-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 18px;
+		font-weight: 700;
+	}
+
+	.btn-modal-close {
+		background: transparent;
+		border: none;
+		color: var(--text-muted);
+		font-size: 24px;
+		cursor: pointer;
+	}
+
+	.modal-instruction {
+		font-size: 13px;
+		color: var(--text-secondary);
+		margin-bottom: 14px;
+	}
+
+	.modal-input-row {
+		display: flex;
+		align-items: center;
+		background: rgba(0, 0, 0, 0.4);
+		border: 1px solid var(--border-subtle);
+		border-radius: 8px;
+		padding: 4px 10px;
+		margin-bottom: 12px;
+	}
+
+	.input-prefix {
+		font-family: var(--font-mono);
+		color: var(--accent-emerald);
+		font-weight: bold;
+		margin-right: 4px;
+	}
+
+	.modal-input-row input {
+		background: transparent;
+		border: none;
+		color: #ffffff;
+		font-family: var(--font-mono);
+		font-size: 14px;
+		width: 100%;
+		outline: none;
+	}
+
+	.btn-modal-check {
+		background: var(--accent-emerald);
+		color: #000000;
+		border: none;
+		padding: 6px 14px;
+		border-radius: 6px;
+		font-size: 12px;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.preset-chips {
+		display: flex;
+		gap: 6px;
+		margin-bottom: 20px;
+	}
+
+	.preset-chip {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		background: rgba(255, 255, 255, 0.06);
+		padding: 3px 8px;
+		border-radius: 6px;
+		cursor: pointer;
+		color: var(--text-secondary);
+	}
+
+	.preset-chip.active {
+		background: rgba(16, 185, 129, 0.15);
+		color: var(--accent-emerald);
+		border: 1px solid rgba(16, 185, 129, 0.3);
+	}
+
+	.conflict-card {
+		background: rgba(245, 158, 11, 0.05);
+		border: 1px solid rgba(245, 158, 11, 0.25);
+		border-radius: 10px;
+		padding: 16px;
+	}
+
+	.conflict-badge-warn {
+		display: flex;
+		justify-content: space-between;
+		font-size: 11.5px;
+		font-weight: 700;
+		color: var(--accent-amber);
+		margin-bottom: 12px;
+	}
+
+	.conflict-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
+		margin-bottom: 16px;
+	}
+
+	.conflict-item {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.conflict-item .label { font-size: 10px; color: var(--text-muted); font-weight: 700; }
+	.conflict-item .val { font-size: 12px; color: var(--text-primary); }
+	.conflict-item .val.mono { font-family: var(--font-mono); font-size: 11px; }
+
+	.conflict-actions {
+		display: flex;
+		gap: 10px;
+	}
+
+	.btn-conflict-browser {
+		flex: 1;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid var(--border-subtle);
+		color: #ffffff;
+		padding: 8px 12px;
+		border-radius: 8px;
+		font-size: 12px;
+		font-weight: 500;
+		text-align: center;
+		text-decoration: none;
+	}
+
+	.btn-conflict-kill {
+		flex: 1;
+		background: rgba(244, 63, 94, 0.2);
+		border: 1px solid rgba(244, 63, 94, 0.3);
+		color: var(--accent-rose);
+		padding: 8px 12px;
+		border-radius: 8px;
+		font-size: 12px;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.free-card {
+		background: rgba(16, 185, 129, 0.08);
+		border: 1px solid rgba(16, 185, 129, 0.25);
+		border-radius: 10px;
+		padding: 20px;
+		text-align: center;
+	}
+
+	.free-badge {
+		font-size: 13px;
+		font-weight: 700;
+		color: var(--accent-emerald);
+		margin-bottom: 6px;
+	}
+
+	.free-text {
+		font-size: 12px;
+		color: var(--text-secondary);
+	}
+
+	/* Toast Notification */
+	.toast-notification {
+		position: fixed;
+		bottom: 24px;
+		right: 24px;
+		background: #10B981;
+		color: #000000;
+		padding: 10px 18px;
+		border-radius: 8px;
+		font-size: 13px;
+		font-weight: 600;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+		transform: translateY(100px);
+		opacity: 0;
+		transition: transform 0.2s ease, opacity 0.2s ease;
+		z-index: 200;
+	}
+
+	.toast-notification.show {
+		transform: translateY(0);
+		opacity: 1;
+	}
+
+	/* Footer */
+	.footer {
+		border-top: 1px solid var(--border-subtle);
+		background: rgba(10, 12, 16, 0.9);
+		padding: 60px 24px 30px;
+	}
+
+	.footer-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 2fr 1fr 1fr;
+		gap: 40px;
+		margin-bottom: 40px;
+	}
+
+	.footer-brand {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 12px;
+	}
+
+	.footer-icon {
+		width: 28px;
+		height: 28px;
+		border-radius: 6px;
+	}
+
+	.footer-title {
+		font-size: 18px;
+		font-weight: 700;
+	}
+
+	.footer-tagline {
+		font-size: 13.5px;
+		color: var(--text-secondary);
+		max-width: 320px;
+		line-height: 1.6;
+	}
+
+	.footer-links-col {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.footer-col-heading {
+		font-size: 11px;
+		font-weight: 700;
+		color: var(--text-muted);
+		letter-spacing: 0.05em;
+		margin-bottom: 6px;
+	}
+
+	.footer-links-col a {
+		color: var(--text-secondary);
+		text-decoration: none;
+		font-size: 13px;
+		transition: color 0.15s ease;
+	}
+
+	.footer-links-col a:hover {
+		color: #ffffff;
+	}
+
+	.footer-bottom {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding-top: 24px;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		font-size: 12px;
+		color: var(--text-muted);
+		text-align: center;
+	}
+
+	.footer-bottom a {
+		color: var(--text-secondary);
+		text-decoration: underline;
+	}
+
+	/* Responsive Media Queries */
+	@media (max-width: 900px) {
+		.hero-title { font-size: 40px; }
+		.nav-links { display: none; }
+		.grid-3-col, .sensors-grid, .storage-grid { grid-template-columns: 1fr; }
+		.kpi-summary-bar { grid-template-columns: repeat(2, 1fr); }
+		.cards-view-grid { grid-template-columns: 1fr; }
+		.comparison-grid, .grid-2-col { grid-template-columns: 1fr; }
+		.footer-container { grid-template-columns: 1fr; }
+	}
+</style>
