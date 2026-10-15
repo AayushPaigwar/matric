@@ -212,7 +212,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
-    <!-- Visual 4-Pillar Feature Showcase (Real Screenshots, Minimal Text) -->
+    <!-- Visual 4-Pillar Feature Showcase (Real Screenshots with FULL Height, Uncropped) -->
     <section id="features" class="py-20 sm:py-28 bg-white border-t border-gray-100">
       <div class="mx-auto max-w-6xl px-4 sm:px-6">
         <div class="text-center max-w-2xl mx-auto">
@@ -224,96 +224,108 @@ import Layout from '../layouts/Layout.astro';
           </p>
         </div>
 
-        <!-- 4 Visual Cards Grid -->
-        <div class="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 4 Visual Cards Grid (Full Height Uncropped Screenshots) -->
+        <div class="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           <!-- Card 1: Port Inspector -->
-          <div class="flex flex-col rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
-            <div class="flex items-center justify-between">
-              <span class="rounded-full bg-purple-100 px-3 py-1 font-mono text-xs font-semibold text-purple-700">
-                Port Intelligence
-              </span>
-              <span class="font-mono text-xs text-gray-400">:3000, :8000, :5432</span>
+          <div class="flex flex-col justify-between rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="rounded-full bg-purple-100 px-3 py-1 font-mono text-xs font-semibold text-purple-700">
+                  Port Intelligence
+                </span>
+                <span class="font-mono text-xs text-gray-400">:3000, :8000, :5432</span>
+              </div>
+              <h3 class="mt-4 text-xl font-bold text-gray-900">
+                Instant Port & Conflict Killer
+              </h3>
+              <p class="mt-2 text-sm text-gray-600">
+                Never get blocked by <code class="rounded bg-white px-1.5 py-0.5 font-mono text-xs text-red-600 border border-gray-200">EADDRINUSE</code>. Identifies the PID, process name, and Git branch squatting on your port, and kills it with one click.
+              </p>
             </div>
-            <h3 class="mt-4 text-xl font-bold text-gray-900">
-              Instant Port & Conflict Killer
-            </h3>
-            <p class="mt-2 text-sm text-gray-600">
-              Never get blocked by <code class="rounded bg-white px-1.5 py-0.5 font-mono text-xs text-red-600 border border-gray-200">EADDRINUSE</code>. Identifies the PID, process name, and Git branch squatting on your port, and kills it with one click.
-            </p>
-            <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div class="mt-6 overflow-hidden rounded-2xl border border-gray-200/90 bg-gray-950 p-1 shadow-sm">
               <img 
                 src="/screenshots/hero-projects.png" 
                 alt="Matric Port Inspector Screenshot" 
-                class="w-full h-48 object-cover object-top hover:scale-[1.02] transition duration-300"
+                class="w-full h-auto block rounded-xl transition duration-300 hover:scale-[1.01]"
+                loading="lazy"
               />
             </div>
           </div>
 
           <!-- Card 2: Disk & Cache Cleanup -->
-          <div class="flex flex-col rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
-            <div class="flex items-center justify-between">
-              <span class="rounded-full bg-emerald-100 px-3 py-1 font-mono text-xs font-semibold text-emerald-700">
-                Disk Reclaim
-              </span>
-              <span class="font-mono text-xs text-emerald-600 font-semibold">37+ GB Cleanable</span>
+          <div class="flex flex-col justify-between rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="rounded-full bg-emerald-100 px-3 py-1 font-mono text-xs font-semibold text-emerald-700">
+                  Disk Reclaim
+                </span>
+                <span class="font-mono text-xs text-emerald-600 font-semibold">37+ GB Cleanable</span>
+              </div>
+              <h3 class="mt-4 text-xl font-bold text-gray-900">
+                Developer Cache & Artifact Purge
+              </h3>
+              <p class="mt-2 text-sm text-gray-600">
+                Reclaim gigabytes instantly. Safely purges stale <code class="font-mono text-xs text-gray-700">node_modules</code>, Xcode <code class="font-mono text-xs text-gray-700">DerivedData</code>, Cargo caches, and Docker dangling images.
+              </p>
             </div>
-            <h3 class="mt-4 text-xl font-bold text-gray-900">
-              Developer Cache & Artifact Purge
-            </h3>
-            <p class="mt-2 text-sm text-gray-600">
-              Reclaim gigabytes instantly. Safely purges stale <code class="font-mono text-xs text-gray-700">node_modules</code>, Xcode <code class="font-mono text-xs text-gray-700">DerivedData</code>, Cargo caches, and Docker dangling images.
-            </p>
-            <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div class="mt-6 overflow-hidden rounded-2xl border border-gray-200/90 bg-gray-950 p-1 shadow-sm">
               <img 
                 src="/screenshots/cleanup.png" 
                 alt="Matric System Cleanup Screenshot" 
-                class="w-full h-48 object-cover object-top hover:scale-[1.02] transition duration-300"
+                class="w-full h-auto block rounded-xl transition duration-300 hover:scale-[1.01]"
+                loading="lazy"
               />
             </div>
           </div>
 
           <!-- Card 3: Deep Hardware Telemetry -->
-          <div class="flex flex-col rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
-            <div class="flex items-center justify-between">
-              <span class="rounded-full bg-blue-100 px-3 py-1 font-mono text-xs font-semibold text-blue-700">
-                Apple Silicon Native
-              </span>
-              <span class="font-mono text-xs text-gray-400">10 Cores · LPDDR5</span>
+          <div class="flex flex-col justify-between rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="rounded-full bg-blue-100 px-3 py-1 font-mono text-xs font-semibold text-blue-700">
+                  Apple Silicon Native
+                </span>
+                <span class="font-mono text-xs text-gray-400">10 Cores · LPDDR5</span>
+              </div>
+              <h3 class="mt-4 text-xl font-bold text-gray-900">
+                Multi-Core CPU & Memory Pressure
+              </h3>
+              <p class="mt-2 text-sm text-gray-600">
+                Real-time Mach VM memory allocation, Apple Silicon per-core distribution, and Darwin BSD network sockets with zero Electron overhead (&lt; 20 MB RAM).
+              </p>
             </div>
-            <h3 class="mt-4 text-xl font-bold text-gray-900">
-              Multi-Core CPU & Memory Pressure
-            </h3>
-            <p class="mt-2 text-sm text-gray-600">
-              Real-time Mach VM memory allocation, Apple Silicon per-core distribution, and Darwin BSD network sockets with zero Electron overhead (&lt; 20 MB RAM).
-            </p>
-            <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div class="mt-6 overflow-hidden rounded-2xl border border-gray-200/90 bg-gray-950 p-1 shadow-sm">
               <img 
                 src="/screenshots/processor.png" 
                 alt="Matric Processor Telemetry Screenshot" 
-                class="w-full h-48 object-cover object-top hover:scale-[1.02] transition duration-300"
+                class="w-full h-auto block rounded-xl transition duration-300 hover:scale-[1.01]"
+                loading="lazy"
               />
             </div>
           </div>
 
           <!-- Card 4: Historical Diagnostics -->
-          <div class="flex flex-col rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
-            <div class="flex items-center justify-between">
-              <span class="rounded-full bg-amber-100 px-3 py-1 font-mono text-xs font-semibold text-amber-700">
-                Time-Travel
-              </span>
-              <span class="font-mono text-xs text-gray-400">Local SQLite Ledger</span>
+          <div class="flex flex-col justify-between rounded-3xl border border-gray-200/80 bg-gray-50/70 p-6 shadow-sm transition hover:shadow-md hover:border-purple-200">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="rounded-full bg-amber-100 px-3 py-1 font-mono text-xs font-semibold text-amber-700">
+                  Time-Travel
+                </span>
+                <span class="font-mono text-xs text-gray-400">Local SQLite Ledger</span>
+              </div>
+              <h3 class="mt-4 text-xl font-bold text-gray-900">
+                Long-Term Performance History
+              </h3>
+              <p class="mt-2 text-sm text-gray-600">
+                Did a daemon crash while you stepped away? Scrub backward through high-resolution hardware history to inspect the exact second memory spiked or leaked.
+              </p>
             </div>
-            <h3 class="mt-4 text-xl font-bold text-gray-900">
-              Long-Term Performance History
-            </h3>
-            <p class="mt-2 text-sm text-gray-600">
-              Did a daemon crash while you stepped away? Scrub backward through high-resolution hardware history to inspect the exact second memory spiked or leaked.
-            </p>
-            <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div class="mt-6 overflow-hidden rounded-2xl border border-gray-200/90 bg-gray-950 p-1 shadow-sm">
               <img 
                 src="/screenshots/history.png" 
                 alt="Matric History Diagnostics Screenshot" 
-                class="w-full h-48 object-cover object-top hover:scale-[1.02] transition duration-300"
+                class="w-full h-auto block rounded-xl transition duration-300 hover:scale-[1.01]"
+                loading="lazy"
               />
             </div>
           </div>
