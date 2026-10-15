@@ -31,11 +31,15 @@ public final class ProjectsManager {
     }
     
     public var hasCursor: Bool {
-        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.todesktop.230313mzl4w4u92") != nil
+        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.todesktop.230313mzl4w4u92") != nil ||
+        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.cursor.Cursor") != nil ||
+        FileManager.default.fileExists(atPath: "/Applications/Cursor.app")
     }
     
     public var hasVSCode: Bool {
-        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.microsoft.VSCode") != nil
+        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.microsoft.VSCode") != nil ||
+        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.microsoft.VSCodeInsiders") != nil ||
+        FileManager.default.fileExists(atPath: "/Applications/Visual Studio Code.app")
     }
     
     public init() {
@@ -354,7 +358,7 @@ public final class ProjectsManager {
         }
     }
     
-    // MARK: - Developer Actions
+    // MARK: - Feature 5: 1-Click Developer Actions
     public func openInBrowser(port: Int) {
         if let url = URL(string: "http://localhost:\(port)") {
             NSWorkspace.shared.open(url)
@@ -373,9 +377,19 @@ public final class ProjectsManager {
     
     public func openPathInCursor(_ path: String) {
         let url = URL(fileURLWithPath: path)
-        if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.todesktop.230313mzl4w4u92") {
-            NSWorkspace.shared.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+        if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.todesktop.230313mzl4w4u92") ??
+                        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.cursor.Cursor") ??
+                        (FileManager.default.fileExists(atPath: "/Applications/Cursor.app") ? URL(fileURLWithPath: "/Applications/Cursor.app") : nil) {
+            if FileManager.default.fileExists(atPath: appURL.path) {
+                NSWorkspace.shared.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+                return
+            }
         }
+        // Fallback to CLI command
+        let task = Process()
+        task.launchPath = "/usr/bin/env"
+        task.arguments = ["cursor", path]
+        try? task.run()
     }
     
     public func openInVSCode(_ project: DevProjectRecord) {
@@ -384,9 +398,19 @@ public final class ProjectsManager {
     
     public func openPathInVSCode(_ path: String) {
         let url = URL(fileURLWithPath: path)
-        if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.microsoft.VSCode") {
-            NSWorkspace.shared.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+        if let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.microsoft.VSCode") ??
+                        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.microsoft.VSCodeInsiders") ??
+                        (FileManager.default.fileExists(atPath: "/Applications/Visual Studio Code.app") ? URL(fileURLWithPath: "/Applications/Visual Studio Code.app") : nil) {
+            if FileManager.default.fileExists(atPath: appURL.path) {
+                NSWorkspace.shared.open([url], withApplicationAt: appURL, configuration: NSWorkspace.OpenConfiguration())
+                return
+            }
         }
+        // Fallback to CLI command
+        let task = Process()
+        task.launchPath = "/usr/bin/env"
+        task.arguments = ["code", path]
+        try? task.run()
     }
     
     public func openInTerminal(_ project: DevProjectRecord) {
@@ -394,7 +418,13 @@ public final class ProjectsManager {
     }
     
     public func openPathInTerminal(_ path: String) {
-        let script = "tell application \"Terminal\" to do script \"cd \\\"\(path.replacingOccurrences(of: "\"", with: "\\\""))\\\"\""
+        let escaped = path.replacingOccurrences(of: "\"", with: "\\\"")
+        let script = """
+        tell application "Terminal"
+            activate
+            do script "cd \"\(escaped)\""
+        end tell
+        """
         if let appleScript = NSAppleScript(source: script) {
             var error: NSDictionary?
             appleScript.executeAndReturnError(&error)

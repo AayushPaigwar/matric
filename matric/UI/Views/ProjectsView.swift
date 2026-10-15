@@ -56,15 +56,26 @@ public struct ProjectsView: View {
         }
         .overlay(alignment: .bottom) {
             if let feedback = copiedFeedback {
-                Text(feedback)
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color.black.opacity(0.85)))
-                    .shadow(radius: 8)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .padding(.bottom, 48)
+                HStack(spacing: 7) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(.green)
+                    Text(feedback)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.primary)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(
+                    Capsule()
+                        .fill(Color(nsColor: .windowBackgroundColor).opacity(0.96))
+                        .overlay(
+                            Capsule().strokeBorder(Color.primary.opacity(0.12), lineWidth: 1)
+                        )
+                        .shadow(color: .black.opacity(0.22), radius: 10, y: 5)
+                )
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .padding(.bottom, 40)
             }
         }
         .sheet(isPresented: $projectsManager.isShowingPortChecker) {
@@ -404,7 +415,7 @@ public struct ProjectsView: View {
                         },
                         onCopyPath: {
                             projectsManager.copyToClipboard(project.projectPath)
-                            showToast("Copied path")
+                            showToast("Copied directory path")
                         },
                         onCopyBranch: { branch in
                             projectsManager.copyToClipboard(branch)
@@ -424,7 +435,7 @@ public struct ProjectsView: View {
         }
     }
     
-    // MARK: - Feature 2: High-Density Ports Table View
+    // MARK: - Feature 2 & 5: High-Density Ports Table View
     @ViewBuilder
     private var portsTableContentView: some View {
         if projectsManager.filteredPortEntries.isEmpty {
@@ -447,7 +458,7 @@ public struct ProjectsView: View {
                         .frame(width: 130, alignment: .leading)
                     Spacer()
                     Text("ACTIONS")
-                        .frame(width: 120, alignment: .trailing)
+                        .frame(width: 155, alignment: .trailing)
                 }
                 .font(.system(size: 11, weight: .bold))
                 .foregroundStyle(.secondary)
@@ -460,7 +471,7 @@ public struct ProjectsView: View {
                 // Table Rows
                 ForEach(projectsManager.filteredPortEntries) { entry in
                     HStack(spacing: 12) {
-                        // Port with Click-to-Copy URL shortcut
+                        // Port with Click-to-Copy URL shortcut (Feature 5.2)
                         Button {
                             let urlStr = "http://localhost:\(entry.port)"
                             projectsManager.copyToClipboard(urlStr)
@@ -525,7 +536,7 @@ public struct ProjectsView: View {
                             
                             Button {
                                 projectsManager.copyToClipboard(entry.projectPath)
-                                showToast("Copied path")
+                                showToast("Copied directory path")
                             } label: {
                                 HStack(spacing: 4) {
                                     Text(entry.projectPath)
@@ -565,8 +576,8 @@ public struct ProjectsView: View {
                         
                         Spacer()
                         
-                        // Direct Inline Actions
-                        HStack(spacing: 6) {
+                        // Feature 5: Direct Inline Developer Actions
+                        HStack(spacing: 5) {
                             if entry.isHTTP {
                                 Button {
                                     projectsManager.openInBrowser(port: entry.port)
@@ -574,7 +585,7 @@ public struct ProjectsView: View {
                                     Image(systemName: "arrow.up.forward.app")
                                         .font(.system(size: 11))
                                         .foregroundStyle(Color.cyan)
-                                        .frame(width: 26, height: 26)
+                                        .frame(width: 24, height: 24)
                                         .background(Circle().fill(Color.cyan.opacity(0.1)))
                                 }
                                 .buttonStyle(.plain)
@@ -589,24 +600,66 @@ public struct ProjectsView: View {
                                 Image(systemName: "doc.on.doc")
                                     .font(.system(size: 10))
                                     .foregroundStyle(Color.cyan)
-                                    .frame(width: 26, height: 26)
+                                    .frame(width: 24, height: 24)
                                     .background(Circle().fill(Color.cyan.opacity(0.1)))
                             }
                             .buttonStyle(.plain)
                             .help("Copy localhost URL")
                             
+                            // IDE Launcher (Cursor or VS Code)
+                            if projectsManager.hasCursor {
+                                Button {
+                                    projectsManager.openPathInCursor(entry.projectPath)
+                                } label: {
+                                    Image(systemName: "chevron.right.circle.fill")
+                                        .font(.system(size: 10))
+                                        .foregroundStyle(.primary)
+                                        .frame(width: 24, height: 24)
+                                        .background(Circle().fill(Color.primary.opacity(0.06)))
+                                }
+                                .buttonStyle(.plain)
+                                .help("Open Project in Cursor")
+                            } else if projectsManager.hasVSCode {
+                                Button {
+                                    projectsManager.openPathInVSCode(entry.projectPath)
+                                } label: {
+                                    Image(systemName: "chevron.left.forwardslash.chevron.right")
+                                        .font(.system(size: 10))
+                                        .foregroundStyle(Color.blue)
+                                        .frame(width: 24, height: 24)
+                                        .background(Circle().fill(Color.blue.opacity(0.1)))
+                                }
+                                .buttonStyle(.plain)
+                                .help("Open Project in VS Code")
+                            }
+                            
+                            // Terminal
                             Button {
                                 projectsManager.openPathInTerminal(entry.projectPath)
                             } label: {
                                 Image(systemName: "terminal")
                                     .font(.system(size: 10))
                                     .foregroundStyle(.secondary)
-                                    .frame(width: 26, height: 26)
+                                    .frame(width: 24, height: 24)
                                     .background(Circle().fill(Color.primary.opacity(0.05)))
                             }
                             .buttonStyle(.plain)
                             .help("Open Terminal at Project Path")
                             
+                            // Finder
+                            Button {
+                                projectsManager.revealPathInFinder(entry.projectPath)
+                            } label: {
+                                Image(systemName: "folder")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.secondary)
+                                    .frame(width: 24, height: 24)
+                                    .background(Circle().fill(Color.primary.opacity(0.05)))
+                            }
+                            .buttonStyle(.plain)
+                            .help("Reveal in Finder")
+                            
+                            // Stop Port
                             Button {
                                 portToStop = entry.port
                                 showPortStopConfirmation = true
@@ -614,19 +667,94 @@ public struct ProjectsView: View {
                                 Image(systemName: "stop.fill")
                                     .font(.system(size: 10))
                                     .foregroundStyle(.red)
-                                    .frame(width: 26, height: 26)
+                                    .frame(width: 24, height: 24)
                                     .background(Circle().fill(Color.red.opacity(0.1)))
                             }
                             .buttonStyle(.plain)
                             .help("Stop or Kill Process Holding Port")
                         }
-                        .frame(width: 120, alignment: .trailing)
+                        .frame(width: 155, alignment: .trailing)
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(hoveredRowID == entry.id ? Color.primary.opacity(0.04) : Color.clear)
                     .onHover { isHovered in
                         hoveredRowID = isHovered ? entry.id : nil
+                    }
+                    // Feature 5.1 & 5.2: Right-click Context Menu on Table Row
+                    .contextMenu {
+                        if entry.isHTTP {
+                            Button {
+                                projectsManager.openInBrowser(port: entry.port)
+                            } label: {
+                                Label("Open http://localhost:\(entry.port)", systemImage: "arrow.up.forward.app")
+                            }
+                            
+                            Button {
+                                let urlStr = "http://localhost:\(entry.port)"
+                                projectsManager.copyToClipboard(urlStr)
+                                showToast("Copied \(urlStr)")
+                            } label: {
+                                Label("Copy Localhost URL", systemImage: "doc.on.doc")
+                            }
+                        }
+                        
+                        Divider()
+                        
+                        Button {
+                            projectsManager.copyToClipboard(entry.projectPath)
+                            showToast("Copied directory path")
+                        } label: {
+                            Label("Copy Directory Path", systemImage: "folder")
+                        }
+                        
+                        if let branch = entry.gitBranch {
+                            Button {
+                                projectsManager.copyToClipboard(branch)
+                                showToast("Copied branch '\(branch)'")
+                            } label: {
+                                Label("Copy Branch '\(branch)'", systemImage: "arrow.triangle.branch")
+                            }
+                        }
+                        
+                        Divider()
+                        
+                        if projectsManager.hasCursor {
+                            Button {
+                                projectsManager.openPathInCursor(entry.projectPath)
+                            } label: {
+                                Label("Open in Cursor", systemImage: "chevron.right.circle.fill")
+                            }
+                        }
+                        
+                        if projectsManager.hasVSCode {
+                            Button {
+                                projectsManager.openPathInVSCode(entry.projectPath)
+                            } label: {
+                                Label("Open in VS Code", systemImage: "chevron.left.forwardslash.chevron.right")
+                            }
+                        }
+                        
+                        Button {
+                            projectsManager.openPathInTerminal(entry.projectPath)
+                        } label: {
+                            Label("Open in Terminal", systemImage: "terminal")
+                        }
+                        
+                        Button {
+                            projectsManager.revealPathInFinder(entry.projectPath)
+                        } label: {
+                            Label("Reveal in Finder", systemImage: "folder")
+                        }
+                        
+                        Divider()
+                        
+                        Button(role: .destructive) {
+                            portToStop = entry.port
+                            showPortStopConfirmation = true
+                        } label: {
+                            Label("Release Port \(entry.port)...", systemImage: "stop.fill")
+                        }
                     }
                     
                     Divider()
@@ -1006,7 +1134,7 @@ private struct PulsingStatusDot: View {
     }
 }
 
-// MARK: - Project Card View (Feature 2 & 4 Polish)
+// MARK: - Project Card View (Feature 2, 4 & 5 Polish)
 private struct ProjectCardView: View {
     let project: DevProjectRecord
     let hasCursor: Bool
@@ -1050,7 +1178,7 @@ private struct ProjectCardView: View {
                     .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(.primary)
                 
-                // Git Branch Pill (if available) with 1-click copy (Feature 4.1)
+                // Git Branch Pill (if available) with 1-click copy (Feature 4.1 & 5.2)
                 if let branch = project.gitBranch {
                     Button {
                         onCopyBranch(branch)
@@ -1128,7 +1256,7 @@ private struct ProjectCardView: View {
                 .help("Stop or kill process")
             }
             
-            // Listening Ports / URLs
+            // Listening Ports / URLs (Feature 5.2)
             if !project.listeningPorts.isEmpty {
                 HStack(spacing: 8) {
                     Text("PORTS:")
@@ -1187,7 +1315,7 @@ private struct ProjectCardView: View {
             Divider()
                 .opacity(0.4)
             
-            // Path Row & Quick IDE Launchers
+            // Path Row & Quick IDE Launchers (Feature 5.1 & 5.2)
             HStack(spacing: 10) {
                 // Project Path with Click-to-Copy
                 Button(action: onCopyPath) {
@@ -1281,6 +1409,66 @@ private struct ProjectCardView: View {
                         .strokeBorder(Color.primary.opacity(0.06), lineWidth: 1)
                 )
         )
+        // Feature 5.1 & 5.2: Right-click Context Menu on Project Card
+        .contextMenu {
+            if let firstPort = project.listeningPorts.first {
+                Button {
+                    onOpenBrowser(firstPort)
+                } label: {
+                    Label("Open http://localhost:\(firstPort)", systemImage: "arrow.up.forward.app")
+                }
+                
+                Button {
+                    onCopyURL(firstPort)
+                } label: {
+                    Label("Copy Localhost URL", systemImage: "doc.on.doc")
+                }
+            }
+            
+            Divider()
+            
+            Button {
+                onCopyPath()
+            } label: {
+                Label("Copy Directory Path", systemImage: "folder")
+            }
+            
+            if let branch = project.gitBranch {
+                Button {
+                    onCopyBranch(branch)
+                } label: {
+                    Label("Copy Git Branch (\(branch))", systemImage: "arrow.triangle.branch")
+                }
+            }
+            
+            Divider()
+            
+            if hasCursor {
+                Button(action: onOpenCursor) {
+                    Label("Open in Cursor", systemImage: "chevron.right.circle.fill")
+                }
+            }
+            
+            if hasVSCode {
+                Button(action: onOpenVSCode) {
+                    Label("Open in VS Code", systemImage: "chevron.left.forwardslash.chevron.right")
+                }
+            }
+            
+            Button(action: onOpenTerminal) {
+                Label("Open in Terminal", systemImage: "terminal")
+            }
+            
+            Button(action: onReveal) {
+                Label("Reveal in Finder", systemImage: "folder")
+            }
+            
+            Divider()
+            
+            Button(role: .destructive, action: onStop) {
+                Label("Stop \(project.projectName)...", systemImage: "stop.fill")
+            }
+        }
     }
 }
 

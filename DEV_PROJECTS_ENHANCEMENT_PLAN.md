@@ -80,15 +80,18 @@ This document records the exact feature scope for the **Developer Projects & Por
 ---
 
 ### Feature 5: 1-Click Developer Actions
-- [ ] **5.1 Direct IDE Launchers**:
-  - **Cursor**: Opens project directory directly in Cursor (`com.todesktop.230313mzl4w4u92`).
-  - **VS Code**: Opens project directory directly in Visual Studio Code (`com.microsoft.VSCode`).
-  - **Terminal**: Opens Terminal tab cd'd to the project path.
-  - **Finder**: Reveals project in macOS Finder.
-- [ ] **5.2 Port Actions & Clipboard Helpers**:
-  - `http://localhost:<PORT>` button to open in default browser.
-  - Copy URL (`doc.on.doc`) with animated toast feedback.
-  - Copy directory path with 1-click.
+- [x] **5.1 Direct IDE Launchers**:
+  - **Cursor**: Opens project directory directly in Cursor (`com.todesktop.230313mzl4w4u92`, `com.cursor.Cursor`, or `/Applications/Cursor.app` with CLI fallback).
+  - **VS Code**: Opens project directory directly in Visual Studio Code (`com.microsoft.VSCode`, Insiders, or `/Applications/Visual Studio Code.app` with CLI fallback).
+  - **Terminal**: Opens Terminal tab cd'd to the project path with activated window focus.
+  - **Finder**: Reveals project directory directly in macOS Finder with item selection.
+  - Available across both Cards View and Ports Table View (dedicated action buttons + right-click context menu).
+- [x] **5.2 Port Actions & Clipboard Helpers**:
+  - `http://localhost:<PORT>` 1-click launch in macOS default web browser.
+  - 1-click copy localhost URL (`doc.on.doc`) with floating feedback toast.
+  - 1-click copy project directory path.
+  - 1-click copy active Git branch name.
+  - Full right-click `.contextMenu` on both Project Cards and Ports Table rows.
 
 ---
 
@@ -107,5 +110,5 @@ This document records the exact feature scope for the **Developer Projects & Por
 - [x] **Step 2**: Implement Feature 2 (Dual-View Mode: Rich Cards vs. Ports Table)
 - [x] **Step 3**: Implement Feature 3 (Smart Filtering & Organization)
 - [x] **Step 4**: Implement Feature 4 (Project Identity & Git Integration)
-- [ ] **Step 5**: Implement Feature 5 (1-Click Developer Actions)
+- [x] **Step 5**: Implement Feature 5 (1-Click Developer Actions)
 - [ ] **Step 6**: Implement Feature 6 (Built-in Port Inspector Utility)
