@@ -196,26 +196,30 @@ matric/
 
 ### Option 1: Install via Homebrew Cask (Recommended)
 
-You can install Matric directly using the Cask formula:
+Modern Homebrew requires casks to be hosted inside a tap repository. You can tap this repository directly:
 
 ```bash
-# Direct Cask installation from repository
-brew install --cask https://raw.githubusercontent.com/pawanbhayde/matric/main/Casks/matric.rb
-```
+# Tap this repository directly
+brew tap aayushpaigwar/matric https://github.com/aayushpaigwar/matric
 
-Or, if you use the tap:
-
-```bash
-brew tap pawanbhayde/tap
+# Install Matric
 brew install --cask matric
 ```
 
-To upgrade to the latest version in the future:
+> **Note on Releases:** Homebrew Cask downloads the release binary from GitHub Releases (`Matric-1.0.0.dmg`). Ensure a release tag (e.g. `v1.0.0`) has been pushed to GitHub to trigger the release workflow before running `brew install`.
+
+If you maintain a dedicated `homebrew-tap` repository:
+```bash
+brew tap aayushpaigwar/tap
+brew install --cask matric
+```
+
+To upgrade in the future:
 ```bash
 brew upgrade --cask matric
 ```
 
-To uninstall and clean up all data:
+To uninstall and clean up all app data:
 ```bash
 brew uninstall --zap --cask matric
 ```
@@ -224,7 +228,7 @@ brew uninstall --zap --cask matric
 
 ### Option 2: Download Disk Image (.dmg)
 
-1. Download the latest Universal release (**Apple Silicon & Intel**) from [GitHub Releases](https://github.com/pawanbhayde/matric/releases/latest).
+1. Download the latest Universal release (**Apple Silicon & Intel**) from [GitHub Releases](https://github.com/aayushpaigwar/matric/releases/latest).
 2. Double-click the downloaded `Matric-x.x.x.dmg`.
 3. Drag **Matric** into your **Applications** folder.
 

@@ -2,10 +2,10 @@ cask "matric" do
   version "1.0.0"
   sha256 "2bff287a4f5fa247ab535f0ca2c4a80dd83bf32c7e32c078227624e8bcce8aec"
 
-  url "https://github.com/pawanbhayde/matric/releases/download/v#{version}/Matric-#{version}.dmg"
+  url "https://github.com/aayushpaigwar/matric/releases/download/v#{version}/Matric-#{version}.dmg"
   name "Matric"
   desc "System monitor and developer workspace companion"
-  homepage "https://github.com/pawanbhayde/matric"
+  homepage "https://github.com/aayushpaigwar/matric"
 
   livecheck do
     url :url
