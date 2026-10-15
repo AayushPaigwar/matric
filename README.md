@@ -231,25 +231,36 @@ brew uninstall --zap --cask matric
 
 ---
 
-### 🛡️ Opening on macOS (Bypassing Gatekeeper / "Open Anyway")
+### 🛡️ First Launch on macOS ("Apple could not verify Matric is free of malware...")
 
-Because Matric is a free and open-source application:
+Because Matric is free and open-source software distributed outside the Mac App Store:
 
 - **If signed with an Apple Developer ID & Notarized**: Matric opens immediately on double-click with zero prompts.
-- **For community/open-source builds without Apple Developer ID**: macOS Gatekeeper marks downloaded files with a quarantine attribute. If macOS prompts that the developer cannot be verified or requires *Privacy & Security -> Open Anyway*, you can permit it in any of these ways:
+- **For community/open-source builds**: macOS Gatekeeper flags downloaded apps with a quarantine tag and displays:
+  > **“Apple could not verify ‘Matric’ is free of malware that may harm your Mac or compromise your privacy.”**
 
-1. **Option 1: 1-Line Terminal Fix (Fastest)**:
-   ```bash
-   xattr -cr /Applications/Matric.app
-   ```
-   *(This removes the quarantine attribute so Matric opens immediately on double-click)*.
-2. **Option 2: macOS System Settings**:
-   - Open **System Settings** -> **Privacy & Security**.
-   - Scroll down to the **Security** section.
-   - Click **Open Anyway** next to Matric.
-3. **Option 3: Finder Right-Click**:
-   - In `/Applications`, **Right-Click** (or `Control-Click`) on **Matric.app** and select **Open**.
-   - Click **Open** in the dialog box (only required once).
+You can permit and open Matric on any Mac in any of the following 3 ways:
+
+#### Option 1: Right-Click "Open" in Finder (Recommended - No Terminal Needed)
+1. In **Finder**, navigate to `/Applications` (or wherever you placed Matric).
+2. **Right-Click** (or hold `Control` and click) on **Matric.app**.
+3. Select **Open** from the context menu.
+4. macOS will present a dialog with an explicit **Open** button. Click **Open**.
+
+*(macOS will remember your choice and open Matric normally with a simple double-click from now on.)*
+
+#### Option 2: 1-Second Terminal Command (Fastest)
+Clear the Gatekeeper quarantine attribute directly:
+```bash
+xattr -cr /Applications/Matric.app
+```
+*(If the app is still in your Downloads folder, run `xattr -cr ~/Downloads/Matric.app`)*.
+
+#### Option 3: System Settings ("Open Anyway")
+1. Open **System Settings** on your Mac.
+2. Go to **Privacy & Security** and scroll down to the **Security** section.
+3. You will see: *"Matric was blocked from use because it is not from an identified developer."*
+4. Click **Open Anyway** and enter your password.
 
 ---
 
@@ -263,7 +274,7 @@ Because Matric is a free and open-source application:
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/pawanbhayde/matric.git
+git clone https://github.com/aayushpaigwar/matric.git
 cd matric
 ```
 
