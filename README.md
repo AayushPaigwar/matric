@@ -1,425 +1,244 @@
-# Matric (Pulse for Mac Clone)
+# Matric
 
-> A high-performance, native macOS system monitor and activity companion built with **SwiftUI** and **AppKit**. Understand the apps, processes, developer runtimes, and performance spikes behind your day — 100% locally and privately.
+<p align="center">
+  <strong>The open-source, high-performance macOS system monitor and developer workspace companion.</strong><br>
+  <em>Understand apps, background workers, developer runtimes, listening ports, and performance spikes — 100% locally and privately.</em>
+</p>
 
----
-
-## 📖 Overview & Mission
-
-**Matric** is an open-source recreation and clone of [Pulse for Mac](https://pulsemac.app/). 
-
-Unlike the stock macOS Activity Monitor — which presents an overwhelming, flat wall of disconnected UNIX threads and helper daemons — Matric brings system metrics, intelligent app grouping, developer workspace inspection, and 30-day historical time-travel into a clean, modern macOS interface.
-
-### Key Tenets
-1. **Clarity Over Clutter**: Child processes (renderers, workers, web content helpers) are automatically attributed to their parent application.
-2. **Developer-First Context**: Real-time discovery of running development servers, working directories, and listening TCP ports.
-3. **Local & Private by Design**: No telemetry, no background daemons, no cloud sync. All historical snapshots stay on your device in a local SQLite/SwiftData store.
-4. **Adaptive Resource Efficiency**: Dynamic polling rates (2 seconds when visible, 10 seconds when minimized/hidden, 1-minute historical rollups) to ensure the monitor itself consumes negligible CPU and battery.
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-macOS%2014.0%2B%20%7C%20Apple%20Silicon%20%26%20Intel-000000?style=flat-square&logo=apple&logoColor=white" alt="Platform: macOS 14.0+">
+  <img src="https://img.shields.io/badge/Swift-5.10%2B%20%2F%20Swift%206-FA7343?style=flat-square&logo=swift&logoColor=white" alt="Swift 5.10+">
+  <img src="https://img.shields.io/badge/UI-SwiftUI%20%2B%20AppKit-0A84FF?style=flat-square" alt="SwiftUI + AppKit">
+  <img src="https://img.shields.io/badge/Telemetry-0%25%20Offline-34C759?style=flat-square" alt="100% Offline">
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License: MIT">
+  <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=flat-square" alt="PRs Welcome">
+</p>
 
 ---
 
-## 🎥 Screen-by-Screen Analysis (`pulse-demo-v1.mp4`)
+## 🌟 Why Matric?
 
-Below is the exhaustive, screen-by-screen breakdown of the Pulse macOS application recorded in `pulse-demo-v1.mp4` (Duration: 79s, 1440×846 @ 30fps).
+The standard macOS **Activity Monitor** is powerful, but it presents a flat, cluttered wall of disconnected UNIX threads, anonymous helpers, and obscure daemon processes. It offers zero awareness of development servers, open TCP ports, or project repositories, and forgets everything the moment you close it.
+
+**Matric** is an open-source, native macOS system monitor and developer workspace companion built with **SwiftUI** and **AppKit**.
+
+### Core Tenets
+1. **Intelligent App Grouping**: Helper processes, web renderers, and background workers are automatically rolled up into their parent applications.
+2. **Developer-First Command Center**: Instantly discovers local dev servers, listening TCP ports, project folders, and active Git branches with 1-click IDE and browser launchers.
+3. **30-Day Historical Time-Travel**: Scrub backward in time to see exactly what applications and processes caused CPU or memory spikes hours or days ago.
+4. **100% Local & Private**: Zero cloud sync, zero telemetry, zero analytics. Everything runs locally on your Mac.
+5. **Battery & Resource Friendly**: Highly optimized Darwin/Mach kernel polling with adaptive refresh rates (faster when visible, throttled when minimized).
+
+---
+
+## 🚀 Key Features
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│  Pulse Window Layout                                                                   │
+│  Matric Window Layout                                                                  │
 ├─────────────────────┬──────────────────────────────────────────────────────────────────┤
 │ SIDEBAR             │ MAIN CONTENT VIEW                                                │
 │                     │                                                                  │
-│  RESOURCES          │  • Dynamic Header (Title, Subtitle, Status, Badges)              │
-│   • Overview        │  • Summary KPI Cards Grid (Live Metrics & Trends)                │
+│  RESOURCES          │  • Dynamic Header (Live KPI Metrics, Status Badges & Counters)   │
+│   • Overview        │  • Summary KPI Cards Grid (CPU, RAM, Disk, Net, GPU, Battery)    │
 │   • CPU             │  • Interactive Timeline Scrubbing Chart (1m / 5m / 10m)          │
-│   • Memory          │  • Drill-down Tables / Tree Views (Apps, Disks, Ports, Folders)  │
+│   • Memory          │  • High-Density Drill-Down Tables (Apps, Ports, Volumes, Trees)  │
 │   • Disk            │                                                                  │
 │   • Network         ├──────────────────────────────────────────────────────────────────┤
-│   • Storage         │ STATUS FOOTER                                                    │
-│   • Graphics        │  🔒 Local & Private  │  ● Live · 2s Refresh  │ Attribution Notes │
-│   • Battery         │                                                                  │
+│   • Graphics        │ STATUS FOOTER                                                    │
+│   • Battery         │  🔒 Local & Private  │  ● Live · 2s Refresh  │ Attribution Notes │
+│   • Storage Space   │                                                                  │
 │                     │                                                                  │
 │  WORKSPACE          │                                                                  │
 │   • Projects        │                                                                  │
 │   • History         │                                                                  │
 │   • Alerts          │                                                                  │
-│   • Saved moments   │                                                                  │
-│                     │                                                                  │
-│  SYSTEM META        │                                                                  │
-│   This Mac (M4,16GB)│                                                                  │
-│   ● Live monitoring │                                                                  │
+│   • Saved Moments   │                                                                  │
+│   • System Cleanup  │                                                                  │
 └─────────────────────┴──────────────────────────────────────────────────────────────────┘
 ```
 
----
+### 1. 📊 Hardware & System Telemetry
+- **CPU Deep Dive**: Total utilization, User vs. System kernel load, 1-minute/5-minute load averages, per-core utilization meters, and live timeline graphs.
+- **Memory & Pressure**: Real-time breakdown of Active, Wired (unpageable kernel memory), Compressed, and Swap storage, accompanied by the native macOS memory pressure state (`Normal`, `Elevated`, `Critical`).
+- **Disk I/O Throughput**: Live read and write throughput in MB/s via `IOKit`, mounted APFS volume breakdown, and per-app read/write statistics.
+- **Network Bandwidth**: Inbound download and outbound upload bandwidth curves, active interface enumeration (`en0`, `bridge0`, `awdl0`, VPN tunnels), and physical vs. virtual interface classification.
+- **Apple Silicon GPU**: Real-time GPU compute load percentage, driver-allocated graphics memory, and macOS thermal throttling state.
+- **Battery & Power Draw**: Instantaneous wattage draw (W), battery temperature (°C), battery health percentage, cycle count, power source detection, and connected peripheral battery levels (Magic Keyboard, Trackpad, AirPods).
 
-### Screen 1: Overview Dashboard (`00:00 - 00:05`)
-* **Sidebar**: Displays branding, search, grouped resource tabs (`RESOURCES` & `WORKSPACE`), and system spec badge (`Apple M4 · 10 cores · 16 GB RAM`).
-* **KPI Metrics Grid** (6 primary cards):
-  1. **CPU**: Overall utilization percentage (e.g. `50.5%`), split by `User %` and `System %`.
-  2. **Memory**: Used RAM (e.g. `12.88 GB` of `16 GB`), memory pressure badge (`Normal`, `Elevated`, or `Compressed`).
-  3. **Disk**: Free/Available disk space (e.g. `94.13 GB`), 1-minute read/write rates.
-  4. **Network**: Total bandwidth (e.g. `5 KB/s download · 2 KB/s upload`).
-  5. **Graphics**: GPU utilization percentage (e.g. `79.0% Apple M4`).
-  6. **Battery**: Current battery charge (e.g. `54.0% On battery`).
-* **Interactive Multi-Metric Timeline Chart**:
-  - Time scale buttons: `1m`, `5m`, `10m`.
-  - Area chart displaying dual metrics over time.
-  - Hover tooltip with millisecond precision cursor scrubbing (`7:41:43 PM · CPU 27.9%`).
-  - Stacked memory composition footer: `Active`, `Wired`, `Compressed`, and `Swap`.
-* **Apps & Activity Table**:
-  - Columns: App Icon + Name, Process Count, CPU %, Physical Footprint (RAM).
-  - Search bar: *"Find an app"*.
-  - Live sort by CPU load or memory usage.
+### 2. 🧩 Intelligent App & Process Grouping
+- **Hierarchical Process Tree**: Automatically rolls up dozens of headless helper processes (e.g. Chrome Renderers, Electron Helpers, Slack Web Workers, VS Code Language Servers) into their visible parent application.
+- **Process Inspector Sheet**: Click any app to open a detailed breakdown displaying every child process, its PID, dedicated CPU %, physical memory footprint, and quick actions (`Show in Finder`, graceful `SIGTERM` stop, force `SIGKILL`).
 
----
+### 3. 🛠️ Developer Projects & Port Command Center
+A purpose-built workspace for software engineers and creators:
+- **Real-Time KPI Summary Bar**: Top-level metrics for **Active Services**, **Open TCP Ports**, **Dev Memory Usage**, and **Dev CPU Load**.
+- **Dual-View Mode**:
+  - **Rich Cards View**: Framework-branded project cards with live status pills, memory footprints, port badges, and quick IDE launchers.
+  - **High-Density Ports Table**: Compact, columnar table displaying Port number, `LISTEN` socket status, Runtime badge, Project path, Git branch, PID, Resource usage, and inline action buttons.
+- **Smart Filtering & Organization**:
+  - Category pills with live counter badges: **All**, **Web / Frontend**, **Backend & APIs**, **Databases**, and **Tunnels & Tools**.
+  - Multi-attribute sorting by Port Number, CPU Load, Memory Footprint, or Project Name.
+  - Colon-agnostic search (e.g. `:3000` or `3000`, project name, path, branch).
+- **Project Identity & Git Integration**:
+  - Zero-subprocess `.git/HEAD` reader supporting standard repos, Git worktrees (`gitdir:` pointer), submodules, and detached HEAD commits.
+  - Authentic framework icons and brand colors for Next.js, Vite, React, Node, Bun, Python, FastAPI, Django, Flask, Go, Rust, Ruby, Docker, PostgreSQL, Redis, MongoDB, and MySQL.
+  - Real-time animated pulsing status dot (`ONLINE` / `LISTEN` vs. `IDLE`).
+- **1-Click Developer Actions**:
+  - Direct IDE launchers for **Cursor** (`cursor`), **VS Code** (`code`), **Terminal** (`cd <path>`), and **macOS Finder**.
+  - 1-click localhost URL launcher in your default browser (`http://localhost:<PORT>`).
+  - 1-click clipboard shortcuts for port URLs, project paths, and Git branches with floating feedback toasts.
+  - Full right-click `.contextMenu` across cards and table rows.
+- **Built-in Port Inspector Utility**:
+  - Watchdog sheet to check whether any TCP port is available or in use.
+  - Quick presets for common ports (`:3000`, `:5173`, `:8080`, `:8000`, `:5432`, `:6379`, `:27017`, `:3306`).
+  - Occupied port conflict breakdown displaying Process Name, PID, User, CPU%, Memory, and Directory path.
+  - 1-click graceful port release (`SIGTERM`) and force kill (`SIGKILL`).
 
-### Screen 2: App Detail & Helper Process Inspector (`00:06 - 00:11`)
-* **Trigger**: Clicking on any application row (e.g., `Google Chrome`, which owns 57 separate processes).
-* **Inspector Sheet / Popover**:
-  - **App Header**: App icon, name, total child process count, and live aggregated totals (`CPU: 136.3%`, `Physical footprint: 12.72 GB`).
-  - **Child Processes List**:
-    - Each sub-process listed with PID (e.g., `Google Chrome Helper (Renderer) PID 16,897`, `Google Chrome Helper PID 5,456`, `Google Chrome PID 5,452`).
-    - Individual CPU % and physical memory footprint for every helper.
-  - **Attribution Note**: Explains parent ancestry attribution vs registered bundle identifiers; highlights that shared OS daemons without a known owner remain distinct.
-  - **Action Controls**:
-    - `Show in Finder` (reveals app bundle)
-    - `Quit app...` (graceful `SIGTERM` via `NSWorkspace` / `kill`)
-    - `Force quit...` (`SIGKILL -9`)
-    - `Done` (close modal)
+### 4. ⏳ 30-Day Historical Time-Travel
+- **Persistent Snapshots**: Automatically logs 1-minute historical snapshots into an embedded, high-performance local SQLite database.
+- **Interactive Time Scrubber**: Scrub backwards across 12 hours, 24 hours, 7 days, or 30 days.
+- **Time-Travel App State Inspection**: Dragging the scrubber doesn't just animate a chart — it **restores the exact list of apps and processes** running at that historical second so you can diagnose intermittent crashes or overnight memory leaks.
 
----
+### 5. 🚨 Sustained Load Alerts
+- Configurable anomaly detector that flags runaway processes (e.g. background apps holding >80% CPU for over 120 seconds).
+- Session timeline with severity ratings (`Normal`, `Warning`, `Critical`) and 1-click process termination.
 
-### Screen 3: CPU Deep Dive (`00:12 - 00:15`)
-* **Header & Summary KPIs**:
-  - Total CPU percentage (e.g. `78.6%`)
-  - User space usage (e.g. `49.8%`)
-  - System/Kernel usage (e.g. `28.5%`)
-  - Unix Load Average: `1-minute load: 5.72`
-* **Timeline Chart**:
-  - High-resolution CPU usage chart with 1m, 5m, and 10m historical views.
-* **Process Table**:
-  - Filtered by active CPU consumers, sorted dynamically by highest CPU percentage.
+### 6. 📸 Saved Moments (Diagnostic Bookmarks)
+- Press a hotkey or click **"Save a moment"** whenever your Mac feels laggy or stutters during a compilation task.
+- Freezes a comprehensive diagnostic snapshot (top CPU apps, memory pressure, active window, battery draw, disk read/write) with space for developer notes.
 
----
+### 7. 🧹 Storage Visualizer & System Cleaner
+- **Storage Space Explorer**: 8-category breakdown (Downloads, Applications, Developer, Caches, Documents, Media, App Data, Other) with recursive directory size ranking.
+- **System Cleaner**: Safely clean stale caches, Xcode `DerivedData`, simulator runtimes, package manager caches, and log files.
 
-### Screen 4: Memory & Memory Pressure (`00:16 - 00:21`)
-* **Header & KPIs**:
-  - Current usage (`Now: 80.4%`)
-  - Moving window average (`Sample average: 79.3%`)
-  - Session peak (`Peak: 82.0%`)
-  - Total working memory footprint (`12.93 GB`)
-  - macOS Memory Pressure badge (`Elevated` / `Normal` / `Critical`)
-  - Swap space allocated (`Swap: 14.56 GB`)
-* **Memory Breakdown Bar**:
-  - `Active` memory (e.g. `2.46 GB`)
-  - `Wired` memory (un-pageable kernel RAM, e.g. `4.42 GB`)
-  - `Compressed` memory (virtual memory compressed in RAM, e.g. `5.99 GB`)
-  - `Swap` on disk (e.g. `14.56 GB`)
-* **Interactive Chart & Table**:
-  - Memory pressure trend over time.
-  - App list sorted by physical memory footprint.
+### 8. 🎛️ Menu Bar Companion & Floating HUD
+- Native macOS menu bar status item (`NSStatusItem`) showing configurable figures, icons, or mini-graphs for CPU, Memory, Network, or Battery.
+- Lightweight floating HUD overlay window for always-on-top monitoring during intense gaming, rendering, or compiling sessions.
 
 ---
 
-### Screen 5: Disk I/O & Storage Bandwidth (`00:22 - 00:27`)
-* **Header & KPIs**:
-  - Live Disk Read (`18.4 MB/s`) & Disk Write (`1.8 MB/s`)
-  - Moving sample average and peak bandwidth (`Peak: 171.9 MB/s`)
-* **Mounted Volumes Summary**:
-  - APFS container name (`Macintosh HD`), free space (`94.12 GB available of 460.4 GB`).
-  - Explanatory note: *"APFS volumes may share container capacity; their totals should not be added together."*
-* **Real-time I/O Chart**:
-  - Dual line graph: Read rate (solid line) vs Write rate (dashed line).
-* **Per-App Disk Activity Table**:
-  - Shows which apps are actively hitting the drive.
-  - Columns: `APPLICATION`, `PROCESSES`, `READ / S`, `WRITE / S`.
+## 🏗️ Architecture & Engineering Specs
 
----
-
-### Screen 6: Network Interfaces & Throughput (`00:28 - 00:35`)
-* **Header & KPIs**:
-  - Real-time Download (`4 KB/s - 13 KB/s`) & Upload (`1 KB/s - 8 KB/s`)
-  - Sample average & session peak (`1.9 MB/s`)
-* **Network Chart**:
-  - Visual throughput curves for inbound vs outbound packets.
-* **Active Interfaces Table**:
-  - Total active interfaces count (e.g., `22 active interfaces`).
-  - Breakdown by interface identifier (e.g., `en0`, `en1`, `bridge0`, `anpi0`, `awdl0`, `ap1`).
-  - Categorization: `Physical interface` vs `Virtual / tunnel interface`.
-  - Real-time download and upload rate per interface.
-
----
-
-### Screen 7: Graphics & GPU Utilization (`00:36 - 00:37`)
-* **Header & KPIs**:
-  - GPU load (`Now: 95.0%`, `Average: 69.5%`, `Peak: 96.0%`).
-  - GPU Hardware Model: `Apple M4` (Apple Silicon unified GPU).
-  - Driver-reported GPU memory allocation (`1.19 GB`).
-  - Thermal State indicator (`Normal` / `Fair` / `Serious` / `Critical`).
-* **GPU Utilization Chart**:
-  - Historical timeline of GPU compute load.
-* **Technical Note**:
-  - *"Live device utilization reported by the graphics driver. GPU memory is a driver-reported figure, not additional physical RAM. Per-app GPU attribution is not available."*
-
----
-
-### Screen 8: Battery Health & Power Draw (`00:38 - 00:41`)
-* **Header & KPIs**:
-  - Charge level (`53.0%`), moving average, and peak.
-  - Power source: `Battery` vs `AC Power`.
-  - Estimated time remaining: `1h 17m`.
-* **Telemetry Details**:
-  - State: `Discharging` / `Charging`
-  - Battery Health / Maximum Capacity: `80.9%`
-  - Cycle count: `668 cycles`
-  - Internal Battery Temperature: `31.0 °C`
-  - Real-time Power Draw: `35.8 W`
-* **Peripheral Battery Section**:
-  - Connected Bluetooth / HID device batteries (Magic Mouse, Magic Keyboard, AirPods, etc.).
-
----
-
-### Screen 9: Storage Space Indexer & Visualizer (`00:42 - 00:49`)
-* **Volume Usage Bar**:
-  - `Macintosh HD`: `366.28 GB used · 94.13 GB free of 460.4 GB`.
-* **Local Storage Index Controls**:
-  - Scan state timestamp (`Last result 27 Sep 2026 at 7:42 PM`).
-  - Buttons: `Choose folder...`, `Refresh`.
-  - Total files measured: `301.03 GB`.
-* **Category Grid (8 Storage Cards)**:
-  1. `Downloads`: Size + status (`Up to date`)
-  2. `Applications`: Size + status (`Up to date`)
-  3. `Developer`: Size + status (`Partial access`)
-  4. `Caches`: Size + status (`Update pending`)
-  5. `Documents & Desktop`: Size + status (`Update pending`)
-  6. `Media`: Size + status (`Up to date`)
-  7. `App data`: Size + status (`Update pending`)
-  8. `Other files`: Size + status (`Update pending`)
-* **Permissions Banner**:
-  - Detects unreadable files: *"419 items could not be read. For protected folders, enable Pulse in System Settings → Privacy & Security → Full Disk Access, then refresh."*
-* **"Where your space goes" Explorer**:
-  - Search field: *"Find a folder"*.
-  - Ranked folder list with accurate recursive sizes:
-    - `/System`, `/Users/.../Library/Application Support`, `/Users/.../Library/Developer`, `/Applications`, `/private`, `/Library/Caches`, developer project directories, container folders.
-
----
-
-### Screen 10: Projects & Local Runtimes (`00:50 - 00:55`)
-* **Header & Description**:
-  - *"Local runtimes, grouped by their working folder."*
-  - Sub-heading: *"Listening TCP ports · refreshes every 10 seconds"*
-  - Option toggle: `[x] Include runtimes without ports`.
-* **Project Cards**:
-  - Automatically identifies development processes (`node`, `bun`, `python`, `redis-server`, `postgres`, `go`, etc.).
-  - Resolves process working directory to a clean project name and path.
-  - Card elements:
-    - **Folder/Project Name**: e.g., `web`, `api`, `redis`
-    - **File System Path**: e.g., `/Users/starc/Desktop/personal-projects/pulse/apps/web`
-    - **Runtime & PID**: `node · PID 16,505`
-    - **Listening TCP Ports**: e.g. `:4183`, `:49319, 49320`, `:6379`
-    - **Live CPU % & Memory Usage**: e.g. `0.0% · 653.8 MB`
-    - **Actions**:
-      - `Reveal` (opens project folder in Finder / Terminal)
-      - `Stop...` (gracefully stops or kills the server process)
-
----
-
-### Screen 11: History & Time-Travel Scrubber (`00:56 - 01:05`)
-* **Header**: *"Thirty days of measurements, stored on this Mac."*
-* **Time Range Selector**: `12 hours` | `24 hours` | `7 days` | `30 days`.
-* **Metric Selector**: Dropdown to inspect `CPU`, `Memory`, `Network`, `Disk`, etc.
-* **Timeline Chart with Interactive Scrubber**:
-  - Shows recorded samples (e.g. `217 displayed samples`).
-  - User can drag or hover anywhere along the 30-day timeline.
-  - Crosshair cursor displays the exact historical timestamp and metric value (e.g., `12:15:06 PM · CPU 27.8% · 27 Sep 2026`).
-* **Time-Travel App State Inspection ("Apps at the selected time")**:
-  - **Dynamic Snapshot Restoration**: The app table underneath reflects the **exact list of apps and their CPU/memory footprints at the scrubbed moment in time**.
-  - Storage spec: 1 snapshot recorded every minute; automatically pruned after 30 days.
-
----
-
-### Screen 12: Alerts & Sustained Load Monitoring (`01:06 - 01:11`, `01:18`)
-* **Header**: *"Sustained activity that may need your attention."*
-* **Configuration**: `Configure alerts` button to set thresholds.
-* **Alert Feed ("This session")**:
-  - Cards identifying background runway processes:
-    - e.g., *"Google Chrome is using sustained CPU — Above 80% of one core for at least 120 seconds."*
-    - Timestamp: `7:41 PM`.
-    - Severity badge: `Normal` / `Warning` / `Critical`.
-
----
-
-### Screen 13: Saved Moments (`01:12 - 01:13`)
-* **Header**: *"A closer look at the moments you saved."*
-* **Feature Concept**:
-  - When the Mac feels laggy or a compile job spikes the system, press a hotkey or click "Save a moment".
-  - Freezes a comprehensive diagnostic snapshot (top CPU apps, memory pressure, active window, battery draw, disk read/write).
-  - Persistent post-mortem inspection list so developers can investigate without interrupting their flow.
-
----
-
-### Screen 14: Settings Modal (`01:14 - 01:17`)
-* **Modal Dialog ("Pulse Settings")**:
-  1. **Updates**:
-     - Current build version (e.g. `0.1.0 (1)`).
-     - Checkbox: `Automatically check for updates`.
-     - Button: `Check for Updates...` (Sparkle-compatible feed).
-  2. **License**:
-     - Status: `Development build` / `Licensed`.
-     - Privacy commitment: *"Activation sends your license and a random installation ID. Your measurements are never uploaded."*
-  3. **Monitoring**:
-     - Sampling rate dropdown:
-       - `While visible`: `Every 1 second` | `Every 2 seconds` | `Every 5 seconds`.
-       - `While hidden`: `Every 10 seconds` | `Every 30 seconds` | `Paused`.
-     - Checkbox: `Open Pulse at login` (`SMAppService.mainApp`).
-  4. **Menu Bar Settings**:
-     - `Metric`: Choose between `CPU`, `Memory`, `Network`, `Battery`, or `Storage`.
-     - `Appearance`: Choose between `Figure` (numerical percentage/speed), `Icon`, or `Mini Graph`.
-
----
-
-## 🛠 Feature Comparison & Requirements Matrix
-
-| Feature Module | Pulse App Specification | Matric Implementation Plan |
-| :--- | :--- | :--- |
-| **App Hierarchy Attribution** | Group helper processes by parent PID and bundle identifier | `proc_pidinfo` + `NSRunningApplication` ancestry tree resolver |
-| **CPU Monitoring** | Per-core and total CPU, User vs System %, Load Average | `host_processor_info`, `mach_host_self`, `getloadavg` |
-| **Memory & Pressure** | Active, Wired, Compressed, Free, Swap, and Kernel Pressure Badge | `host_statistics64` (`vm_statistics64`), `sysctl` vm swap |
-| **Disk Activity** | Live MB/s read and write throughput | `IOKit` (`IOBlockStorageDriver` statistics) |
-| **Network Throughput** | Inbound/outbound bytes/s per interface + interface classifier | `sysctl` (`NET_RT_IFLIST2`), `getifaddrs` |
-| **Apple Silicon GPU** | GPU load %, GPU driver memory, Thermal state | `IOReport` / `IOAccelerator` registry + `ProcessInfo.thermalState` |
-| **Battery & Power** | Charge %, Wattage draw, Temperature, Health %, Cycle count | `IOPMPowerSource` + `IOPMrootDomain` via `IOKit` |
-| **Storage Space Analyzer** | 8 categories + directory tree + Full Disk Access handling | Fast parallel `FileManager` directory scanner + APFS metadata |
-| **Projects / Dev Runtimes** | Detect node, python, bun, docker, etc. with folder & listening ports | `libproc` (`PROC_PIDLISTFDS`, `PROC_PIDVNODEPATHINFO`) + `lsof`/socket query |
-| **30-Day History** | 1-minute persistent snapshots with time-travel scrubber | Embedded SQLite / SwiftData with automatic 30-day sliding window |
-| **Saved Moments** | Instant capture of system bottleneck state | On-demand frozen state serialization with notes |
-| **Sustained Load Alerts** | Configurable CPU/Memory anomaly detector (>80% for >120s) | Sliding time-window threshold evaluator |
-| **Menu Bar Companion** | Configurable metric display (Figure, Mini Graph, Icon) | `NSStatusItem` with custom SwiftUI popover |
-| **Settings & Polling** | Dynamic 2s visible / 10s hidden polling rate, launch at login | `SMAppService`, SwiftUI Settings scene, adaptive `Combine` timer |
-
----
-
-## 🏗 Architecture & Engineering Specs for Matric
+Matric is written in **100% native Swift 5.10+** using Apple's modern **SwiftUI** and **Observation** framework (`@Observable`), interfacing directly with Darwin and Mach kernel subsystems.
 
 ```
 matric/
 ├── App/
-│   ├── MatricApp.swift               # Application entry point & Scene configuration
-│   ├── MenuBarManager.swift          # NSStatusItem, status bar updates, menu popover
-│   └── AppState.swift                # Central observable environment state
+│   ├── MyApp.swift                      # Application entry point & Scene configuration
+│   └── AppState.swift                   # Central observable environment state
 │
 ├── Core/
-│   ├── SystemSensors/
-│   │   ├── CPUMonitor.swift          # Mach host_processor_info, per-core & total load
-│   │   ├── MemoryMonitor.swift       # vm_statistics64, memory pressure, swap usage
-│   │   ├── DiskMonitor.swift         # IOKit disk I/O read/write throughput
-│   │   ├── NetworkMonitor.swift      # getifaddrs / sysctl bandwidth per interface
-│   │   ├── GPUMonitor.swift          # IOAccelerator / Apple Silicon GPU utilization
-│   │   └── BatteryMonitor.swift      # IOPMPowerSource, cycle count, temperature, wattage
+│   ├── Sensors/                         # Native Mach & IOKit Telemetry Sensors
+│   │   ├── CPUMonitor.swift             # Mach host_processor_info, per-core & total load
+│   │   ├── MemoryMonitor.swift          # vm_statistics64, memory pressure, swap usage
+│   │   ├── DiskMonitor.swift            # IOKit disk I/O read/write throughput
+│   │   ├── NetworkMonitor.swift         # getifaddrs / sysctl bandwidth per interface
+│   │   ├── GPUMonitor.swift             # IOAccelerator / Apple Silicon GPU utilization
+│   │   ├── BatteryMonitor.swift         # IOPMPowerSource, cycle count, wattage, temperature
+│   │   ├── HardwareInfo.swift           # Mac model, chip architecture, core counts
+│   │   └── SystemTelemetryHub.swift     # 1-second coordinated telemetry heartbeat
 │   │
-│   ├── ProcessEngine/
-│   │   ├── ProcessScanner.swift      # libproc process enumeration
-│   │   ├── ProcessTreeResolver.swift # Attributing helpers & daemons to parent apps
-│   │   └── AppMetadataService.swift  # Icon extraction, bundle ID, display names
+│   ├── Process/                         # Process Tree & Parent-Child Attribution
+│   │   ├── ProcessScanner.swift         # libproc process enumeration
+│   │   ├── ProcessTreeResolver.swift    # Attributing helpers & daemons to parent apps
+│   │   └── ProcessModels.swift          # ProcessRecord & AppGroupRecord models
 │   │
-│   ├── ProjectDetector/
-│   │   ├── PortScanner.swift         # Mapping listening TCP ports to PIDs
-│   │   ├── WorkingDirResolver.swift  # Finding project directory for dev runtimes
-│   │   └── DevRuntimeClassifier.swift# Node, Bun, Python, Ruby, Go, Redis, Docker, etc.
+│   ├── Projects/                        # Developer Workspace & Port Inspection
+│   │   ├── ProjectsManager.swift        # Aggregations, filtering, sorting, IDE launching
+│   │   ├── PortScanner.swift            # Mapping listening TCP ports via socket tables
+│   │   ├── WorkingDirResolver.swift     # Zero-subprocess CWD & .git/HEAD branch reader
+│   │   ├── DevRuntimeClassifier.swift   # Framework classifier (Node, Python, Go, Rust, etc.)
+│   │   └── DevProjectModels.swift       # Categories, runtimes, port items, sort options
 │   │
-│   ├── StorageIndexer/
-│   │   ├── VolumeManager.swift       # APFS container & volume information
-│   │   ├── DiskSpaceScanner.swift    # Background parallel directory size calculator
-│   │   └── FullDiskAccessHelper.swift# Permissions verification & system prompt
+│   ├── History/                         # 30-Day Historical Time-Travel Engine
+│   │   ├── HistoryStore.swift           # SQLite snapshot persistence & rolling pruning
+│   │   └── HistoryModels.swift          # Snapshot data contracts & scrubber models
 │   │
-│   ├── History/
-│   │   ├── HistoryDatabase.swift     # SQLite / SwiftData storage for 30-day snapshots
-│   │   ├── SnapshotRecorder.swift    # 1-minute interval snapshot engine
-│   │   └── TimeTravelPlayback.swift  # Historical snapshot interpolation & scrubber
+│   ├── Moments/                         # Saved Diagnostic Snapshots
+│   │   ├── MomentsManager.swift         # Moment capture, serialization & persistence
+│   │   └── MomentModels.swift           # Frozen diagnostic state structures
 │   │
-│   └── AlertEngine/
-│       ├── AlertRule.swift           # Threshold definitions (e.g. CPU > 80% for 120s)
-│       └── AlertManager.swift        # Sustained load detection & session notifications
+│   ├── Alerts/                          # Sustained Activity & Anomaly Detection
+│   │   ├── AlertsManager.swift          # Threshold evaluation & session notifications
+│   │   └── AlertModels.swift            # Alert severity & trigger rules
+│   │
+│   ├── Storage/                         # Storage Space Visualizer
+│   │   ├── StorageManager.swift         # APFS volume info & Category aggregation
+│   │   ├── DiskSpaceScanner.swift       # Background directory scanner & FDA handling
+│   │   └── DiskSpaceModels.swift        # Directory tree and category models
+│   │
+│   └── Cleaner/                         # System Junk & Cache Cleaner
+│       ├── CleanerManager.swift         # Cache categories & cleaning coordinator
+│       ├── SystemCleanerEngine.swift    # Safe deletion & trash operations
+│       └── CleanerModels.swift          # Scan items & cleanup rules
 │
 └── UI/
-    ├── Navigation/
-    │   ├── SidebarView.swift         # Sidebar navigation with Resources & Workspace groups
-    │   └── WindowLayoutView.swift    # NavigationSplitView container
-    │
-    ├── Views/
-    │   ├── Overview/                 # Overview dashboard with 6 KPI cards & timeline
-    │   ├── CPU/                      # CPU deep-dive & per-core charts
-    │   ├── Memory/                   # Memory composition & pressure views
-    │   ├── Disk/                     # Disk I/O & per-app read/write activity
-    │   ├── Network/                  # Interface list & network throughput
-    │   ├── Graphics/                 # GPU compute activity & thermal state
-    │   ├── Battery/                  # Battery health, power draw, peripheral levels
-    │   ├── Storage/                  # Storage category cards & directory tree explorer
-    │   ├── Projects/                 # Running developer servers, ports & kill actions
-    │   ├── History/                  # Interactive 30-day time-travel scrubber
-    │   ├── Alerts/                   # Sustained workload alerts list
-    │   ├── SavedMoments/             # Bookmarked bottlenecks view
-    │   └── Settings/                 # Preferences, refresh rates, menu bar customization
-    │
-    ├── Components/
-    │   ├── MetricKPICard.swift       # Standard metric card component
-    │   ├── TimelineChartView.swift   # Swift Charts live scrubbable area/line chart
-    │   ├── ProcessInspectorSheet.swift# Modal for child processes & kill actions
-    │   └── StatusFooterView.swift    # Bottom privacy & refresh rate bar
-    │
-    └── MenuBar/
-        └── MenuBarPopoverView.swift  # Lightweight status bar popover view
+    ├── Navigation/                      # NavigationSplitView, Sidebar & Window Shell
+    ├── Views/                           # Main Feature Views (Overview, CPU, Projects, etc.)
+    ├── Components/                      # Reusable UI Elements (KPI Cards, Charts, Tables)
+    ├── Modals/                          # Inspector Sheets & Conflict Watchdog Dialogs
+    ├── MenuBar/                         # NSStatusItem Custom Popover
+    └── HUD/                             # Always-On-Top Floating HUD Overlay
 ```
 
----
-
-## 💻 Native macOS System APIs Used
-
-1. **Mach & Kernel APIs**:
-   - `host_processor_info(mach_host_self(), PROCESSOR_CPU_LOAD_INFO, ...)` for per-core and aggregate CPU load.
-   - `host_statistics64(mach_host_self(), HOST_VM_INFO64, ...)` for active, inactive, wired, and free memory pages.
-   - `sysctl([CTL_VM, VM_SWAPUSAGE], ...)` for allocated and used swap memory.
-2. **Process & App Identity**:
-   - `proc_listpids(PROC_ALL_PIDS, ...)` and `proc_pidinfo(..., PROC_PIDTASKINFO)` for CPU and physical footprint.
-   - `proc_pidinfo(..., PROC_PIDVNODEPATHINFO)` to get the process executable path and current working directory.
-   - `NSRunningApplication` and `LSCopyApplicationURLsForBundleIdentifier` to link PIDs to parent applications and native icons.
-3. **Network & Sockets**:
-   - `sysctl([CTL_NET, PF_ROUTE, 0, 0, NET_RT_IFLIST2, 0])` for 64-bit hardware packet and byte counters per interface.
-   - `PROC_PIDLISTFDS` and `proc_pidfdinfo` with `PROC_PIDFDSOCKETINFO` to identify open TCP sockets in `LISTEN` state and resolve port numbers.
-4. **Disk I/O & Storage**:
-   - `IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceMatching("IOBlockStorageDriver"), ...)` to read total byte read/write statistics.
-   - `URLResourceValues.totalFileAllocatedSizeKey` for accurate APFS allocated block sizing.
-5. **GPU & Apple Silicon**:
-   - `IOReport` API / `IOAccelerator` user client keys to read normalized GPU utilization without root privileges.
-   - `ProcessInfo.processInfo.thermalState` for macOS thermal throttle levels.
-6. **Power & Battery**:
-   - `IOPMCopyPowerSourcesInfo()` and `IOPMCopyPowerSourcesList()` from `IOKit.ps`.
-   - `IOPSGetPowerSourceDescription()` for instantaneous wattage draw, health percentage, temperature, and cycle count.
+### Native macOS System APIs Utilized
+- **Mach & Kernel**: `host_processor_info(mach_host_self(), ...)` for CPU core loads, `host_statistics64(mach_host_self(), ...)` for VM statistics and memory pressure, `getloadavg()` for UNIX load averages.
+- **Process & Socket Tables**: `proc_listpids`, `proc_pidinfo` (`PROC_PIDTASKINFO`, `PROC_PIDVNODEPATHINFO`, `PROC_PIDTBSDINFO`), and `PROC_PIDFDSOCKETINFO` to identify open TCP sockets without shelling out to slow terminal commands.
+- **IOKit & Hardware Registry**: `IOBlockStorageDriver` for disk throughput, `IOAccelerator` for Apple Silicon GPU compute load, `IOPMPowerSource` for battery health and wattage draw.
+- **AppKit & Workspace**: `NSWorkspace`, `NSRunningApplication`, and `SMAppService` for application launching, Finder interaction, and login item management.
 
 ---
 
-## 🚀 Getting Started with Matric
+## 💻 Getting Started & Building from Source
 
 ### Prerequisites
-- macOS 14.0 (Sonoma) or macOS 15.0+ (Sequoia) / macOS 26+
-- Xcode 15+ or 16+
-- Swift 5.10 or Swift 6
+- **macOS 14.0 (Sonoma)** or **macOS 15.0+ (Sequoia)** (Apple Silicon M1/M2/M3/M4 or Intel)
+- **Xcode 15.0+** or **Xcode 16.0+**
+- Command Line Tools (`xcode-select --install`)
 
-### Opening in Xcode
+### Clone the Repository
 ```bash
-open matric.xcodeproj
+git clone https://github.com/your-username/matric.git
+cd matric
 ```
 
-Build and run with `Cmd + R` in Xcode.
+### Build via Command Line
+```bash
+xcodebuild -project matric.xcodeproj -scheme matric -configuration Debug build
+```
+
+### Run via Xcode
+1. Open the project in Xcode:
+   ```bash
+   open matric.xcodeproj
+   ```
+2. Select the `matric` scheme and target **My Mac**.
+3. Press `Cmd + R` to build and run.
 
 ---
 
 ## 🔒 Privacy & Permissions
-- **No Network Telemetry**: Matric makes zero outbound network requests.
-- **Local Storage Only**: Snapshots are saved to `~/Library/Application Support/Matric/history.sqlite`.
-- **Full Disk Access (Optional)**: Needed only by the **Storage Indexer** to calculate directory sizes inside protected directories (e.g. `~/Library/Application Support` or `/System`). All other features run within standard user privileges.
+
+- **100% Offline**: Matric makes **zero outbound network connections**. It contains no analytics trackers, crash-reporting SDKs, or cloud synchronization.
+- **Local Persistence**: All historical snapshots, saved moments, and preferences are stored exclusively on your device in standard macOS application support directories (`~/Library/Application Support/Matric/`).
+- **Standard User Privileges**: 95% of Matric's features run without any special permissions.
+- **Optional Full Disk Access**: Only required by the **Storage Space Explorer** if you wish to calculate accurate folder sizes inside restricted system directories (such as `~/Library/Application Support` or `/System`). All other system sensors and developer tools function perfectly without it.
 
 ---
 
-## 📄 License
-MIT License. Inspired by [Pulse for Mac](https://pulsemac.app/).
+## 🤝 Contributing
+
+We welcome contributions from developers, designers, and system performance enthusiasts!
+
+- Please read our [Contributing Guide](CONTRIBUTING.md) for branch management and commit guidelines.
+- Review our [Code of Conduct](CODE_OF_CONDUCT.md).
+- To report bugs or suggest enhancements, please use our [GitHub Issue Templates](.github/ISSUE_TEMPLATE/).
+
+---
+
+## 📜 License
+
+Matric is licensed under the [MIT License](LICENSE).
+
+Developed with ❤️ for the macOS developer community. Inspired by [Pulse for Mac](https://pulsemac.app/).
