@@ -42,16 +42,28 @@ This document records the exact feature scope for the **Developer Projects & Por
 ---
 
 ### Feature 3: Smart Filtering & Organization
-- [ ] **3.1 Category Filter Pills**:
+- [x] **3.1 Category Filter Pills**:
   - Quick toggle bar across:
-    - **All**: All detected dev projects and services.
-    - **Web & APIs**: Next.js, Vite, React, Node, Bun, Deno, Python, FastAPI, Django, Flask, Go, Rust, Ruby.
-    - **Databases**: PostgreSQL (`5432`), Redis (`6379`), MongoDB (`27017`), MySQL (`3306`).
-    - **Tunnels & Tooling**: VS Code Remote, T3 Code harness, Cloudflare Tunnels, SSH, Docker.
-- [ ] **3.2 Multi-Attribute Sorting**:
-  - Sort projects by: **Port Number**, **CPU Usage**, **Memory Footprint**, or **Project Name**.
-- [ ] **3.3 Live Search**:
-  - Instant search filtering by project name, port (`:3000`), git branch, or file path.
+    - **All**: All detected dev projects and services (`square.grid.2x2`).
+    - **Web & APIs**: Next.js, Vite, React, Node, Bun, Deno, Python, FastAPI, Django, Flask, Go, Rust, Ruby (`globe`).
+    - **Databases**: PostgreSQL (`5432`), Redis (`6379`), MongoDB (`27017`), MySQL (`3306`) (`cylinder.split.1x2`).
+    - **Tunnels & Tooling**: VS Code Remote, T3 Code harness, Cloudflare Tunnels, SSH, Docker (`wrench.and.screwdriver`).
+  - Real-time count badges embedded directly inside each category pill.
+- [x] **3.2 Multi-Attribute Sorting**:
+  - Sort projects uniformly across Cards and Ports Table by:
+    - **Port Number** (numerical listening port order)
+    - **CPU Usage** (highest CPU% first)
+    - **Memory Footprint** (highest RAM bytes first)
+    - **Project Name** (alphabetical A-Z)
+  - Animated sort selection menu with active checkmarks.
+- [x] **3.3 Live Search**:
+  - Instant colon-agnostic search filtering across:
+    - Project names
+    - Port numbers (e.g. typing `:3000` or `3000`)
+    - Git branches
+    - File system paths
+  - Live result counter (e.g. `X found`) and 1-click query clearing.
+  - Contextual filter-aware empty state with a 1-click **"Reset Filters"** action button.
 
 ---
 
@@ -90,7 +102,7 @@ This document records the exact feature scope for the **Developer Projects & Por
 ## 🛠️ Step-by-Step Development Order
 - [x] **Step 1**: Implement Feature 1 (Header & KPI Summary Metrics Bar)
 - [x] **Step 2**: Implement Feature 2 (Dual-View Mode: Rich Cards vs. Ports Table)
-- [ ] **Step 3**: Implement Feature 3 (Smart Filtering & Organization)
+- [x] **Step 3**: Implement Feature 3 (Smart Filtering & Organization)
 - [ ] **Step 4**: Implement Feature 4 (Project Identity & Git Integration)
 - [ ] **Step 5**: Implement Feature 5 (1-Click Developer Actions)
 - [ ] **Step 6**: Implement Feature 6 (Built-in Port Inspector Utility)

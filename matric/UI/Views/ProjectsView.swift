@@ -29,7 +29,7 @@ public struct ProjectsView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 16)
             
-            // Filter, Category & View Control Bar
+            // Feature 3: Filter, Category & View Control Bar
             controlToolbar
                 .padding(.horizontal, 24)
                 .padding(.bottom, 14)
@@ -241,21 +241,36 @@ public struct ProjectsView: View {
         }
     }
     
-    // MARK: - Control Toolbar (Categories, Search, Sort, View Switcher)
+    // MARK: - Feature 3: Smart Filtering & Organization Toolbar
     private var controlToolbar: some View {
         VStack(spacing: 10) {
             HStack(spacing: 12) {
-                // Category Pills
+                // Category Filter Pills (3.1)
                 HStack(spacing: 6) {
                     ForEach(DevProjectCategory.allCases) { cat in
+                        let count = projectsManager.viewMode == .cards ? projectsManager.projectCount(for: cat) : projectsManager.portCount(for: cat)
+                        
                         Button {
-                            projectsManager.selectedCategory = cat
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                projectsManager.selectedCategory = cat
+                            }
                         } label: {
                             HStack(spacing: 5) {
                                 Image(systemName: cat.iconName)
                                     .font(.system(size: 11))
                                 Text(cat.rawValue)
                                     .font(.system(size: 12, weight: projectsManager.selectedCategory == cat ? .semibold : .regular))
+                                
+                                if count > 0 {
+                                    Text("\(count)")
+                                        .font(.system(size: 10, weight: .bold))
+                                        .padding(.horizontal, 5)
+                                        .padding(.vertical, 1)
+                                        .background(
+                                            Capsule()
+                                                .fill(projectsManager.selectedCategory == cat ? Color.orange.opacity(0.3) : Color.primary.opacity(0.08))
+                                        )
+                                }
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
@@ -271,7 +286,7 @@ public struct ProjectsView: View {
                 
                 Spacer()
                 
-                // View Mode Switcher (Feature 2: Cards vs Table)
+                // View Mode Switcher (Cards vs Table)
                 Picker("", selection: $projectsManager.viewMode) {
                     ForEach(DevProjectViewMode.allCases) { mode in
                         Label(mode.rawValue, systemImage: mode.iconName).tag(mode)
@@ -282,7 +297,7 @@ public struct ProjectsView: View {
             }
             
             HStack(spacing: 12) {
-                // Search Input
+                // Live Search Input (3.3)
                 HStack(spacing: 8) {
                     Image(systemName: "magnifyingglass")
                         .foregroundStyle(.secondary)
@@ -293,8 +308,15 @@ public struct ProjectsView: View {
                         .font(.system(size: 13))
                     
                     if !projectsManager.searchText.isEmpty {
+                        let resultCount = projectsManager.viewMode == .cards ? projectsManager.filteredProjects.count : projectsManager.filteredPortEntries.count
+                        Text("\(resultCount) found")
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(.secondary)
+                        
                         Button {
-                            projectsManager.searchText = ""
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                projectsManager.searchText = ""
+                            }
                         } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundStyle(.secondary)
@@ -314,11 +336,13 @@ public struct ProjectsView: View {
                         )
                 )
                 
-                // Sort Menu
+                // Multi-Attribute Sorting Menu (3.2)
                 Menu {
                     ForEach(DevProjectSortOption.allCases) { opt in
                         Button {
-                            projectsManager.sortOption = opt
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                projectsManager.sortOption = opt
+                            }
                         } label: {
                             HStack {
                                 Text(opt.rawValue)
@@ -731,63 +755,93 @@ public struct ProjectsView: View {
         }
     }
     
-    // MARK: - Empty State
+    // MARK: - Empty & Filter State
     private var emptyStateView: some View {
-        VStack(spacing: 18) {
+        let isFiltered = !projectsManager.searchText.isEmpty || projectsManager.selectedCategory != .all
+        
+        return VStack(spacing: 18) {
             ZStack {
                 Circle()
                     .fill(Color.orange.opacity(0.1))
                     .frame(width: 68, height: 68)
                 
-                Image(systemName: "terminal")
+                Image(systemName: isFiltered ? "line.3.horizontal.decrease.circle" : "terminal")
                     .font(.system(size: 30))
                     .foregroundStyle(.orange)
             }
             
             VStack(spacing: 6) {
-                Text("No Active Development Servers Found")
+                Text(isFiltered ? "No Matching Services Found" : "No Active Development Servers Found")
                     .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(.primary)
                 
-                Text("Start your dev server (e.g. `npm run dev`, `vite`, `cargo run`, `fastapi dev`, `python manage.py runserver`) and Matric will automatically discover its listening ports, git branch, and directory.")
-                    .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 520)
+                if isFiltered {
+                    Text("No services match the active filter for '\(projectsManager.selectedCategory.rawValue)'\(projectsManager.searchText.isEmpty ? "" : " with search query \"\(projectsManager.searchText)\"").")
+                        .font(.system(size: 13))
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 520)
+                } else {
+                    Text("Start your dev server (e.g. `npm run dev`, `vite`, `cargo run`, `fastapi dev`, `python manage.py runserver`) and Matric will automatically discover its listening ports, git branch, and directory.")
+                        .font(.system(size: 13))
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 520)
+                }
             }
             
             HStack(spacing: 10) {
-                Button {
-                    projectsManager.refreshProjects()
-                } label: {
-                    HStack(spacing: 6) {
-                        Image(systemName: "arrow.clockwise")
-                        Text("Scan Again")
+                if isFiltered {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.15)) {
+                            projectsManager.searchText = ""
+                            projectsManager.selectedCategory = .all
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "xmark.circle")
+                            Text("Reset Filters")
+                        }
+                        .font(.system(size: 12, weight: .semibold))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(Color.orange.opacity(0.15)))
+                        .foregroundStyle(.orange)
                     }
-                    .font(.system(size: 12, weight: .semibold))
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 6)
-                    .background(Capsule().fill(Color.orange.opacity(0.15)))
-                    .foregroundStyle(.orange)
-                }
-                .buttonStyle(.plain)
-                
-                Button {
-                    projectsManager.portCheckInput = ""
-                    projectsManager.portCheckStatus = .idle
-                    projectsManager.isShowingPortChecker = true
-                } label: {
-                    HStack(spacing: 6) {
-                        Image(systemName: "network.badge.shield.half.filled")
-                        Text("Check Port")
+                    .buttonStyle(.plain)
+                } else {
+                    Button {
+                        projectsManager.refreshProjects()
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "arrow.clockwise")
+                            Text("Scan Again")
+                        }
+                        .font(.system(size: 12, weight: .semibold))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(Color.orange.opacity(0.15)))
+                        .foregroundStyle(.orange)
                     }
-                    .font(.system(size: 12, weight: .semibold))
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 6)
-                    .background(Capsule().fill(Color.primary.opacity(0.06)))
-                    .foregroundStyle(.primary)
+                    .buttonStyle(.plain)
+                    
+                    Button {
+                        projectsManager.portCheckInput = ""
+                        projectsManager.portCheckStatus = .idle
+                        projectsManager.isShowingPortChecker = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "network.badge.shield.half.filled")
+                            Text("Check Port")
+                        }
+                        .font(.system(size: 12, weight: .semibold))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(Color.primary.opacity(0.06)))
+                        .foregroundStyle(.primary)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
             .padding(.top, 4)
         }

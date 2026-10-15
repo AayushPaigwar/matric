@@ -105,7 +105,31 @@ public final class ProjectsManager {
         }
     }
     
+    // MARK: - Feature 3: Smart Filtering & Organization
+    
+    /// Count of matching projects for a specific category
+    public func projectCount(for category: DevProjectCategory) -> Int {
+        if category == .all {
+            return includeRuntimesWithoutPorts ? projects.count : projects.filter { !$0.listeningPorts.isEmpty }.count
+        }
+        return projects.filter { p in
+            if !includeRuntimesWithoutPorts && p.listeningPorts.isEmpty { return false }
+            return p.category == category
+        }.count
+    }
+    
+    /// Count of matching ports for a specific category
+    public func portCount(for category: DevProjectCategory) -> Int {
+        if category == .all {
+            return portEntries.count
+        }
+        return portEntries.filter { $0.runtime.category == category }.count
+    }
+    
     public var filteredProjects: [DevProjectRecord] {
+        let rawQuery = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let queryCleanPort = rawQuery.hasPrefix(":") ? String(rawQuery.dropFirst()) : rawQuery
+        
         let list = projects.filter { project in
             if !includeRuntimesWithoutPorts && project.listeningPorts.isEmpty {
                 return false
@@ -113,13 +137,12 @@ public final class ProjectsManager {
             if selectedCategory != .all && project.category != selectedCategory {
                 return false
             }
-            if searchText.isEmpty { return true }
-            let query = searchText.lowercased()
-            return project.projectName.lowercased().contains(query) ||
-                   project.projectPath.lowercased().contains(query) ||
-                   project.runtime.rawValue.lowercased().contains(query) ||
-                   (project.gitBranch?.lowercased().contains(query) ?? false) ||
-                   project.listeningPorts.contains { "\($0)".contains(query) }
+            if rawQuery.isEmpty { return true }
+            return project.projectName.lowercased().contains(rawQuery) ||
+                   project.projectPath.lowercased().contains(rawQuery) ||
+                   project.runtime.rawValue.lowercased().contains(rawQuery) ||
+                   (project.gitBranch?.lowercased().contains(rawQuery) ?? false) ||
+                   project.listeningPorts.contains { "\($0)".contains(queryCleanPort) }
         }
         
         return list.sorted { a, b in
@@ -141,18 +164,20 @@ public final class ProjectsManager {
     }
     
     public var filteredPortEntries: [PortInspectionItem] {
+        let rawQuery = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let queryCleanPort = rawQuery.hasPrefix(":") ? String(rawQuery.dropFirst()) : rawQuery
+        
         let list = portEntries.filter { item in
             if selectedCategory != .all && item.runtime.category != selectedCategory {
                 return false
             }
-            if searchText.isEmpty { return true }
-            let q = searchText.lowercased()
-            return "\(item.port)".contains(q) ||
-                   item.projectName.lowercased().contains(q) ||
-                   item.processName.lowercased().contains(q) ||
-                   item.projectPath.lowercased().contains(q) ||
-                   (item.gitBranch?.lowercased().contains(q) ?? false) ||
-                   item.runtime.rawValue.lowercased().contains(q)
+            if rawQuery.isEmpty { return true }
+            return "\(item.port)".contains(queryCleanPort) ||
+                   item.projectName.lowercased().contains(rawQuery) ||
+                   item.processName.lowercased().contains(rawQuery) ||
+                   item.projectPath.lowercased().contains(rawQuery) ||
+                   (item.gitBranch?.lowercased().contains(rawQuery) ?? false) ||
+                   item.runtime.rawValue.lowercased().contains(rawQuery)
         }
         
         return list.sorted { a, b in
