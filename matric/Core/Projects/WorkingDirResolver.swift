@@ -52,18 +52,51 @@ public final class WorkingDirResolver: Sendable {
         return nil
     }
     
-    /// Resolves git branch by reading .git/HEAD upward from the path
+    /// Resolves git branch by reading .git/HEAD upward from the path without spawning any child processes.
+    /// Supports standard repositories, Git worktrees, submodules, and detached HEAD commits.
     public nonisolated func resolveGitBranch(for path: String) -> String? {
         guard !path.isEmpty && path != "/" else { return nil }
         var url = URL(fileURLWithPath: path)
-        for _ in 0..<4 {
-            let headURL = url.appendingPathComponent(".git/HEAD")
-            if let content = try? String(contentsOf: headURL, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines) {
-                if content.hasPrefix("ref: refs/heads/") {
-                    return String(content.dropFirst("ref: refs/heads/".count))
+        let fileManager = FileManager.default
+        
+        for _ in 0..<5 {
+            let gitPath = url.appendingPathComponent(".git")
+            var isDir: ObjCBool = false
+            
+            if fileManager.fileExists(atPath: gitPath.path, isDirectory: &isDir) {
+                var actualGitDirURL = gitPath
+                
+                // If .git is a file (e.g. Git worktree or submodule pointer)
+                if !isDir.boolValue {
+                    if let gitFileContent = try? String(contentsOf: gitPath, encoding: .utf8) {
+                        for line in gitFileContent.components(separatedBy: "\n") {
+                            let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
+                            if trimmed.hasPrefix("gitdir:") {
+                                let targetDir = trimmed.dropFirst("gitdir:".count).trimmingCharacters(in: .whitespacesAndNewlines)
+                                if targetDir.hasPrefix("/") {
+                                    actualGitDirURL = URL(fileURLWithPath: targetDir)
+                                } else {
+                                    actualGitDirURL = url.appendingPathComponent(targetDir).standardized
+                                }
+                                break
+                            }
+                        }
+                    }
                 }
-                return String(content.prefix(7))
+                
+                let headURL = actualGitDirURL.appendingPathComponent("HEAD")
+                if let content = try? String(contentsOf: headURL, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines) {
+                    if content.hasPrefix("ref: refs/heads/") {
+                        let branch = String(content.dropFirst("ref: refs/heads/".count))
+                        return branch
+                    } else if !content.isEmpty {
+                        // Detached HEAD commit SHA
+                        return String(content.prefix(7))
+                    }
+                }
+                break
             }
+            
             let parent = url.deletingLastPathComponent()
             if parent.path == url.path || parent.path == "/" { break }
             url = parent

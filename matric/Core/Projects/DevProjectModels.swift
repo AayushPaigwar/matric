@@ -20,7 +20,7 @@ public enum DevProjectCategory: String, CaseIterable, Identifiable, Sendable {
 }
 
 public enum DevProjectSortOption: String, CaseIterable, Identifiable, Sendable {
-    case ports = "Ports"
+    case ports = "Port Number"
     case cpu = "CPU Usage"
     case memory = "Memory"
     case name = "Name"
@@ -30,14 +30,14 @@ public enum DevProjectSortOption: String, CaseIterable, Identifiable, Sendable {
 
 public enum DevProjectViewMode: String, CaseIterable, Identifiable, Sendable {
     case cards = "Cards"
-    case portsTable = "Ports Table"
+    case table = "Ports Table"
     
     public var id: String { rawValue }
     
     public var iconName: String {
         switch self {
         case .cards: return "square.grid.2x2.fill"
-        case .portsTable: return "tablecells.fill"
+        case .table: return "tablecells.fill"
         }
     }
 }
@@ -86,12 +86,18 @@ public enum DevRuntime: String, CaseIterable, Sendable {
         case .node: return "shippingbox.fill"
         case .bun: return "flame.fill"
         case .deno: return "tortoise.fill"
-        case .python, .fastapi, .django, .flask: return "chevron.left.forwardslash.chevron.right"
+        case .python: return "chevron.left.forwardslash.chevron.right"
+        case .fastapi: return "bolt.horizontal.fill"
+        case .django: return "leaf.fill"
+        case .flask: return "testtube.2"
         case .go: return "paperplane.fill"
         case .rust: return "gearshape.2.fill"
         case .ruby: return "diamond.fill"
         case .docker: return "ferry.fill"
-        case .postgres, .redis, .mongodb, .mysql: return "cylinder.split.1x2.fill"
+        case .postgres: return "cylinder.split.1x2.fill"
+        case .redis: return "layers.fill"
+        case .mongodb: return "leaf.arrow.circlepath"
+        case .mysql: return "cylinder.split.1x2.fill"
         case .vscodeTunnel: return "chevron.left.forwardslash.chevron.right"
         case .t3code: return "sparkles"
         case .cloudflare: return "cloud.fill"
@@ -108,7 +114,10 @@ public enum DevRuntime: String, CaseIterable, Sendable {
         case .node: return Color.green
         case .bun: return Color.orange
         case .deno: return Color.blue
-        case .python, .fastapi, .django, .flask: return Color.yellow
+        case .python: return Color.yellow
+        case .fastapi: return Color.teal
+        case .django: return Color.mint
+        case .flask: return Color(red: 0.2, green: 0.75, blue: 0.6)
         case .go: return Color.cyan
         case .rust: return Color.red
         case .ruby: return Color.pink
@@ -138,9 +147,8 @@ public struct DevProjectRecord: Identifiable, Sendable {
     public let listeningPorts: [Int]
     public var cpuPercent: Double
     public var memoryBytes: UInt64
-    public let detectedAt: Date
     
-    public nonisolated init(
+    public init(
         id: UUID = UUID(),
         projectName: String,
         projectPath: String,
@@ -148,11 +156,10 @@ public struct DevProjectRecord: Identifiable, Sendable {
         runtime: DevRuntime,
         pid: pid_t,
         command: String,
-        fullCommand: String = "",
+        fullCommand: String,
         listeningPorts: [Int],
-        cpuPercent: Double = 0.0,
-        memoryBytes: UInt64 = 0,
-        detectedAt: Date = Date()
+        cpuPercent: Double,
+        memoryBytes: UInt64
     ) {
         self.id = id
         self.projectName = projectName
@@ -161,59 +168,46 @@ public struct DevProjectRecord: Identifiable, Sendable {
         self.runtime = runtime
         self.pid = pid
         self.command = command
-        self.fullCommand = fullCommand.isEmpty ? command : fullCommand
+        self.fullCommand = fullCommand
         self.listeningPorts = listeningPorts
         self.cpuPercent = cpuPercent
         self.memoryBytes = memoryBytes
-        self.detectedAt = detectedAt
     }
     
-    public nonisolated var isListening: Bool {
+    public var category: DevProjectCategory {
+        runtime.category
+    }
+    
+    public var isListening: Bool {
         !listeningPorts.isEmpty
     }
     
-    public nonisolated var primaryURL: URL? {
-        guard let firstPort = listeningPorts.first else { return nil }
-        return URL(string: "http://localhost:\(firstPort)")
-    }
-    
-    public nonisolated var formattedMemory: String {
+    public var formattedMemory: String {
         let formatter = ByteCountFormatter()
         formatter.countStyle = .memory
         return formatter.string(fromByteCount: Int64(memoryBytes))
-    }
-    
-    public nonisolated var category: DevProjectCategory {
-        runtime.category
     }
 }
 
 public struct PortInspectionItem: Identifiable, Sendable {
-    public var id: String { "\(pid)-\(port)" }
+    public var id: String { "\(port)-\(pid)" }
     public let port: Int
     public let status: String
-    public let pid: pid_t
-    public let processName: String
     public let projectName: String
     public let projectPath: String
     public let gitBranch: String?
     public let runtime: DevRuntime
-    public let isHTTP: Bool
+    public let pid: pid_t
+    public let processName: String
     public var cpuPercent: Double
     public var memoryBytes: UInt64
     
-    public var memoryFormatted: String {
-        let formatter = ByteCountFormatter()
-        formatter.countStyle = .memory
-        return formatter.string(fromByteCount: Int64(memoryBytes))
-    }
-    
-    public nonisolated init(
+    public init(
         port: Int,
-        status: String = "LISTEN",
+        status: String,
         projectName: String,
         projectPath: String,
-        gitBranch: String? = nil,
+        gitBranch: String?,
         runtime: DevRuntime,
         pid: pid_t,
         processName: String,
@@ -228,8 +222,17 @@ public struct PortInspectionItem: Identifiable, Sendable {
         self.runtime = runtime
         self.pid = pid
         self.processName = processName
-        self.isHTTP = (port == 80 || port == 443 || port == 3000 || port == 5173 || port == 8080 || port == 8000 || port == 4200 || port == 5000 || port >= 1024)
         self.cpuPercent = cpuPercent
         self.memoryBytes = memoryBytes
+    }
+    
+    public var isHTTP: Bool {
+        port == 80 || port == 443 || port >= 1000
+    }
+    
+    public var memoryFormatted: String {
+        let formatter = ByteCountFormatter()
+        formatter.countStyle = .memory
+        return formatter.string(fromByteCount: Int64(memoryBytes))
     }
 }

@@ -406,6 +406,10 @@ public struct ProjectsView: View {
                             projectsManager.copyToClipboard(project.projectPath)
                             showToast("Copied path")
                         },
+                        onCopyBranch: { branch in
+                            projectsManager.copyToClipboard(branch)
+                            showToast("Copied branch '\(branch)'")
+                        },
                         onOpenCursor: { projectsManager.openInCursor(project) },
                         onOpenVSCode: { projectsManager.openInVSCode(project) },
                         onOpenTerminal: { projectsManager.openInTerminal(project) },
@@ -476,18 +480,11 @@ public struct ProjectsView: View {
                         .help("Click to copy http://localhost:\(entry.port)")
                         .frame(width: 80, alignment: .leading)
                         
-                        // Status: LISTEN socket indicator
-                        HStack(spacing: 5) {
-                            Circle()
-                                .fill(Color.green)
-                                .frame(width: 6, height: 6)
-                            Text(entry.status)
-                                .font(.system(size: 10, weight: .bold, design: .monospaced))
-                                .foregroundStyle(.green)
-                        }
-                        .frame(width: 80, alignment: .leading)
+                        // Status: Feature 4.2 Pulsing socket dot
+                        PulsingStatusDot(isActive: entry.status == "LISTEN", label: entry.status)
+                            .frame(width: 80, alignment: .leading)
                         
-                        // Service & Framework
+                        // Service & Framework with Feature 4.2 branding
                         HStack(spacing: 6) {
                             Image(systemName: entry.runtime.iconName)
                                 .font(.system(size: 11))
@@ -498,7 +495,7 @@ public struct ProjectsView: View {
                         }
                         .frame(width: 160, alignment: .leading)
                         
-                        // Project, Git Branch & Path
+                        // Project, Git Branch (with 1-click copy) & Path
                         VStack(alignment: .leading, spacing: 2) {
                             HStack(spacing: 6) {
                                 Text(entry.projectName)
@@ -506,16 +503,23 @@ public struct ProjectsView: View {
                                     .lineLimit(1)
                                 
                                 if let branch = entry.gitBranch {
-                                    HStack(spacing: 3) {
-                                        Image(systemName: "arrow.triangle.branch")
-                                            .font(.system(size: 8))
-                                        Text(branch)
-                                            .font(.system(size: 9, weight: .medium, design: .monospaced))
+                                    Button {
+                                        projectsManager.copyToClipboard(branch)
+                                        showToast("Copied branch '\(branch)'")
+                                    } label: {
+                                        HStack(spacing: 3) {
+                                            Image(systemName: "arrow.triangle.branch")
+                                                .font(.system(size: 8))
+                                            Text(branch)
+                                                .font(.system(size: 9, weight: .medium, design: .monospaced))
+                                        }
+                                        .foregroundStyle(Color.purple)
+                                        .padding(.horizontal, 5)
+                                        .padding(.vertical, 1)
+                                        .background(RoundedRectangle(cornerRadius: 3).fill(Color.purple.opacity(0.12)))
                                     }
-                                    .foregroundStyle(Color.purple)
-                                    .padding(.horizontal, 5)
-                                    .padding(.vertical, 1)
-                                    .background(RoundedRectangle(cornerRadius: 3).fill(Color.purple.opacity(0.1)))
+                                    .buttonStyle(.plain)
+                                    .help("Click to copy git branch name")
                                 }
                             }
                             
@@ -926,6 +930,82 @@ private struct KPIMetricCard: View {
     }
 }
 
+// MARK: - Pulsing Status Components (Feature 4.2)
+private struct PulsingStatusPill: View {
+    let isListening: Bool
+    @State private var isPulsing: Bool = false
+    
+    var body: some View {
+        HStack(spacing: 5) {
+            ZStack {
+                if isListening {
+                    Circle()
+                        .stroke(Color.green.opacity(0.4), lineWidth: 1.5)
+                        .frame(width: isPulsing ? 13 : 7, height: isPulsing ? 13 : 7)
+                        .opacity(isPulsing ? 0 : 0.8)
+                }
+                
+                Circle()
+                    .fill(isListening ? Color.green : Color.secondary.opacity(0.6))
+                    .frame(width: 7, height: 7)
+            }
+            .frame(width: 13, height: 13)
+            
+            Text(isListening ? "ONLINE" : "IDLE")
+                .font(.system(size: 9, weight: .heavy, design: .monospaced))
+                .foregroundStyle(isListening ? Color.green : Color.secondary)
+        }
+        .padding(.horizontal, 7)
+        .padding(.vertical, 3)
+        .background(
+            Capsule()
+                .fill(isListening ? Color.green.opacity(0.12) : Color.primary.opacity(0.04))
+        )
+        .onAppear {
+            if isListening {
+                withAnimation(.easeInOut(duration: 1.4).repeatForever(autoreverses: false)) {
+                    isPulsing = true
+                }
+            }
+        }
+    }
+}
+
+private struct PulsingStatusDot: View {
+    let isActive: Bool
+    let label: String
+    @State private var isPulsing: Bool = false
+    
+    var body: some View {
+        HStack(spacing: 5) {
+            ZStack {
+                if isActive {
+                    Circle()
+                        .stroke(Color.green.opacity(0.4), lineWidth: 1.2)
+                        .frame(width: isPulsing ? 12 : 6, height: isPulsing ? 12 : 6)
+                        .opacity(isPulsing ? 0 : 0.8)
+                }
+                
+                Circle()
+                    .fill(isActive ? Color.green : Color.secondary)
+                    .frame(width: 6, height: 6)
+            }
+            .frame(width: 12, height: 12)
+            
+            Text(label)
+                .font(.system(size: 10, weight: .bold, design: .monospaced))
+                .foregroundStyle(isActive ? Color.green : Color.secondary)
+        }
+        .onAppear {
+            if isActive {
+                withAnimation(.easeInOut(duration: 1.4).repeatForever(autoreverses: false)) {
+                    isPulsing = true
+                }
+            }
+        }
+    }
+}
+
 // MARK: - Project Card View (Feature 2 & 4 Polish)
 private struct ProjectCardView: View {
     let project: DevProjectRecord
@@ -934,6 +1014,7 @@ private struct ProjectCardView: View {
     let onOpenBrowser: (Int) -> Void
     let onCopyURL: (Int) -> Void
     let onCopyPath: () -> Void
+    let onCopyBranch: (String) -> Void
     let onOpenCursor: () -> Void
     let onOpenVSCode: () -> Void
     let onOpenTerminal: () -> Void
@@ -946,22 +1027,10 @@ private struct ProjectCardView: View {
         VStack(alignment: .leading, spacing: 14) {
             // Card Top Row
             HStack(alignment: .center, spacing: 10) {
-                // Online Pulsing Dot (if has listening ports)
-                if project.isListening {
-                    HStack(spacing: 5) {
-                        Circle()
-                            .fill(Color.green)
-                            .frame(width: 7, height: 7)
-                        Text("ONLINE")
-                            .font(.system(size: 9, weight: .heavy, design: .monospaced))
-                            .foregroundStyle(.green)
-                    }
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 3)
-                    .background(Capsule().fill(Color.green.opacity(0.1)))
-                }
+                // Online Pulsing Dot (Feature 4.2)
+                PulsingStatusPill(isListening: project.isListening)
                 
-                // Framework Badge
+                // Framework Badge with authentic icon & brand color (Feature 4.2)
                 HStack(spacing: 5) {
                     Image(systemName: project.runtime.iconName)
                         .font(.system(size: 11, weight: .bold))
@@ -981,21 +1050,27 @@ private struct ProjectCardView: View {
                     .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(.primary)
                 
-                // Git Branch Pill (if available)
+                // Git Branch Pill (if available) with 1-click copy (Feature 4.1)
                 if let branch = project.gitBranch {
-                    HStack(spacing: 4) {
-                        Image(systemName: "arrow.triangle.branch")
-                            .font(.system(size: 10))
-                        Text(branch)
-                            .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    Button {
+                        onCopyBranch(branch)
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "arrow.triangle.branch")
+                                .font(.system(size: 10))
+                            Text(branch)
+                                .font(.system(size: 11, weight: .medium, design: .monospaced))
+                        }
+                        .foregroundStyle(Color.purple)
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 2)
+                        .background(
+                            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                .fill(Color.purple.opacity(0.12))
+                        )
                     }
-                    .foregroundStyle(Color.purple)
-                    .padding(.horizontal, 7)
-                    .padding(.vertical, 2)
-                    .background(
-                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-                            .fill(Color.purple.opacity(0.1))
-                    )
+                    .buttonStyle(.plain)
+                    .help("Click to copy git branch name")
                 }
                 
                 // PID

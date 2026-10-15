@@ -68,11 +68,14 @@ This document records the exact feature scope for the **Developer Projects & Por
 ---
 
 ### Feature 4: Project Identity & Git Integration
-- [ ] **4.1 Zero-Subprocess Git Branch Detection**:
+- [x] **4.1 Zero-Subprocess Git Branch Detection**:
   - Automatically detect and display active git branch (e.g. `main`, `feature/auth`) by inspecting `.git/HEAD` upward without shelling out.
-- [ ] **4.2 Status & Branding Badges**:
-  - **Pulsing Status Pill**: Indicates `ONLINE` with a green pulse dot when server is actively listening on TCP ports.
-  - **Framework Logos & Badges**: Distinct color-coded badge for Vite, Next.js, React, Node, Bun, Python, FastAPI, Django, Go, Rust, Ruby, Docker, and Database services.
+  - Full support for standard `.git` repos, Git worktrees (`gitdir:` pointer file), submodules, and detached HEAD commits.
+  - Interactive 1-click copy git branch name shortcut across Cards and Ports Table with feedback toast.
+- [x] **4.2 Status & Branding Badges**:
+  - **Pulsing Status Pill**: Indicates `ONLINE` with a green radar pulse dot when server is actively listening on TCP ports, and `IDLE` when quiet.
+  - **Pulsing Socket Dot**: Real-time pulsing socket dot for `LISTEN` rows in the high-density table.
+  - **Framework Logos & Badges**: Distinct color-coded badge and iconic glyph for Vite, Next.js, React, Node, Bun, Python, FastAPI, Django, Flask, Go, Rust, Ruby, Docker, PostgreSQL, Redis, MongoDB, MySQL, and Tunnel tooling.
 
 ---
 
@@ -103,6 +106,6 @@ This document records the exact feature scope for the **Developer Projects & Por
 - [x] **Step 1**: Implement Feature 1 (Header & KPI Summary Metrics Bar)
 - [x] **Step 2**: Implement Feature 2 (Dual-View Mode: Rich Cards vs. Ports Table)
 - [x] **Step 3**: Implement Feature 3 (Smart Filtering & Organization)
-- [ ] **Step 4**: Implement Feature 4 (Project Identity & Git Integration)
+- [x] **Step 4**: Implement Feature 4 (Project Identity & Git Integration)
 - [ ] **Step 5**: Implement Feature 5 (1-Click Developer Actions)
 - [ ] **Step 6**: Implement Feature 6 (Built-in Port Inspector Utility)
