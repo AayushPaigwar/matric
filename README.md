@@ -200,7 +200,7 @@ Tap this repository directly and install Matric:
 
 ```bash
 # 1. Tap this repository
-brew tap aayushpaigwar/matric https://github.com/aayushpaigwar/matric
+brew tap pawanbhayde/matric https://github.com/pawanbhayde/matric
 
 # 2. Install Matric
 brew install --cask matric
@@ -208,7 +208,7 @@ brew install --cask matric
 
 > **Note on Homebrew 7+ Tap Trust:** If prompted with `Refusing to load cask from untrusted tap`, run:
 > ```bash
-> brew trust aayushpaigwar/matric
+> brew trust pawanbhayde/matric
 > ```
 
 To upgrade in the future:
@@ -225,7 +225,7 @@ brew uninstall --zap --cask matric
 
 ### Option 2: Download Disk Image (.dmg)
 
-1. Download the latest Universal release (**Apple Silicon & Intel**) from [GitHub Releases](https://github.com/aayushpaigwar/matric/releases/latest).
+1. Download the latest Universal release (**Apple Silicon & Intel**) from [GitHub Releases](https://github.com/pawanbhayde/matric/releases/latest).
 2. Double-click the downloaded `Matric-x.x.x.dmg`.
 3. Drag **Matric** into your **Applications** folder.
 
@@ -274,7 +274,7 @@ xattr -cr /Applications/Matric.app
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/aayushpaigwar/matric.git
+git clone https://github.com/pawanbhayde/matric.git
 cd matric
 ```
 
